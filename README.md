@@ -1,3 +1,5 @@
+<p align="center"><img src="icons/logo.png" alt="Hift" width="420"></p>
+
 # Hift App
 
 Web app per allenamenti funzionali ad alta intensità (HIFT).
@@ -7,6 +9,10 @@ Web app per allenamenti funzionali ad alta intensità (HIFT).
 - Player con timer, segnali sonori e contagiri; diario con RPE e note
 - Libreria di 45 esercizi con figure animate, istruzioni, errori comuni e link a video gratuiti (Pexels, Pixabay, Wikimedia Commons)
 
-Un unico file `index.html`, nessuna dipendenza. I dati restano nel browser (localStorage).
+App installabile (PWA): si aggiunge alla schermata Home, si apre a tutto schermo e funziona anche offline. Nessuna dipendenza; i dati restano nel browser (localStorage).
+
+- `index.html` — l'app
+- `manifest.json`, `sw.js` — installazione e offline
+- `icons/` — logo e icone
 
 Per pubblicarla: Settings → Pages → Deploy from a branch → `main` / root.
