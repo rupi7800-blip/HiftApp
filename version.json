@@ -1,7 +1,10 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "date": "09/11/2026",
   "notes": [
-    "Nuovo sistema di aggiornamento: quando esce una nuova versione compaiono il tasto Aggiorna e un avviso con le novità"
+    "Musica durante l'allenamento: tracce Hift Beats o brani dal tuo dispositivo",
+    "Nuova schermata esercizio: lista della sessione sempre visibile e anteprima del prossimo esercizio",
+    "Esercizi su due lati: conteggio per lato e indicazione del lato da eseguire",
+    "Il tasto Aggiorna ora compare davvero: l'app resta sulla versione installata finché non lo premi"
   ]
 }

@@ -243,6 +243,69 @@ ul.err li::before{content:"×";position:absolute;left:0;top:-1px;color:var(--cor
 .rpe button.on{background:var(--volt);color:#0D0E0B;border-color:var(--volt)}
 .ta{width:100%;min-height:80px;border-radius:14px;border:1px solid var(--line2);background:var(--card);padding:12px 14px;font-size:15px;outline:none;margin-top:10px;resize:vertical}
 
+/* player a pannelli */
+.pgrid{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto minmax(0,1fr);grid-template-areas:"main main" "list next";gap:10px;max-width:1200px;width:100%;margin:8px auto 0}
+.pmain{grid-area:main;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:0;overflow:auto}
+.pside{background:rgba(243,241,234,.04);border:1px solid var(--line);border-radius:18px;padding:10px 10px 12px;overflow:auto;min-height:0;position:relative}
+.plall{grid-area:list}.pnx{grid-area:next;text-align:center}
+.pl .ring{width:min(50vw,250px,29vh)}
+.pl .digits{font-size:min(clamp(60px,17vw,130px),15vh)}
+.pl .pname{font-size:clamp(28px,7.5vw,48px)}
+.pl .cbtn.main{width:72px;height:72px}
+.sl-b{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:10px 4px 4px}
+.sl-b:first-of-type{margin-top:6px}
+.sl-i{padding:6px 8px;border-radius:10px;font-size:13px;font-weight:600;line-height:1.2}
+.sl-i small{display:block;color:var(--mute);font-size:11px;font-weight:400;margin-top:2px}
+.sl-i.now{background:rgba(212,255,30,.13);color:var(--volt)}
+.sl-i.now small{color:var(--volt);opacity:.8}
+.done{opacity:.38}
+.pnx .fig{max-width:min(150px,15vh);margin:8px auto 6px;width:100%}
+.pmain .plist .it{grid-template-columns:44px 1fr;padding:5px 0}
+.nx-n{font-weight:800;font-stretch:70%;font-size:17px;text-transform:uppercase;line-height:1.05;overflow-wrap:anywhere;hyphens:auto}
+.toggle{text-align:left}
+.nx-s{font-size:12px;color:var(--mute);margin-top:4px;line-height:1.3}
+.nx-s b{color:var(--ink)}
+.nx-end{font-size:30px;margin:18px 0 8px;color:var(--volt)}
+.sideb{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:999px;background:var(--coral);color:#0D0E0B;font-weight:800;font-stretch:75%;font-size:14px;text-transform:uppercase;letter-spacing:.06em;margin-top:6px}
+.sideb.alt{background:var(--sky)}
+.sideb.sm{font-size:11px;padding:5px 10px}
+@media (min-width:860px),(orientation:landscape) and (min-width:640px){
+  .pgrid{grid-template-columns:minmax(210px,280px) 1fr minmax(210px,280px);grid-template-rows:minmax(0,1fr);grid-template-areas:"list main next"}
+  .pmain{justify-content:center}
+  .pl .ring{width:min(30vw,300px,34vh)}
+  .pl .ph{max-width:1200px}
+  .pl .pname{font-size:min(clamp(28px,5vw,48px),8.5vh)}
+  .pl .preps{font-size:min(18px,4vh)}
+  .pl .digits{font-size:min(130px,14vh)}
+  .pl .kind{margin-top:4px}
+}
+@media (orientation:landscape) and (max-height:540px){
+  .pl{padding-top:calc(6px + var(--st));padding-bottom:calc(8px + var(--sb))}
+  .pgrid{margin-top:6px}
+  .pmain{display:grid;grid-template-columns:auto minmax(0,1fr);align-content:center;justify-items:start;column-gap:16px;row-gap:2px;text-align:left}
+  .pgrid{grid-template-columns:minmax(160px,220px) minmax(0,1fr) minmax(160px,220px)}
+  .pmain{overflow-x:hidden}
+  .pmain>.ring{grid-row:1/span 6;width:min(18vw,46vh)}
+  .pmain>*:not(.ring){grid-column:2}
+  .pl .pname,.pl .preps{text-align:left}
+  .pl .pname{font-size:min(30px,7.5vh);overflow-wrap:anywhere}
+  .pl .digits{font-size:min(96px,20vh)}
+  .pl .pctl{margin-top:4px}.pl .cbtn{width:48px;height:48px}.pl .cbtn.main{width:60px;height:60px}
+  .pnx .fig{max-width:min(120px,22vh)}
+}
+/* musica */
+.mrow{display:flex;gap:8px;align-items:center;margin-top:8px}
+.mrow>button:first-child{flex:1;text-align:left;padding:12px 14px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:14px;font-weight:600}
+.mrow>button small{color:var(--mute);font-weight:400}
+.mrow.on>button:first-child{border-color:var(--volt);color:var(--volt)}
+.mctl{display:flex;gap:18px;justify-content:center;align-items:center;margin-top:20px}
+.rng{width:100%;accent-color:var(--volt);height:30px}
+.cbtn.on{border-color:var(--volt);color:var(--volt)}
+/* aggiornamenti */
+.updslot{position:fixed;top:calc(12px + var(--st));right:max(18px,calc(50% - 262px));z-index:35}
+body.has-upd .top>.m,body.has-upd #instChip{visibility:hidden}
+.upd-card{background:#1A1B15!important;border:1px solid rgba(243,241,234,.18)}
+.upd-card .upd-go{background:#D4FF1E!important;color:#0D0E0B!important}
 @media (prefers-reduced-motion:reduce){.marq span{animation:none}}
 </style>
 </head>
@@ -251,6 +314,7 @@ ul.err li::before{content:"×";position:absolute;left:0;top:-1px;color:var(--cor
 
 <div class="cta hide" id="cta"><div class="in">
   <button class="btn ghost" id="regen" aria-label="Rigenera"><svg class="ico" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 4v5h-5"/></svg></button>
+  <button class="btn ghost" id="musicBtn" aria-label="Musica"><svg class="ico" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></button>
   <button class="btn volt" id="go"><svg class="ico" viewBox="0 0 24 24" style="fill:currentColor;stroke:none"><path d="M7 4l13 8-13 8z"/></svg>Inizia</button>
 </div></div>
 
@@ -264,6 +328,8 @@ ul.err li::before{content:"×";position:absolute;left:0;top:-1px;color:var(--cor
 <div class="sw-wrap" id="sheetWrap"><div class="sheet" id="sheet"></div></div>
 <div id="obRoot"></div>
 <div id="plRoot"></div>
+<div class="sw-wrap" id="musicWrap" style="z-index:95"><div class="sheet" id="musicSheet"></div></div>
+<div class="updslot" data-update-slot></div>
 
 <script>
 "use strict";
@@ -456,11 +522,11 @@ E('stepjack',{n:'Step jack',en:'low impact jumping jacks',cat:'cardio',base:30,s
  kf:[{L:[-3,-3,-90],R:[3,3,90],A:[-10,-5],B:[10,5],an:['hip',100]},{L:[-3,-3,-90],R:[18,18,90],A:[-150,-165],B:[150,165],an:['hip',100]},{L:[-3,-3,-90],R:[3,3,90],A:[-10,-5],B:[10,5],an:['hip',100]},{L:[-18,-18,-90],R:[3,3,90],A:[-150,-165],B:[150,165],an:['hip',100]}],
  cues:['Versione senza salto del jumping jack.','Porta un piede di lato alzando le braccia sopra la testa.','Rientra e alterna il lato, a ritmo sostenuto.'],
  err:['Rallentare troppo: tieni un ritmo che alzi il battito.']});
-E('mountainclimber',{n:'Mountain climber',en:'mountain climbers exercise',cat:'cardio',j:['polsi'],base:30,spr:.8,tempo:260,hold:40,note:'totali',mus:'Core, flessori dell’anca, spalle',
+E('mountainclimber',{n:'Mountain climber',en:'mountain climbers exercise',cat:'cardio',j:['polsi'],base:15,spr:.8,tempo:260,hold:40,side:'alt',sl:'per gamba',mus:'Core, flessori dell’anca, spalle',
  kf:[{t:72,L:[55,-80,-40],R:[-72,-72,-5],an:['hL',150]},{t:72,L:[-72,-72,-5],R:[55,-80,-40],an:['hL',150]}],
  cues:['Parti in plank alto, mani sotto le spalle.','Porta un ginocchio verso il petto, poi alterna velocemente.','Bacino basso e stabile, spalle sopra le mani.'],
  err:['Sedere che si alza a ogni passo.','Spalle che arretrano dietro le mani.']});
-E('lunge',{n:'Affondo indietro alternato',en:'reverse lunge',cat:'lunge',j:['ginocchia'],base:16,spr:2.5,note:'totali, alternando',mus:'Quadricipiti, glutei, adduttori',
+E('lunge',{n:'Affondo indietro alternato',en:'reverse lunge',cat:'lunge',j:['ginocchia'],base:10,spr:2.5,side:'alt',sl:'per gamba',mus:'Quadricipiti, glutei, adduttori',
  kf:[{A:[-25,60],an:['aL',110]},{t:4,L:[85,-5,90],R:[-10,-100,30],A:[-25,60],an:['aL',110]},{A:[-25,60],an:['aL',110]},{t:4,R:[85,-5,90],L:[-10,-100,30],A:[-25,60],an:['aR',110]}],
  cues:['In piedi, fai un passo lungo all’indietro.','Scendi finché il ginocchio posteriore sfiora il pavimento.','Ginocchio anteriore sopra la caviglia, busto alto.','Spingi col tallone anteriore per tornare su, poi cambia gamba.'],
  err:['Passo troppo corto: il ginocchio anteriore va molto oltre la punta.','Busto inclinato in avanti.']});
@@ -484,11 +550,11 @@ E('glutebridge',{n:'Ponte glutei',en:'glute bridge',cat:'hinge',base:15,spr:2,wa
  kf:[{t:-88,L:[140,30,90],A:[90,90],an:['aL',150]},{t:-120,h:30,L:[100,5,90],A:[90,90],an:['aL',150]}],
  cues:['Supino, piedi a terra vicini ai glutei.','Spingi con i talloni e solleva il bacino fino a linea spalle-ginocchia.','Stringi i glutei in alto per un secondo e scendi controllato.'],
  err:['Inarcare la lombare invece di estendere l’anca.']});
-E('highknees',{n:'Skip (ginocchia alte)',en:'high knees exercise',cat:'cardio',imp:1,base:40,spr:.6,note:'totali',tempo:240,hold:30,mus:'Flessori dell’anca, polpacci, core',
+E('highknees',{n:'Skip (ginocchia alte)',en:'high knees exercise',cat:'cardio',imp:1,base:20,spr:.6,side:'alt',sl:'per gamba',tempo:240,hold:30,mus:'Flessori dell’anca, polpacci, core',
  kf:[{t:5,L:[85,-5,70],R:[-5,-15,80],A:[-35,75],B:[50,110],air:4,an:['hip',95]},{t:5,R:[85,-5,70],L:[-5,-15,80],B:[-35,75],A:[50,110],air:4,an:['hip',95]}],
  cues:['Corsa sul posto portando le ginocchia all’altezza dell’anca.','Appoggio sull’avampiede, busto dritto.','Braccia che lavorano in opposizione alle gambe.'],
  err:['Busto che si inclina indietro.']});
-E('stepup',{n:'Step-up sul box',en:'step up exercise',cat:'lunge',eq:['box'],base:16,spr:2.5,note:'totali, alternando',mus:'Quadricipiti, glutei',
+E('stepup',{n:'Step-up sul box',en:'step up exercise',cat:'lunge',eq:['box'],base:10,spr:2.5,side:'alt',sl:'per gamba',mus:'Quadricipiti, glutei',
  props:[{t:'box',x:118,y:150,w:62,h:32}],
  kf:[{L:[75,-5,90],R:[0,0,90],an:['aR',100]},{an:['aL',135,148]}],
  cues:['Appoggia tutto il piede sul box.','Sali spingendo con la gamba sopra, senza slanciarti con quella a terra.','Estendi completamente l’anca in alto, poi scendi controllato.'],
@@ -503,7 +569,7 @@ E('dbthruster',{n:'Thruster con manubri',en:'dumbbell thruster',cat:'full',eq:['
  kf:[{A:RDB},{t:30,L:[95,-32,90],A:RDB},{A:OH}],
  cues:['Manubri sulle spalle, gomiti leggermente avanti.','Squat completo con busto alto.','Risali esplosivo e usa la spinta delle gambe per portare i manubri sopra la testa.','Braccia tese, bicipiti vicino alle orecchie, poi riporta i manubri alle spalle.'],
  err:['Spingere con le braccia prima di aver esteso le gambe.','Lombare inarcata in chiusura sopra la testa.']});
-E('dbsnatch',{n:'Snatch con manubrio',en:'dumbbell snatch',cat:'full',eq:['manubri'],load:'db',lvl:2,alt:'dbpushpress',j:['spalle','schiena'],base:12,spr:3,note:'totali, alternando braccio',mus:'Catena posteriore, spalle, trapezi',
+E('dbsnatch',{n:'Snatch con manubrio',en:'dumbbell snatch',cat:'full',eq:['manubri'],load:'db',lvl:2,alt:'dbpushpress',j:['spalle','schiena'],base:8,spr:3,side:'alt',sl:'per braccio',mus:'Catena posteriore, spalle, trapezi',
  props:[{t:'db',h:['hL']}],
  kf:[{t:70,L:[75,-25,90],A:[-15,-15],B:[20,20]},{t:-3,L:[0,0,80],A:[120,30],B:[0,0]},{A:OH,B:[0,0]}],
  cues:['Manubrio tra i piedi, schiena neutra, anca indietro.','Estendi esplosivo anche, ginocchia e caviglie.','Tira il gomito alto vicino al corpo e “infilati” sotto il manubrio.','Chiudi con braccio teso sopra la testa, poi cambia mano.'],
@@ -624,7 +690,7 @@ E('goodmorning',{n:'Good morning a corpo libero',en:'good morning exercise',cat:
 E('forwardfold',{n:'Allungamento posteriore in piedi',en:'standing forward fold stretch',cat:'mob',cool:1,unit:'sec',tempo:1800,hold:600,mus:'Femorali, polpacci, schiena',
  kf:[{t:130,h:10,L:[-8,-8,90],an:['aL',100]},{t:135,h:12,L:[-8,-8,90],an:['aL',100]}],
  cues:['Piedi uniti, ginocchia leggermente piegate.','Lascia cadere il busto in avanti e rilassa collo e braccia.','Respira lentamente e scendi un po’ a ogni espirazione.'],err:['Molleggiare.']});
-E('quadstretch',{n:'Allungamento quadricipite',en:'quad stretch',cat:'mob',cool:1,unit:'sec',note:'per lato',tempo:1800,hold:600,mus:'Quadricipiti, flessori dell’anca',
+E('quadstretch',{n:'Allungamento quadricipite',en:'quad stretch',cat:'mob',cool:1,unit:'sec',side:'each',sl:'per lato',tempo:1800,hold:600,mus:'Quadricipiti, flessori dell’anca',
  kf:[{L:[-5,-170,-120],R:[0,0,90],A:[-12,-12],B:[90,90],an:['aR',100]},{L:[-8,-170,-120],R:[0,0,90],A:[-14,-14],B:[88,88],an:['aR',100]}],
  cues:['In piedi, afferra la caviglia e porta il tallone verso il gluteo.','Ginocchia vicine, bacino in retroversione.','Mantieni e cambia lato.'],err:['Inarcare la zona lombare.']});
 E('childpose',{n:'Posizione del bambino',en:'child pose stretch',cat:'mob',cool:1,unit:'sec',tempo:1800,hold:600,mus:'Schiena, dorsali, anche',
@@ -658,7 +724,12 @@ function canUse(ex,P,low,eqSet){
 }
 function resolveEx(id,P,low,eqSet){let ex=EX[id],g=0;while(ex&&!canUse(ex,P,low,eqSet)&&ex.alt&&g++<4)ex=EX[ex.alt];return ex&&canUse(ex,P,low,eqSet)?ex:null}
 function nice(n,u){if(u==='m')return Math.max(50,Math.round(n/50)*50);if(u==='sec')return Math.max(15,Math.round(n/5)*5);if(n<=12)return Math.max(1,Math.round(n));if(n<=24)return Math.round(n);return Math.round(n/5)*5}
-function q(ex,n){return ex.unit==='cal'?n+' cal':ex.unit==='m'?n+' m':ex.unit==='sec'?n+'"':String(n)}
+function q(ex,n){
+  if(ex.side&&ex.unit==='rip') return `${n} ${ex.sl||'per lato'} · ${2*n} tot.`;
+  if(ex.side==='each'&&ex.unit==='sec') return `${n}" ${ex.sl||'per lato'}`;
+  return ex.unit==='cal'?n+' cal':ex.unit==='m'?n+' m':ex.unit==='sec'?n+'"':String(n)}
+function tgt(ex,w){if(ex.unit==='sec')return w+'"';const t=nice(w/ex.spr*.8,ex.unit);return q(ex,ex.side&&ex.unit==='rip'?Math.max(1,Math.round(t/2)):t)}
+const SIDE_TAG={alt:'Alternato destra / sinistra',each:'Un lato alla volta'};
 function loadFor(ex,P){
   if(!ex.load) return '';
   const F=P.sex!=='M',L=P.level-1;
@@ -671,6 +742,7 @@ function loadFor(ex,P){
   const v=T[ex.load][L];
   return ex.load==='db'?v+(ex.id==='dbsnatch'?'':' per manubrio'):v;
 }
+function powQ(x,P){return nice(x.unit==='rip'?(x.cat==='plyo'?4:6)*LM[P.level-1]*(x.side?.5:1):x.base*.6,x.unit)}
 function generate(P,opt){
   const seed=opt.seed||((Date.now()%1e9)|1); const r=rng(seed);
   const pick=a=>a[Math.floor(r()*a.length)];
@@ -722,7 +794,7 @@ function generate(P,opt){
     const bOpts=['powerclean','kbswing','dbsnatch','wallball','slam','dbthruster'].map(id=>resolveEx(id,P,low,eqSet)).filter(x=>x&&!used.has(x.id));
     const b=bOpts.length?pick(bOpts):resolveEx('squat',P,low,eqSet);
     if(b)used.add(b.id);
-    const its=[a,b].filter(Boolean).map((x,i)=>({id:x.id,txt:(i===0?'Minuti dispari · ':'Minuti pari · ')+q(x,nice(x.unit==='rip'?(x.cat==='plyo'?4:6)*LM[P.level-1]:x.base*.6,x.unit)),load:loadFor(x,P)}));
+    const its=[a,b].filter(Boolean).map((x,i)=>{const pre=i===0?'Minuti dispari':'Minuti pari',qq=q(x,powQ(x,P));return {id:x.id,pre,q:qq,txt:pre+' · '+qq,load:loadFor(x,P)}});
     blocks.push({kind:'power',label:'Potenza',format:`EMOM ${pMin}'`,minutes:pMin,desc:'Ogni minuto poche ripetizioni alla massima velocità possibile. Qualità prima di tutto: se rallenti, fermati.',items:its});
     why.push('Obiettivo potenza: ripetizioni brevi ed esplosive con recupero dentro il minuto, poi un WOD intenso.');
   }
@@ -746,7 +818,7 @@ function generate(P,opt){
   } else if(fmt==='EMOM'){
     const mins=Math.max(movs.length,Math.floor(M/movs.length)*movs.length); wod.minutes=mins;
     wod.format=`EMOM ${mins}'`; wod.desc=`All’inizio di ogni minuto esegui il movimento indicato, a rotazione. Il tempo che avanza è recupero.`;
-    wod.items=movs.map((m,i)=>({id:m.ex.id,g:m.g,txt:`Min ${i+1}${movs.length<mins?' · ogni '+movs.length+'°':''} · `+q(m.ex,m.ex.unit==='sec'?30:R(m.ex,m.ex.unit==='rip'?.75:.85)),load:loadFor(m.ex,P)}));
+    wod.items=movs.map((m,i)=>{const pre=`Min ${i+1}${movs.length<mins?' · ogni '+movs.length+'°':''}`,qq=q(m.ex,m.ex.unit==='sec'?30:R(m.ex,m.ex.unit==='rip'?.75:.85));return {id:m.ex.id,g:m.g,pre,q:qq,txt:pre+' · '+qq,load:loadFor(m.ex,P)}});
   } else if(fmt==='TABATA'){
     const b=movs.length; wod.minutes=b*5-1;
     wod.format=`TABATA × ${b}`; wod.desc=`Per ogni esercizio 8 round da 20" al massimo e 10" di pausa. 1' di recupero tra un blocco e l’altro.`;
@@ -755,17 +827,17 @@ function generate(P,opt){
     const w=P.level===1?30:P.level===2?40:45, rs=60-w; const rounds=Math.max(1,Math.floor(M/movs.length)); wod.minutes=rounds*movs.length;
     wod.work=w;wod.rest=rs;wod.rounds=rounds;
     wod.format=`${w}/${rs} × ${rounds}`; wod.desc=`Stazioni da ${w}" di lavoro e ${rs}" di recupero, ${rounds} giri del circuito. Cerca di mantenere le stesse ripetizioni a ogni giro.`;
-    wod.items=movs.map(m=>({id:m.ex.id,g:m.g,txt:`${w}" · obiettivo ~${m.ex.unit==='sec'?w+'"':q(m.ex,nice(w/m.ex.spr*.8,m.ex.unit))}`,load:loadFor(m.ex,P)}));
+    wod.items=movs.map(m=>({id:m.ex.id,g:m.g,txt:`${w}" · obiettivo ~${tgt(m.ex,w)}`,load:loadFor(m.ex,P)}));
   } else {
     const allRip=movs.every(m=>m.ex.unit==='rip'||m.ex.unit==='cal');
     if(M<=12&&allRip&&r()<.6){
       const sc=P.level===1?[15,12,9]:[21,15,9];
       wod.format='FOR TIME'; wod.scheme=sc; wod.cap=M; wod.rounds=3;
       wod.desc=`${sc.join('-')} ripetizioni di ogni movimento, nel minor tempo possibile. Time cap ${M}'.`;
-      wod.items=movs.map(m=>({id:m.ex.id,g:m.g,txt:sc.join('-')+(m.ex.unit==='cal'?' cal':''),load:loadFor(m.ex,P)}));
+      wod.items=movs.map(m=>({id:m.ex.id,g:m.g,txt:sc.join('-')+(m.ex.unit==='cal'?' cal':m.ex.side?' '+m.ex.sl:''),load:loadFor(m.ex,P)}));
     } else {
       const reps=movs.map(m=>m.ex.unit==='sec'?30:R(m.ex,.9));
-      const rs=movs.reduce((s,m,i)=>s+(m.ex.unit==='sec'?reps[i]:reps[i]*m.ex.spr)+12,0);
+      const rs=movs.reduce((s,m,i)=>s+(m.ex.unit==='sec'?reps[i]:reps[i]*m.ex.spr*(m.ex.side?2:1))+12,0);
       const rounds=clamp(Math.round(M*60*.85/rs),2,8);
       wod.format=`${rounds} ROUND`; wod.cap=M; wod.rounds=rounds;
       wod.desc=`${rounds} giri il più veloce possibile, con tecnica pulita. Time cap ${M}'.`;
@@ -777,13 +849,14 @@ function generate(P,opt){
   why.push(FWHY[fmt]);
 
   /* defaticamento */
-  const cSec=clamp(Math.round(coolMin*60/3/5)*5,30,90);
-  blocks.push({kind:'cool',label:'Defaticamento',format:'STRETCH',minutes:coolMin,desc:'Respira lento, lascia scendere il battito. Nessun molleggio.',items:['forwardfold','quadstretch','childpose'].map(id=>({id,txt:cSec+'"'+(EX[id].note?' · '+EX[id].note:'')}))});
+  const cIds=['forwardfold','quadstretch','childpose'], cw=cIds.reduce((a,id)=>a+(EX[id].side==='each'?2:1),0);
+  const cSec=clamp(Math.round(coolMin*60/cw/5)*5,30,90);
+  blocks.push({kind:'cool',label:'Defaticamento',format:'STRETCH',minutes:coolMin,desc:'Respira lento, lascia scendere il battito. Nessun molleggio. Gli allungamenti su un lato vanno fatti su entrambi.',items:cIds.map(id=>({id,txt:q(EX[id],cSec)}))});
 
   const hm=Math.round(208-.7*P.age);
   const z=goal==='salute'?[.7,.8]:goal==='resistenza'?[.75,.88]:[.8,.92];
   why.push(`FC obiettivo nel WOD: ${Math.round(hm*z[0])}–${Math.round(hm*z[1])} bpm (FC max stimata ${hm} con la formula 208 − 0,7 × età).`);
-  return {seed,date:today(),T,focus,goal,fmt,title:NAMES[Math.floor(r()*NAMES.length)],rpe:goal==='salute'?'6–7':goal==='resistenza'?'7–8':'8–9',hr:[Math.round(hm*z[0]),Math.round(hm*z[1])],blocks,why,low};
+  return {v:2,seed,date:today(),T,focus,goal,fmt,title:NAMES[Math.floor(r()*NAMES.length)],rpe:goal==='salute'?'6–7':goal==='resistenza'?'7–8':'8–9',hr:[Math.round(hm*z[0]),Math.round(hm*z[1])],blocks,why,low};
 }
 function swapItem(bi,ii){
   const s=state.session,P=state.P,b=s.blocks[bi],it=b.items[ii];
@@ -795,43 +868,51 @@ function swapItem(bi,ii){
   const old=EX[it.id]; const lm=LM[P.level-1]*(P.age>=60?.85:1);
   let txt=it.txt;
   const m=it.txt.match(/^([\d]+)(?: (cal|m))?/)||it.txt.match(/^(\d+)"/);
-  if(b.fmt==='TABATA') txt='8 × 20"/10" · max '+(ex.unit==='rip'?'rip':ex.unit==='sec'?'tenuta':ex.unit);
-  else if(b.fmt==='INTERVALLI') txt=`${b.work}" · obiettivo ~${ex.unit==='sec'?b.work+'"':q(ex,nice(b.work/ex.spr*.8,ex.unit))}`;
-  else if(b.scheme) txt=b.scheme.join('-')+(ex.unit==='cal'?' cal':'');
-  else if(b.fmt==='EMOM'){const pre=it.txt.split(' · ').slice(0,-1).join(' · ');txt=pre+' · '+q(ex,ex.unit==='sec'?30:nice(ex.base*lm*(ex.unit==='rip'?.75:.85),ex.unit))}
+  let qq=null;
+  if(b.kind==='power'){qq=q(ex,powQ(ex,P));txt=it.pre+' · '+qq}
+  else if(b.fmt==='TABATA') txt='8 × 20"/10" · max '+(ex.unit==='rip'?'rip':ex.unit==='sec'?'tenuta':ex.unit);
+  else if(b.fmt==='INTERVALLI') txt=`${b.work}" · obiettivo ~${tgt(ex,b.work)}`;
+  else if(b.scheme) txt=b.scheme.join('-')+(ex.unit==='cal'?' cal':ex.side?' '+ex.sl:'');
+  else if(b.fmt==='EMOM'){qq=q(ex,ex.unit==='sec'?30:nice(ex.base*lm*(ex.unit==='rip'?.75:.85),ex.unit));txt=(it.pre?it.pre+' · ':'')+qq}
   else if(b.kind==='wod'){const f=b.fmt==='AMRAP'?1:.9;txt=q(ex,ex.unit==='sec'?30:nice(ex.base*lm*f,ex.unit))+(ex.note?' · '+ex.note:'')}
   void old; void m;
-  b.items[ii]={id:ex.id,g,txt,load:loadFor(ex,P)};
+  b.items[ii]={id:ex.id,g,pre:it.pre,q:qq,txt,load:loadFor(ex,P)};
   store.set('session',s); renderHome();
 }
 
 /* ============ timeline per il player ============ */
 function timeline(s){
   const segs=[];
-  const prepS=(b,i)=>segs.push({type:'timed',kind:'prep',dur:i===0?10:12,label:EX[b.items[0].id].n,sub:'Si parte con '+b.label.toLowerCase()+' · '+b.format,ex:b.items[0].id,block:b.label});
+  // esercizi su due lati: "each" = un lato alla volta (tenute e serie raddoppiano, nel tempo si cambia a metà), "alt" = alternati
+  const W=seg=>{const ex=EX[seg.ex];
+    if(seg.x&&ex&&ex.side){
+      if(ex.side==='each'&&(seg.type==='manual'||ex.unit==='sec')){segs.push({...seg,side:'dx'});segs.push({...seg,side:'sx'});return}
+      seg.side=ex.side==='each'?'split':'alt';
+    }
+    segs.push(seg)};
+  const qOf=it=>it.q||it.txt.split(' · ').pop();
   s.blocks.forEach((b,bi)=>{
-    prepS(b,bi);
+    const B={block:b.label,bi};
+    segs.push({...B,type:'timed',kind:'prep',dur:bi===0?10:12,label:EX[b.items[0].id].n,sub:'Si parte con '+b.label.toLowerCase()+' · '+b.format,ex:b.items[0].id});
     if(b.kind==='warm'){
       const sec=parseInt(b.items[0].txt);
-      for(let r=0;r<b.rounds;r++) b.items.forEach(it=>segs.push({type:'timed',kind:'work',dur:sec,label:EX[it.id].n,sub:`Giro ${r+1}/${b.rounds} · ${sec}"`,ex:it.id,block:b.label}));
+      for(let r=0;r<b.rounds;r++) b.items.forEach(it=>W({...B,x:1,type:'timed',kind:'work',dur:sec,label:EX[it.id].n,sub:`Giro ${r+1}/${b.rounds} · ${sec}"`,ex:it.id}));
     } else if(b.kind==='cool'){
-      b.items.forEach(it=>{const sec=parseInt(it.txt);segs.push({type:'timed',kind:'rest',dur:sec,label:EX[it.id].n,sub:it.txt,ex:it.id,block:b.label})});
+      b.items.forEach(it=>{const sec=parseInt(it.txt);W({...B,x:1,type:'timed',kind:'rest',dur:sec,label:EX[it.id].n,sub:sec+'" · respira lento',ex:it.id})});
     } else if(b.kind==='strength'){
       const it=b.items[0];
-      for(let i=0;i<b.sets;i++){segs.push({type:'manual',kind:'work',label:EX[it.id].n,sub:`Serie ${i+1}/${b.sets} · ${it.txt}`,load:it.load,ex:it.id,block:b.label});if(i<b.sets-1)segs.push({type:'timed',kind:'rest',dur:b.rest,label:'Recupero',sub:'Prossima: serie '+(i+2),ex:it.id,block:b.label})}
-    } else if(b.kind==='power'){
-      for(let m=0;m<b.minutes;m++){const it=b.items[m%b.items.length];segs.push({type:'timed',kind:'work',dur:60,label:EX[it.id].n,sub:`Minuto ${m+1}/${b.minutes} · `+it.txt.split(' · ').pop(),load:it.load,ex:it.id,block:b.label})}
+      for(let i=0;i<b.sets;i++){W({...B,x:1,type:'manual',kind:'work',label:EX[it.id].n,sub:`Serie ${i+1}/${b.sets} · ${it.txt}`,load:it.load,ex:it.id});if(i<b.sets-1)segs.push({...B,type:'timed',kind:'rest',dur:b.rest,label:'Recupero',sub:'Prossima: serie '+(i+2),ex:it.id})}
+    } else if(b.kind==='power'||b.fmt==='EMOM'){
+      for(let m=0;m<b.minutes;m++){const it=b.items[m%b.items.length];W({...B,x:1,type:'timed',kind:'work',dur:60,label:EX[it.id].n,sub:`Minuto ${m+1}/${b.minutes} · `+qOf(it),load:it.load,ex:it.id})}
     } else if(b.fmt==='AMRAP'){
-      segs.push({type:'amrap',kind:'work',dur:b.minutes*60,label:b.format,items:b.items,block:b.label,res:b.label});
-    } else if(b.fmt==='EMOM'){
-      for(let m=0;m<b.minutes;m++){const it=b.items[m%b.items.length];segs.push({type:'timed',kind:'work',dur:60,label:EX[it.id].n,sub:`Minuto ${m+1}/${b.minutes} · `+it.txt.split(' · ').pop(),load:it.load,ex:it.id,block:b.label})}
+      segs.push({...B,x:1,type:'amrap',kind:'work',dur:b.minutes*60,label:b.format,items:b.items,res:b.label});
     } else if(b.fmt==='TABATA'){
-      b.items.forEach((it,k)=>{for(let r=0;r<8;r++){segs.push({type:'timed',kind:'work',dur:20,label:EX[it.id].n,sub:`Round ${r+1}/8 · al massimo`,ex:it.id,block:b.label});segs.push({type:'timed',kind:'rest',dur:10,label:'Pausa',sub:r<7?'Prossimo round':'Fine blocco',ex:it.id,block:b.label})}
-        if(k<b.items.length-1)segs.push({type:'timed',kind:'rest',dur:60,label:'Recupero',sub:'Prossimo: '+EX[b.items[k+1].id].n,ex:b.items[k+1].id,block:b.label})});
+      b.items.forEach((it,k)=>{for(let r=0;r<8;r++){W({...B,x:1,type:'timed',kind:'work',dur:20,label:EX[it.id].n,sub:`Round ${r+1}/8 · al massimo`,ex:it.id});segs.push({...B,type:'timed',kind:'rest',dur:10,label:'Pausa',sub:r<7?'Prossimo round':'Fine blocco',ex:it.id})}
+        if(k<b.items.length-1)segs.push({...B,type:'timed',kind:'rest',dur:60,label:'Recupero',sub:'Prossimo: '+EX[b.items[k+1].id].n,ex:b.items[k+1].id})});
     } else if(b.fmt==='INTERVALLI'){
-      for(let r=0;r<b.rounds;r++) b.items.forEach((it,k)=>{segs.push({type:'timed',kind:'work',dur:b.work,label:EX[it.id].n,sub:`Giro ${r+1}/${b.rounds} · `+it.txt,load:it.load,ex:it.id,block:b.label});const nx=b.items[k+1]||b.items[0];segs.push({type:'timed',kind:'rest',dur:b.rest,label:'Cambio stazione',sub:'Prossimo: '+EX[nx.id].n,ex:nx.id,block:b.label})});
+      for(let r=0;r<b.rounds;r++) b.items.forEach((it,k)=>{W({...B,x:1,type:'timed',kind:'work',dur:b.work,label:EX[it.id].n,sub:`Giro ${r+1}/${b.rounds} · `+it.txt,load:it.load,ex:it.id});const nx=b.items[k+1]||b.items[0];segs.push({...B,type:'timed',kind:'rest',dur:b.rest,label:'Cambio stazione',sub:'Prossimo: '+EX[nx.id].n,ex:nx.id})});
     } else {
-      segs.push({type:'fortime',kind:'work',cap:b.cap*60,rounds:b.rounds,label:b.format,sub:b.scheme?b.scheme.join('-'):'',items:b.items,block:b.label,res:b.label});
+      segs.push({...B,x:1,type:'fortime',kind:'work',cap:b.cap*60,rounds:b.rounds,label:b.format,sub:b.scheme?b.scheme.join('-'):'',items:b.items,res:b.label});
     }
   });
   return segs;
@@ -916,6 +997,8 @@ function renderHome(){
 }
 $('#regen').onclick=()=>{newSession();renderHome()};
 $('#go').onclick=()=>startPlayer();
+$('#musicBtn').onclick=()=>openMusic();
+document.addEventListener('app-update-available',()=>document.body.classList.add('has-upd'));
 
 /* ============ libreria ============ */
 const LCAT={all:['Tutti',null],gambe:['Gambe',['squat','hinge','lunge','plyo']],push:['Spinta',['push']],pull:['Trazione',['pull']],core:['Core',['core']],cardio:['Cardio',['cardio']],full:['Total body',['full','carry']],mob:['Mobilità',['mob']]};
@@ -949,7 +1032,7 @@ function openEx(id){
   $('#sheet').innerHTML=`<div class="grab"></div>
   <div class="fig big" data-ex="${id}"></div>
   <h2 class="d">${esc(e.n)}</h2>
-  <div class="tags"><span class="tag">${CAT[e.cat]}</span><span class="tag">${esc(eqTxt)}</span><span class="tag">${LEVELS[e.lvl-1][1]}+</span>${e.imp?'<span class="tag hot">Alto impatto</span>':'<span class="tag">Basso impatto</span>'}${(e.j||[]).map(j=>`<span class="tag hot">Attenzione: ${LIMN[j].toLowerCase()}</span>`).join('')}</div>
+  <div class="tags"><span class="tag">${CAT[e.cat]}</span><span class="tag">${esc(eqTxt)}</span><span class="tag">${LEVELS[e.lvl-1][1]}+</span>${e.imp?'<span class="tag hot">Alto impatto</span>':'<span class="tag">Basso impatto</span>'}${e.side?`<span class="tag" style="color:var(--sky)">${SIDE_TAG[e.side]}</span>`:''}${(e.j||[]).map(j=>`<span class="tag hot">Attenzione: ${LIMN[j].toLowerCase()}</span>`).join('')}</div>
   ${e.mus?`<div class="sec"><h3>Muscoli coinvolti</h3><p>${esc(e.mus)}</p></div>`:''}
   <div class="sec"><h3>Come si esegue</h3><ol class="cues">${e.cues.map(c=>`<li>${esc(c)}</li>`).join('')}</ol></div>
   <div class="sec"><h3>Errori comuni</h3><ul class="err">${e.err.map(c=>`<li>${esc(c)}</li>`).join('')}</ul></div>
@@ -1063,13 +1146,14 @@ function renderProfile(){
 
 /* ============ player ============ */
 let PL=null,AC=null,WL=null;
-function beep(f,d,v){try{if(!AC)return;const o=AC.createOscillator(),g=AC.createGain();o.type='square';o.frequency.value=f;g.gain.setValueAtTime(v||.08,AC.currentTime);g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+d);o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}}
+function beep(f,d,v){try{if(!AC)return;if(AC.state==='suspended')AC.resume();const o=AC.createOscillator(),g=AC.createGain();o.type='square';o.frequency.value=f;g.gain.setValueAtTime(v||.08,AC.currentTime);g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+d);o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}}
 async function wake(on){try{if(on&&navigator.wakeLock)WL=await navigator.wakeLock.request('screen');else if(WL){WL.release();WL=null}}catch(e){}}
 function startPlayer(){
   try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();AC.resume&&AC.resume()}catch(e){}
   wake(true);
   PL={segs:timeline(state.session),i:0,acc:0,t0:performance.now(),paused:false,rounds:0,res:{},start:Date.now(),beeped:-1,exitArm:false};
   renderPlayer(); tick();
+  if(MS.mode!=='off') MUSIC.play();
 }
 const el=()=>PL.paused?PL.acc:PL.acc+(performance.now()-PL.t0)/1000;
 const mmss=s=>{s=Math.max(0,Math.ceil(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
@@ -1080,13 +1164,56 @@ function segDone(){
 }
 function nextSeg(){segDone();PL.i++;PL.acc=0;PL.t0=performance.now();PL.rounds=0;PL.beeped=-1;PL.finished=false;if(PL.i>=PL.segs.length)return finishPlayer();beep(990,.35,.1);renderPlayer()}
 function prevSeg(){if(el()>3||PL.i===0){PL.acc=0;PL.t0=performance.now()}else{PL.i--;PL.acc=0;PL.t0=performance.now()}PL.rounds=0;PL.beeped=-1;renderPlayer()}
+const IC={
+  play:'<svg class="ico" style="width:28px;height:28px;fill:currentColor;stroke:none" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>',
+  pause:'<svg class="ico" style="width:28px;height:28px" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" stroke-width="3"/></svg>',
+  prev:'<svg class="ico" viewBox="0 0 24 24"><path d="M19 20L9 12l10-8zM5 4v16"/></svg>',
+  next:'<svg class="ico" viewBox="0 0 24 24"><path d="M5 4l10 8-10 8zM19 4v16"/></svg>',
+  note:'<svg class="ico" style="width:20px;height:20px" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>'
+};
+function sideInfo(s,e){
+  if(s.side==='dx')return['Lato destro',''];
+  if(s.side==='sx')return['Lato sinistro',''];
+  if(s.side==='alt')return['Alterna destra ↔ sinistra','alt'];
+  if(s.side==='split')return[e<s.dur/2?'Lato destro · cambi a metà':'Lato sinistro',''];
+  return null;
+}
+function nextIdx(){
+  const c=PL.segs[PL.i];
+  for(let j=PL.i+1;j<PL.segs.length;j++){const s=PL.segs[j];if(!s.x)continue;
+    if(c.x&&s.ex&&s.ex===c.ex&&s.bi===c.bi&&s.side===c.side&&s.type!=='manual')continue;
+    return j}
+  return -1;
+}
+function sessionList(){
+  const c=PL.segs[PL.i];
+  return '<div class="m">Sessione</div>'+state.session.blocks.map((b,bi)=>`<div class="sl-b ${bi<c.bi?'done':''}">${esc(b.label)} · ${esc(b.format)}</div>`+
+    b.items.map(it=>{const now=bi===c.bi&&c.kind!=='prep'&&(c.ex?c.ex===it.id:true);
+      return `<div class="sl-i ${now?'now':''} ${bi<c.bi?'done':''}">${esc(EX[it.id].n)}<small>${esc(it.txt)}</small></div>`}).join('')).join('');
+}
+function nextPanel(){
+  const j=PL.nx=nextIdx();
+  if(j<0) return '<div class="m">Prossimo</div><div class="nx-end d">Traguardo</div><p class="nx-s">Questo è l’ultimo step: dai tutto.</p>';
+  const s=PL.segs[j],id=s.ex||(s.items&&s.items[0].id),sd=sideInfo(s,0);
+  return `<div class="m">Prossimo esercizio</div><span class="fig" data-ex="${id}"></span>
+    <div class="nx-n">${esc(s.ex?EX[s.ex].n:s.label)}</div>
+    <div class="nx-s">${esc(s.sub||(s.items?s.items.map(i=>EX[i.id].n).join(' · '):''))}</div>
+    ${s.load?`<div class="nx-s"><b>${esc(s.load)}</b></div>`:''}
+    ${sd?`<div class="sideb sm ${sd[1]}">${esc(sd[0].split(' · ')[0])}</div>`:''}
+    <div class="m" id="nxT" style="color:var(--volt);margin-top:8px"></div>`;
+}
 function renderPlayer(){
-  const s=PL.segs[PL.i],nx=PL.segs[PL.i+1];
-  const kindTxt={work:'Lavoro',rest:'Recupero',prep:'Preparati'}[s.kind];
+  const s=PL.segs[PL.i];
+  const kindTxt={work:'Lavoro',rest:s.x?'Allungamento':'Recupero',prep:'Preparati'}[s.kind];
   const list=s.type==='amrap'||s.type==='fortime';
+  const sd=sideInfo(s,el()); PL.half=null;
   $('#plRoot').innerHTML=`<div class="pl" data-k="${s.kind}">
-    <div class="ph"><button class="cbtn" id="plX" style="width:auto;padding:0 16px;border-radius:999px;height:42px"><span class="m" id="plXt" style="color:inherit">Esci</span></button><div class="m">${esc(s.block)} · ${PL.i+1}/${PL.segs.length}</div></div>
-    <div class="pbody">
+    <div class="ph"><button class="cbtn" id="plX" style="width:auto;padding:0 16px;border-radius:999px;height:42px"><span class="m" id="plXt" style="color:inherit">Esci</span></button>
+      <div class="m">${esc(s.block)} · ${PL.i+1}/${PL.segs.length}</div>
+      <button class="cbtn ${MUSIC.playing?'on':''}" id="plMusic" style="width:42px;height:42px" aria-label="Musica">${IC.note}</button></div>
+    <div class="pgrid">
+      <aside class="pside plall" id="plList">${sessionList()}</aside>
+      <section class="pmain">
       ${list?`<div class="kind">${esc(s.block)}</div><div class="pname d">${esc(s.label)}</div>${s.sub?`<div class="preps">${esc(s.sub)}</div>`:''}
         <div class="plist">${s.items.map(it=>`<div class="it"><span class="fig" data-ex="${it.id}"></span><div><div class="nm">${esc(EX[it.id].n)}</div><div class="rp"><b>${esc(it.txt)}</b>${it.load?' · '+esc(it.load):''}</div></div></div>`).join('')}</div>
         <div class="digits" id="dg">0:00</div>
@@ -1096,18 +1223,27 @@ function renderPlayer(){
         <div class="kind">${kindTxt}</div>
         <div class="pname d">${esc(s.label)}</div>
         <div class="preps">${esc(s.sub||'')}${s.load?' · <b>'+esc(s.load)+'</b>':''}</div>
-        ${s.type==='manual'?`<div class="digits" id="dg" style="font-size:64px;color:var(--mute)">0:00</div><button class="btn volt" id="setDone" style="margin-top:6px">Serie fatta</button>`:`<div class="digits" id="dg">${mmss(s.dur)}</div>`}`}
-      <div class="pnext">${nx?'Dopo: <b>'+esc(nx.label)+'</b>':'Ultimo step'}</div>
+        ${sd?`<div class="sideb ${sd[1]}" id="sideB">${esc(sd[0])}</div>`:''}
+        ${s.type==='manual'?`<div class="digits" id="dg" style="font-size:56px;color:var(--mute)">0:00</div><button class="btn volt" id="setDone" style="margin-top:6px">${s.side?'Fatto questo lato':'Serie fatta'}</button>`:`<div class="digits" id="dg">${mmss(s.dur)}</div>`}`}
+      </section>
+      <aside class="pside pnx">${nextPanel()}</aside>
     </div>
     <div class="pctl">
-      <button class="cbtn" id="pPrev" aria-label="Indietro"><svg class="ico" viewBox="0 0 24 24"><path d="M19 20L9 12l10-8zM5 4v16"/></svg></button>
-      <button class="cbtn main" id="pPlay" aria-label="Pausa">${PL.paused?'<svg class="ico" style="width:30px;height:30px;fill:currentColor;stroke:none" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>':'<svg class="ico" style="width:30px;height:30px" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" stroke-width="3"/></svg>'}</button>
-      <button class="cbtn" id="pNext" aria-label="Avanti"><svg class="ico" viewBox="0 0 24 24"><path d="M5 4l10 8-10 8zM19 4v16"/></svg></button>
+      <button class="cbtn" id="pPrev" aria-label="Indietro">${IC.prev}</button>
+      <button class="cbtn main" id="pPlay" aria-label="Pausa">${PL.paused?IC.play:IC.pause}</button>
+      <button class="cbtn" id="pNext" aria-label="Avanti">${IC.next}</button>
     </div></div>`;
   if(!list&&s.ex){$('#rfig').appendChild(figure(s.ex,true))}
   hydrate($('#plRoot'));
+  const box=$('#plList'),now=$('#plList .sl-i.now')||$$('#plList .sl-b')[s.bi];
+  if(box&&now) box.scrollTop=Math.max(0,now.offsetTop-box.clientHeight/2+20);
+  MUSIC.setDuck(s.kind!=='work');
+  $('#plMusic').onclick=openMusic;
   $('#plX').onclick=()=>{if(!PL.exitArm){PL.exitArm=true;$('#plXt').textContent='Tocca ancora per uscire';setTimeout(()=>{if(PL&&$('#plXt')){PL.exitArm=false;$('#plXt').textContent='Esci'}},2500);return}closePlayer()};
-  $('#pPlay').onclick=()=>{if(PL.paused){PL.paused=false;PL.t0=performance.now()}else{PL.acc=el();PL.paused=true}renderPlayer()};
+  $('#pPlay').onclick=()=>{
+    if(PL.paused){PL.paused=false;PL.t0=performance.now();if(PL.musicWas)MUSIC.play()}
+    else{PL.acc=el();PL.paused=true;PL.musicWas=MUSIC.playing;if(MUSIC.playing)MUSIC.stop()}
+    renderPlayer()};
   $('#pNext').onclick=nextSeg; $('#pPrev').onclick=prevSeg;
   if($('#setDone'))$('#setDone').onclick=nextSeg;
   if($('#rPlus'))$('#rPlus').onclick=()=>{PL.rounds++;$('#rc').textContent=PL.rounds;beep(1200,.08,.06);try{navigator.vibrate&&navigator.vibrate(30)}catch(e){}};
@@ -1117,19 +1253,23 @@ function renderPlayer(){
 function tick(){
   if(!PL||PL.done)return;
   const s=PL.segs[PL.i],e=el(),dg=$('#dg'),rg=$('#rg');
+  let rem=null;
   if(s.type==='timed'||s.type==='amrap'){
-    const rem=s.dur-e; if(dg)dg.textContent=mmss(rem); if(rg)rg.setAttribute('stroke-dashoffset',(289*Math.min(1,e/s.dur)).toFixed(1));
+    rem=s.dur-e; if(dg)dg.textContent=mmss(rem); if(rg)rg.setAttribute('stroke-dashoffset',(289*Math.min(1,e/s.dur)).toFixed(1));
     const sc=Math.ceil(rem); if(!PL.paused&&sc<=3&&sc>=1&&sc!==PL.beeped){PL.beeped=sc;beep(660,.12)}
     if(s.type==='amrap'&&!PL.paused&&Math.floor(rem)===60&&PL.beeped!==60){PL.beeped=60;beep(500,.2)}
+    if(s.side==='split'){const h=e>=s.dur/2;if(h!==PL.half){if(PL.half===false&&h){beep(880,.15);setTimeout(()=>beep(880,.15),200);try{navigator.vibrate&&navigator.vibrate([60,60,60])}catch(x){}}PL.half=h;const b=$('#sideB');if(b)b.textContent=sideInfo(s,e)[0]}}
     if(rem<=0&&!PL.paused) return (nextSeg(),requestAnimationFrame(tick));
   } else if(s.type==='fortime'){
     if(dg)dg.textContent=mmss(e)+' / '+mmss(s.cap);
     if(e>=s.cap&&!PL.paused) return (nextSeg(),requestAnimationFrame(tick));
   } else if(dg) dg.textContent=mmss(e);
+  const nt=$('#nxT');
+  if(nt){let t=rem;if(t!=null&&PL.nx>0){for(let k=PL.i+1;k<PL.nx;k++){const z=PL.segs[k];if(z.type!=='timed'){t=null;break}t+=z.dur}}nt.textContent=t!=null?'tra '+mmss(t):''}
   requestAnimationFrame(tick);
 }
 function finishPlayer(){
-  PL.done=true; beep(880,.15);setTimeout(()=>beep(1320,.4,.1),180);
+  PL.done=true; MUSIC.setDuck(false); beep(880,.15);setTimeout(()=>beep(1320,.4,.1),180);
   const min=Math.max(1,Math.round((Date.now()-PL.start)/60000));
   let rpe=null;
   $('#plRoot').innerHTML=`<div class="pl" data-k="work" style="overflow:auto;justify-content:flex-start"><div style="max-width:560px;width:100%;margin:0 auto">
@@ -1151,7 +1291,100 @@ function finishPlayer(){
   };
   $('#fSkip').onclick=closePlayer;
 }
-function closePlayer(){if(PL)PL.done=true;PL=null;$('#plRoot').innerHTML='';wake(false);route()}
+function closePlayer(){if(PL)PL.done=true;PL=null;$('#plRoot').innerHTML='';MUSIC.stop();wake(false);route()}
+
+/* ============ musica ============ */
+function getAC(){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume()}catch(e){}return AC}
+const TRACKS=[
+  {n:'Motore',bpm:128,st:'house',d:'House energica, spinta costante: ideale per AMRAP ed EMOM'},
+  {n:'Linea rossa',bpm:140,st:'techno',d:'Techno serrata per Tabata e intervalli'},
+  {n:'Ferro',bpm:92,st:'hiphop',d:'Groove pesante per i blocchi di forza'},
+  {n:'Respiro',bpm:72,st:'ambient',d:'Morbida, per riscaldamento e stretching'}];
+const PROG=[[57,[0,3,7]],[53,[0,4,7]],[48,[0,4,7]],[55,[0,4,7]]]; // La min · Fa · Do · Sol
+const mtof=m=>440*Math.pow(2,(m-69)/12);
+const MS=Object.assign({mode:'off',ti:0,fi:0,vol:.7,duck:true},store.get('music',{}));
+const MUSIC={files:[],playing:false,ducked:false,bus:null,timer:null,step:0,tnext:0,audio:null,noise:null,
+  save(){store.set('music',{mode:MS.mode,ti:MS.ti,fi:MS.fi,vol:MS.vol,duck:MS.duck})},
+  level(){return MS.vol*(this.ducked&&MS.duck?.4:1)},
+  applyVol(){const v=this.level();if(this.bus&&AC)this.bus.gain.setTargetAtTime(v*.9,AC.currentTime,.15);if(this.audio)try{this.audio.volume=clamp(v,0,1)}catch(e){}},
+  setDuck(on){this.ducked=on;this.applyVol()},
+  ensureBus(){const ac=getAC();if(!ac)return null;
+    if(!this.bus){const comp=ac.createDynamicsCompressor();comp.threshold.value=-14;comp.ratio.value=4;this.bus=ac.createGain();this.bus.gain.value=this.level()*.9;this.bus.connect(comp);comp.connect(ac.destination);
+      const b=ac.createBuffer(1,ac.sampleRate,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;this.noise=b}
+    return ac},
+  play(){if(MS.mode==='beats')this.startBeats();else if(MS.mode==='files')this.startFile()},
+  stop(){this.stopBeats();if(this.audio)this.audio.pause();this.playing=false;paintMusicUI()},
+  toggle(){this.playing?this.stop():this.play()},
+  next(d){d=d||1;
+    if(MS.mode==='beats'){MS.ti=(MS.ti+d+TRACKS.length)%TRACKS.length;this.save();if(this.playing)this.startBeats()}
+    else if(MS.mode==='files'&&this.files.length){MS.fi=(MS.fi+d+this.files.length)%this.files.length;this.save();if(this.playing)this.startFile()}
+    paintMusicUI()},
+  startBeats(){const ac=this.ensureBus();if(!ac)return;this.stopBeats();if(this.audio)this.audio.pause();this.step=0;this.tnext=ac.currentTime+.08;this.playing=true;this.timer=setInterval(()=>this.sched(),25);this.applyVol();paintMusicUI()},
+  stopBeats(){if(this.timer){clearInterval(this.timer);this.timer=null}},
+  sched(){const ac=AC,tr=TRACKS[MS.ti],sd=60/tr.bpm/4;
+    if(this.tnext<ac.currentTime-.2)this.tnext=ac.currentTime+.05;
+    while(this.tnext<ac.currentTime+.15){this.voice(tr,this.step,this.tnext,sd);this.tnext+=sd*(tr.st==='hiphop'?(this.step%2===0?1.12:.88):1);this.step++}},
+  voice(tr,k,t,sd){const s=k%16,bar=Math.floor(k/16),ch=PROG[bar%4],root=ch[0],st=tr.st,fill=bar%8===7;
+    if(st==='house'){if(s%4===0)this.kick(t,1);if(s===4||s===12)this.clap(t,.5);if(s%4===2)this.hat(t,.35,true);else if(s%2===1)this.hat(t,.12);if(s%4===2)this.bass(t,root-12,sd*1.6,.5);if(s===0)this.pad(t,ch,sd*15,.1);if(fill&&s>=12)this.clap(t,.25)}
+    else if(st==='techno'){if(s%4===0)this.kick(t,1.1);this.hat(t,s%2?.18:.08);if(s===4||s===12)this.clap(t,.45);if(s%4!==0)this.bass(t,root-12+(s%4===3?12:0),sd*.8,.38);if(s===3||s===11)this.stab(t,ch,.12);if(fill&&s%2===0&&s>8)this.clap(t,.2)}
+    else if(st==='hiphop'){if(s===0||s===7||s===10)this.kick(t,1);if(s===4||s===12)this.clap(t,.6);if(s%2===0)this.hat(t,s%4===2?.22:.12);if(s===0||s===10)this.bass(t,root-12,sd*5,.55);if(s===0)this.pad(t,ch,sd*15,.09)}
+    else{if(s===0)this.pad(t,ch,sd*16,.13);if(s%4===0)this.pluck(t,root+12+ch[1][(s/4)%3],.1);if(s===8)this.pluck(t,root+24,.05);if(s===0&&bar%2===0)this.kick(t,.25)}},
+  env(g,t,a,peak,dec){g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(peak,t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+dec)},
+  kick(t,v){const ac=AC,o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(42,t+.14);this.env(g,t,.003,v,.32);o.connect(g);g.connect(this.bus);o.start(t);o.stop(t+.4)},
+  nz(t,dur,type,f,qv,v,dec){const ac=AC,sr=ac.createBufferSource(),fl=ac.createBiquadFilter(),g=ac.createGain();sr.buffer=this.noise;fl.type=type;fl.frequency.value=f;fl.Q.value=qv;this.env(g,t,.002,v,dec);sr.connect(fl);fl.connect(g);g.connect(this.bus);sr.start(t,Math.random()*.5);sr.stop(t+dur)},
+  clap(t,v){this.nz(t,.25,'bandpass',1600,1.2,v,.16)},
+  hat(t,v,open){this.nz(t,open?.2:.06,'highpass',7500,.7,v,open?.14:.035)},
+  osc(t,type,f,dur,v,cut,a){a=a||.01;const ac=AC,o=ac.createOscillator(),fl=ac.createBiquadFilter(),g=ac.createGain();o.type=type;o.frequency.value=f;fl.type='lowpass';fl.frequency.setValueAtTime(cut,t);fl.frequency.exponentialRampToValueAtTime(Math.max(120,cut*.3),t+dur);
+    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+a);g.gain.setValueAtTime(v,t+Math.max(a,dur*.6));g.gain.exponentialRampToValueAtTime(.0001,t+dur+.05);o.connect(fl);fl.connect(g);g.connect(this.bus);o.start(t);o.stop(t+dur+.1);return o},
+  bass(t,m,dur,v){this.osc(t,'sawtooth',mtof(m),dur,v,900)},
+  pad(t,ch,dur,v){ch[1].forEach(i=>[-6,6].forEach(c=>{const o=this.osc(t,'sawtooth',mtof(ch[0]+i),dur,v/2,1400,.45);o.detune.value=c}))},
+  stab(t,ch,v){ch[1].forEach(i=>this.osc(t,'square',mtof(ch[0]+12+i),.12,v/2,2400))},
+  pluck(t,m,v){this.osc(t,'triangle',mtof(m),.5,v,3000)},
+  startFile(){if(!this.files.length){paintMusicUI();return}this.stopBeats();
+    const f=this.files[MS.fi%this.files.length];if(!f.url)f.url=URL.createObjectURL(f.blob);
+    if(!this.audio){this.audio=new Audio();this.audio.onended=()=>this.next(1)}
+    this.audio.src=f.url;this.applyVol();this.playing=true;
+    this.audio.play().catch(()=>{this.playing=false;paintMusicUI()});paintMusicUI()}
+};
+const DB={
+  open(){return new Promise((res,rej)=>{try{const r=indexedDB.open('hift',1);r.onupgradeneeded=()=>r.result.createObjectStore('tracks',{keyPath:'id',autoIncrement:true});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}catch(e){rej(e)}})},
+  async all(){const db=await this.open();return new Promise(res=>{const q=db.transaction('tracks').objectStore('tracks').getAll();q.onsuccess=()=>res(q.result||[]);q.onerror=()=>res([])})},
+  async add(o){const db=await this.open();return new Promise(res=>{const tx=db.transaction('tracks','readwrite'),q=tx.objectStore('tracks').add(o);q.onsuccess=()=>res(q.result);q.onerror=()=>res(null);tx.onabort=()=>res(null)})},
+  async del(id){const db=await this.open();return new Promise(res=>{const q=db.transaction('tracks','readwrite').objectStore('tracks').delete(id);q.onsuccess=q.onerror=()=>res()})}
+};
+DB.all().then(a=>{MUSIC.files=a.map(x=>({id:x.id,name:x.name,blob:x.blob}))}).catch(()=>{});
+function openMusic(){getAC();$('#musicWrap').classList.add('on');paintMusicUI();$('#musicSheet').scrollTop=0}
+function closeMusic(){$('#musicWrap').classList.remove('on')}
+$('#musicWrap').onclick=e=>{if(e.target.id==='musicWrap')closeMusic()};
+function paintMusicUI(){
+  const pb=$('#plMusic');if(pb)pb.classList.toggle('on',MUSIC.playing);
+  const sh=$('#musicSheet');if(!$('#musicWrap').classList.contains('on'))return;
+  const nf=MUSIC.files.length, cur=MS.mode==='beats'?TRACKS[MS.ti].n:MS.mode==='files'&&nf?MUSIC.files[MS.fi%nf].name:'nessun brano';
+  sh.innerHTML=`<div class="grab"></div><h2 class="d" style="font-size:46px;margin:4px 0 14px">Musica</h2>
+  <div class="row">${[['off','Nessuna'],['beats','Hift Beats'],['files','I miei brani']].map(([k,l])=>`<button class="chip ${MS.mode===k?'on':''}" data-mm="${k}">${l}</button>`).join('')}</div>
+  ${MS.mode==='beats'?`<p class="note">Tracce originali generate dall’app in tempo reale: niente da scaricare, funzionano anche offline.</p>${TRACKS.map((t,i)=>`<button class="opt ${MS.ti===i?'on':''}" data-tr="${i}"><b>${t.n} · ${t.bpm} BPM</b><span>${t.d}</span></button>`).join('')}`:''}
+  ${MS.mode==='files'?`<label class="btn ghost w" style="margin-top:14px;position:relative;overflow:hidden">+ Aggiungi brani dal dispositivo<input type="file" accept="audio/*" multiple id="mFiles" style="position:absolute;inset:0;opacity:0;cursor:pointer"></label>
+    ${nf?MUSIC.files.map((f,i)=>`<div class="mrow ${i===MS.fi%nf?'on':''}"><button data-fi="${i}">${esc(f.name)}${f.id==null?' <small>· solo per ora</small>':''}</button><button class="swap" data-fdel="${i}" aria-label="Rimuovi">×</button></div>`).join(''):'<p class="empty" style="padding:18px 0 4px">Nessun brano. Aggiungi file audio (mp3, m4a, wav…) dalla memoria del telefono.</p>'}
+    <p class="note">I brani restano salvati solo su questo dispositivo e non vengono caricati online.</p>`:''}
+  ${MS.mode!=='off'?`<div class="mctl"><button class="cbtn" id="mPrev" aria-label="Precedente">${IC.prev}</button><button class="cbtn main" id="mPlay" style="width:72px;height:72px">${MUSIC.playing?IC.pause:IC.play}</button><button class="cbtn" id="mNext" aria-label="Successivo">${IC.next}</button></div>
+    <div class="m" style="text-align:center;margin-top:10px">${MUSIC.playing?'In riproduzione':'In pausa'} · ${esc(cur)}</div>`:''}
+  <label class="fld" style="margin-top:20px"><span class="m">Volume</span><input type="range" min="0" max="1" step="0.05" value="${MS.vol}" id="mVol" class="rng"></label>
+  <button class="toggle" id="mDuck"><span class="sw ${MS.duck?'on':''}"></span>Abbassa la musica durante recuperi e stretching</button>
+  <p class="note">La musica scelta parte da sola quando avvii l’allenamento e si ferma in pausa.</p>
+  <button class="btn ghost w" style="margin-top:16px" id="mClose">Chiudi</button>`;
+  $$('[data-mm]',sh).forEach(b=>b.onclick=()=>{const was=MUSIC.playing;MUSIC.stop();MS.mode=b.dataset.mm;MS.fi=0;MUSIC.save();if(was&&MS.mode!=='off')MUSIC.play();paintMusicUI()});
+  $$('[data-tr]',sh).forEach(b=>b.onclick=()=>{MS.ti=+b.dataset.tr;MUSIC.save();MUSIC.startBeats()});
+  $$('[data-fi]',sh).forEach(b=>b.onclick=()=>{MS.fi=+b.dataset.fi;MUSIC.save();MUSIC.startFile()});
+  $$('[data-fdel]',sh).forEach(b=>b.onclick=()=>{const i=+b.dataset.fdel,f=MUSIC.files[i];if(!f)return;
+    if(i===MS.fi%MUSIC.files.length&&MUSIC.playing)MUSIC.stop();if(f.id!=null)DB.del(f.id).catch(()=>{});if(f.url)URL.revokeObjectURL(f.url);MUSIC.files.splice(i,1);MS.fi=0;MUSIC.save();paintMusicUI()});
+  const inp=$('#mFiles',sh);if(inp)inp.onchange=async()=>{for(const file of inp.files){let id=null;try{id=await DB.add({name:file.name.replace(/\.[^.]+$/,''),blob:file})}catch(e){}MUSIC.files.push({id,name:file.name.replace(/\.[^.]+$/,''),blob:file})}paintMusicUI()};
+  if($('#mPlay',sh))$('#mPlay',sh).onclick=()=>MUSIC.toggle();
+  if($('#mPrev',sh))$('#mPrev',sh).onclick=()=>MUSIC.next(-1);
+  if($('#mNext',sh))$('#mNext',sh).onclick=()=>MUSIC.next(1);
+  $('#mVol',sh).oninput=e=>{MS.vol=+e.target.value;MUSIC.applyVol();MUSIC.save()};
+  $('#mDuck',sh).onclick=()=>{MS.duck=!MS.duck;MUSIC.save();MUSIC.applyVol();$('#mDuck .sw',sh).classList.toggle('on',MS.duck)};
+  $('#mClose',sh).onclick=closeMusic;
+}
 
 /* ============ app installabile ============ */
 let installEvt=null;
@@ -1175,10 +1408,10 @@ if('serviceWorker' in navigator&&location.protocol.startsWith('http')){window.ad
 if(!state.P){onboarding()}
 else{
   state.opt.minutes=state.P.minutes;
-  if(!state.session||state.session.date!==today()) newSession();
+  if(!state.session||state.session.date!==today()||state.session.v!==2) newSession();
   route();
 }
 </script>
-<script src="aggiornamenti.js" data-version="1.0.0"></script>
+<script src="aggiornamenti.js" data-version="1.1.0"></script>
 </body>
 </html>
