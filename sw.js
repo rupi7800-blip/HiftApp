@@ -1,5 +1,5 @@
 /* Service worker di Hift App: funziona offline e si aggiorna da solo */
-const CACHE = 'hift-v1';
+const CACHE = 'hift-1.0.0';
 const CORE = ['./', './index.html', './manifest.json', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png', './icons/favicon-32.png', './icons/icon.svg'];
 
 self.addEventListener('install', e => {
@@ -9,6 +9,8 @@ self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
 });
 self.addEventListener('fetch', e => {
+  if (new URL(e.request.url).pathname.endsWith('version.json')) return; // controllo aggiornamenti: sempre dalla rete
+
   const req = e.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
@@ -26,3 +28,6 @@ self.addEventListener('fetch', e => {
     }));
   }
 });
+
+// Tasto "Aggiorna": attiva subito la nuova versione
+self.addEventListener('message', e => { if (e.data && e.data.type === 'SKIP_WAITING') self.skipWaiting(); });
