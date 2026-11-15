@@ -1,0 +1,32 @@
+{
+  "_nota": "ARCHIVIO DI SOLA PROVA per i test automatici. Non è l'archivio di HIFT App e non viene mai caricato dall'app.",
+  "esercizi": [
+    {"id":"T-C1","nome":"Test core A","distretto":"Core","categoria":"anti-estensione","attrezzatura":["corpo libero"],"livello":1,"varianti":["T-C2"]},
+    {"id":"T-C2","nome":"Test core A variante","distretto":"Core","categoria":"anti-estensione","attrezzatura":["corpo libero"],"livello":2},
+    {"id":"T-C3","nome":"Test core B","distretto":"Addominali, obliqui","categoria":"anti-rotazione","attrezzatura":"Elastici","livello":"principiante"},
+    {"id":"T-C4","nome":"Test core C","distretto":"core","categoria":"flessione","attrezzatura":["TRX"],"livello":2},
+    {"id":"T-C5","nome":"Test core D","distretto":"core","categoria":"carry","attrezzatura":["Kettlebell"],"livello":"intermedio"},
+    {"id":"T-C6","nome":"Test core E","distretto":"core","categoria":"rotazione","attrezzatura":["Medicine ball"],"livello":1},
+    {"id":"T-C7","nome":"Test core F","distretto":"core","categoria":"anti-flessione laterale","attrezzatura":["Sandbag"],"livello":3},
+    {"id":"T-C8","nome":"Test core G","distretto":"core","categoria":"dinamico","attrezzatura":["corpo libero"],"livello":1},
+    {"id":"T-P1","nome":"Test petto A","distretto":["Petto","Tricipiti"],"attrezzatura":["corpo libero"],"livello":1},
+    {"id":"T-P2","nome":"Test petto B","distretto":"Petto","attrezzatura":["TRX"],"livello":2},
+    {"id":"T-P3","nome":"Test petto C","distretto":"Petto","attrezzatura":["Kettlebell","Panca"],"livello":2},
+    {"id":"T-Q1","nome":"Test quad A","distretto":"Quadricipiti, glutei","attrezzatura":["corpo libero"],"livello":1},
+    {"id":"T-Q2","nome":"Test quad B","distretto":"Quadricipiti","attrezzatura":["Kettlebell | Manubri"],"livello":2},
+    {"id":"T-Q3","nome":"Test quad C","distretto":"Quadricipiti","attrezzatura":["Powerbag"],"livello":3},
+    {"id":"T-S1","nome":"Test spalle A","distretto":"Spalle","attrezzatura":["corpo libero"],"livello":1},
+    {"id":"T-S2","nome":"Test spalle B","distretto":"Deltoidi","attrezzatura":["Elastici"],"livello":1},
+    {"id":"T-S3","nome":"Test spalle C","distretto":"Spalle","attrezzatura":["Kettlebell"],"livello":2},
+    {"id":"T-G1","nome":"Test glutei A","distretto":"Glutei","attrezzatura":["corpo libero"],"livello":1},
+    {"id":"T-G2","nome":"Test glutei B","distretto":"Glutei, femorali","attrezzatura":["Kettlebell"],"livello":2},
+    {"id":"T-D1","nome":"Test dorso A","distretto":"Dorso","attrezzatura":["TRX"],"livello":1},
+    {"id":"T-D2","nome":"Test dorso B","distretto":"Gran dorsale","attrezzatura":["Elastici"],"livello":1},
+    {"id":"T-D3","nome":"Test dorso C","distretto":"Dorso","attrezzatura":["Kettlebell"],"livello":2},
+    {"id":"T-D4","nome":"Test dorso D","distretto":"Dorso","attrezzatura":["corpo libero","Tavolo"],"livello":1},
+    {"id":"T-X1","nome":"Test senza attrezzatura","distretto":"Petto","livello":1},
+    {"id":"T-P1","nome":"Duplicato","distretto":"Petto","attrezzatura":["corpo libero"]},
+    {"nome":"Senza id","distretto":"Petto","attrezzatura":["corpo libero"]},
+    {"id":"T-M1","nome":"Test media","distretto":"Spalle","attrezzatura":["corpo libero"],"immagine":"javascript:alert(1)","video":"https://example.org/v.mp4","livello":1}
+  ]
+}

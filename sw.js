@@ -4,7 +4,7 @@
    una versione nuova. Non serve cambiare questo file a ogni rilascio. */
 const CACHE = 'hift-app';
 const ASSETS = [
-  './', './index.html', './aggiornamenti.js', './manifest.json',
+  './', './index.html', './aggiornamenti.js', './hift-method-core.js', './manifest.json',
   './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/favicon-32.png', './icons/apple-touch-icon.png'
 ];
 
@@ -39,6 +39,12 @@ self.addEventListener('fetch', e => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.pathname.endsWith('version.json')) return; // controllo aggiornamenti: sempre dalla rete
+
+  // Archivio esercizi esterno: prima la rete (così un archivio aggiornato arriva subito), offline la copia salvata
+  if (url.origin === self.location.origin && url.pathname.endsWith('archivio-esercizi.json')) {
+    e.respondWith(fromNetwork(req).then(res => res.ok ? res : caches.match(req).then(hit => hit || res)).catch(() => caches.match(req)));
+    return;
+  }
 
   // Pagina: la versione installata; se manca, dalla rete
   if (req.mode === 'navigate') {
