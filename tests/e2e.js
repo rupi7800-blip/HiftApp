@@ -10,10 +10,12 @@ const ok = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) fails++
 
 (async () => {
   const b = await chromium.launch();
-  const p = await b.newPage({ viewport: { width: 390, height: 844 } });
+  const p = await b.newPage({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block' });
   const errs = [];
   p.on('pageerror', e => errs.push(e.message));
   p.on('console', m => { if (m.type() === 'error' && !/404|Failed to load resource/.test(m.text())) errs.push(m.text()); });
+  // prima parte: archivio dell'app non raggiungibile (verifica messaggio e importazione)
+  await p.route('**/archivio-esercizi.json', r => r.fulfill({ status: 404, body: '' }));
   await p.goto(URL); await p.evaluate(() => localStorage.clear()); await p.reload();
   // onboarding con kettlebell ed elastici nel profilo
   await p.click('#obNext'); await p.click('#obNext');
@@ -137,6 +139,30 @@ const ok = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) fails++
   await p.click('#fSkip'); await p.waitForTimeout(200);
   for (const r of ['esercizi', 'diario', 'profilo', 'metodo']) { await p.evaluate(r => location.hash = r, r); await p.waitForTimeout(200); }
   if (OUT) { await p.evaluate(() => location.hash = 'diario'); await p.waitForTimeout(200); await p.screenshot({ path: OUT + '/6-diario.png' }); }
+  // seconda parte: archivio reale degli Atlanti 100 (ha la precedenza sul file importato)
+  await p.unroute('**/archivio-esercizi.json');
+  await p.evaluate(() => { location.hash = 'metodo'; }); await p.waitForTimeout(300);
+  await p.click('#hReload'); await p.waitForTimeout(800);
+  ok(await p.evaluate(() => HM.arch.exercises.length === 600 && /atlanti/.test(HM.src)), 'archivio reale: 600 esercizi dagli atlanti (' + await p.evaluate(() => HM.src) + ')');
+  ok(await p.evaluate(() => HM.draft && HM.draft.issues.some(i => i.level === 'error')), 'scheda della prova: esercizi non più in archivio segnalati');
+  await p.evaluate(() => { HM.draft = null; HM.tab = 'prog'; store.del('m_draft'); renderMethod(); });
+  await p.click('#hCfgT');
+  for (const k of ['trx', 'powerbag', 'med ball']) { if (!(await p.evaluate(k => HM.cfg.eq.includes(k), k))) await p.click(`[data-heq="${k}"]`); }
+  await p.click('#hCfgT'); await p.click('#hGen'); await p.waitForTimeout(600);
+  const real = await p.evaluate(() => ({ err: HC.blocking(HM.draft), ids: planIds(HM.draft), d: HM.draft.circuito.stazioni.map(s => hx(s.id).primary) }));
+  ok(!real.err && real.ids.length === 8, 'archivio reale: scheda generata ' + real.ids.join(','));
+  ok(real.d.join() === 'petto,quadricipiti,spalle,glutei,dorso', 'archivio reale: distretti delle stazioni corretti');
+  const imgs = await p.evaluate(() => Promise.all([...document.querySelectorAll('.hx-img img')].map(i => i.complete ? i.naturalWidth : new Promise(r => { i.onload = () => r(i.naturalWidth); i.onerror = () => r(0); }))));
+  ok(imgs.length === 8 && imgs.every(w => w > 0), 'archivio reale: illustrazioni caricate (' + imgs.length + ')');
+  await p.click('.hx-txt >> nth=0'); await p.waitForTimeout(250);
+  ok(await p.isVisible('#sheet >> text=Fonte: Atlante Core 100'), 'scheda esercizio: fonte e illustrazione');
+  if (OUT) await p.screenshot({ path: OUT + '/7-esercizio-atlante.png' });
+  await p.click('#closeSheet');
+  if (OUT) { await p.waitForTimeout(300); await p.screenshot({ path: OUT + '/8-scheda-atlanti.png', fullPage: true }); }
+  await p.click('#hStart'); await p.waitForTimeout(400);
+  ok(await p.evaluate(() => !!document.querySelector('#rfig img.aimg')), 'player: illustrazione dell\'atlante nel timer');
+  if (OUT) { await p.click('#pNext'); await p.waitForTimeout(300); await p.screenshot({ path: OUT + '/9-player-atlante.png' }); }
+  await p.click('#plX'); await p.click('#plX'); await p.waitForTimeout(200);
   const overflow = await p.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
   ok(!overflow, 'nessuno scorrimento orizzontale a 390px');
   ok(!errs.length, 'nessun errore JavaScript' + (errs.length ? ': ' + errs.join(' | ') : ''));

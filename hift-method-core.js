@@ -69,7 +69,8 @@
     varianti: ['varianti', 'variants', 'variations'],
     regressioni: ['regressioni', 'regressione', 'regressions', 'regression'],
     progressioni: ['progressioni', 'progressione', 'progressions', 'progression'],
-    sezione: ['hift', 'sezione', 'sezioni', 'uso', 'slot', 'slots', 'hift_slot', 'hiftSlot', 'stazione', 'blocco']
+    sezione: ['hift', 'sezione', 'sezioni', 'uso', 'slot', 'slots', 'hift_slot', 'hiftSlot', 'stazione', 'blocco'],
+    fonte: ['fonte', 'source', 'riferimento']
   };
   function pick(o, keys) {
     for (var i = 0; i < keys.length; i++) {
@@ -185,7 +186,8 @@
         regressioni: toList(pick(o, K.regressioni)),
         progressioni: toList(pick(o, K.progressioni)),
         slots: slots,
-        primary: primary
+        primary: primary,
+        fonte: String(pick(o, K.fonte) || '')
       };
       byId[id] = ex;
       exercises.push(ex);
@@ -208,7 +210,9 @@
     function find(x) { while (parent[x] && parent[x] !== x) x = parent[x]; return x; }
     function unite(a, b) { a = find(a); b = find(b); if (a !== b) parent[b] = a; }
     var byName = {};
-    exercises.forEach(function (ex) { parent[ex.id] = ex.id; byName[norm(ex.nome)] = ex.id; });
+    exercises.forEach(function (ex) { parent[ex.id] = ex.id; });
+    // stesso nome = stesso esercizio (magari con un altro attrezzo): mai due volte nella stessa scheda
+    exercises.forEach(function (ex) { var nn = norm(ex.nome); if (byName[nn]) unite(byName[nn], ex.id); else byName[nn] = ex.id; });
     exercises.forEach(function (ex) {
       ex.varianti.concat(ex.regressioni, ex.progressioni).forEach(function (ref) {
         var other = byId[ref] ? ref : byName[norm(ref)];
@@ -224,8 +228,16 @@
     if (report.invalid.length) report.warnings.push(report.invalid.length + ' voci scartate perché incomplete (ID, nome o attrezzatura mancanti).');
     if (report.unclassified.length) report.warnings.push(report.unclassified.length + ' esercizi senza distretto riconoscibile per il metodo HIFT (non usati nella programmazione).');
     if (report.noLevel) report.warnings.push(report.noLevel + ' esercizi senza livello: considerati adatti a tutti i livelli.');
-    if (report.sameName.length) report.warnings.push('Nomi ripetuti con ID diversi: ' + report.sameName.slice(0, 3).join('; ') + '.');
-    return { ok: exercises.length > 0, exercises: exercises, byId: byId, report: report, eqLabels: eqLabels, meta: meta || {} };
+    if (report.sameName.length) report.warnings.push(report.sameName.length + ' nomi ripetuti con ID diversi (trattati come varianti, mai insieme nella stessa scheda): ' + report.sameName.slice(0, 3).join('; ') + '.');
+    // descrizioni degli attrezzi e fonti, se l'archivio le fornisce
+    var eqInfo = {}, fonti = [];
+    if (raw && !Array.isArray(raw) && typeof raw === 'object') {
+      if (raw.attrezzi && typeof raw.attrezzi === 'object') Object.keys(raw.attrezzi).forEach(function (k) { if (raw.attrezzi[k]) eqInfo[eqKey(k)] = String(raw.attrezzi[k]); });
+      if (Array.isArray(raw.fonti)) fonti = raw.fonti.filter(function (f) { return f && typeof f === 'object'; }).map(function (f) {
+        return { nome: String(f.atlante || f.nome || f.name || ''), url: safeUrl(f.artifact || f.url || ''), esercizi: +f.esercizi || null };
+      });
+    }
+    return { ok: exercises.length > 0, exercises: exercises, byId: byId, report: report, eqLabels: eqLabels, eqInfo: eqInfo, fonti: fonti, meta: meta || {} };
   }
 
   /* ---------------- compatibilità ---------------- */

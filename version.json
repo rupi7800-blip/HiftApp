@@ -1,11 +1,10 @@
 {
-  "version": "1.2.0",
+  "version": "1.3.0",
   "date": "15/11/2026",
   "notes": [
-    "Nuova sezione HIFT Method: CORE 3 × 4 × 30\"/30\" e circuito su 5 stazioni fisse (petto, quadricipiti, spalle, glutei, dorso)",
-    "Cinque metodi di circuito con tempi, serie, giri e recuperi modificabili e durata calcolata",
-    "Schede salvabili, duplicabili, rinominabili e archiviabili, con storico per variare gli esercizi",
-    "Esercizi dall'archivio esterno, solo con l'attrezzatura che selezioni",
-    "Timer più affidabile: non perde il conteggio con lo schermo spento; segnali acustici configurabili"
+    "HIFT Method collegato all'archivio esercizi: 600 esercizi dagli Atlanti 100 (Core, Petto, Quadricipiti, Spalle, Glutei, Dorso)",
+    "Ogni esercizio con illustrazione, esecuzione, livello e progressione",
+    "Attrezzatura dagli atlanti: corpo libero, TRX, powerbag, med ball, rialzo, muro e altri",
+    "Lo stesso esercizio non compare mai due volte nella stessa scheda"
   ]
 }

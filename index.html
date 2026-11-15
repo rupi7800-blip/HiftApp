@@ -342,6 +342,8 @@ ul.err li::before{content:"×";position:absolute;left:0;top:-1px;color:var(--cor
 @media (max-width:380px){.hx{grid-template-columns:48px minmax(0,1fr) auto;gap:9px}.hx-img{width:48px;height:48px}.ov{padding-left:0}.nav button{font-size:9px;letter-spacing:.04em}}
 /* immagini dell'archivio esterno nel player */
 .aimg{width:100%;height:100%;object-fit:cover;display:block}
+.aimg[src$=".svg"]{object-fit:contain}
+.hx-img .aimg[src$=".svg"]{transform:scale(1.25)}
 .rdist{display:grid;place-items:center;height:100%;font-size:clamp(22px,6vw,34px);color:var(--volt);text-align:center;padding:10px}
 /* musica */
 .mrow{display:flex;gap:8px;align-items:center;margin-top:8px}
@@ -1218,6 +1220,7 @@ async function loadArchive(){
   catch(e){HM.err='Il modulo esterno dell’archivio ha restituito un errore: '+(e&&e.message||e)}
   if(!raw&&window.HIFT_ARCHIVIO){raw=window.HIFT_ARCHIVIO;src='Modulo esterno collegato (HIFT_ARCHIVIO)'}
   if(!raw&&location.protocol.startsWith('http')){try{const r=await fetch('archivio-esercizi.json',{cache:'no-cache'});if(r.ok){raw=await r.json();src='File archivio-esercizi.json'}}catch(e){if(e instanceof SyntaxError)HM.err='Il file archivio-esercizi.json non è un JSON valido.'}}
+  if(raw&&src==='File archivio-esercizi.json'&&Array.isArray(raw.fonti)&&raw.fonti.length)src='Archivio dell’app · '+raw.fonti.length+' atlanti';
   if(!raw){const imp=store.get('m_archive',null);if(imp&&imp.data){raw=imp.data;src='Importato da file: '+imp.name+' ('+new Date(imp.date).toLocaleDateString('it-IT')+')'}}
   HM.arch=raw?HC.normalizeArchive(raw,{src}):null;HM.src=src;HM.loading=false;HM.loaded=true;
   if(HM.arch&&!HM.arch.ok&&!HM.err)HM.err='L’archivio è stato trovato ma non contiene esercizi utilizzabili.';
@@ -1230,8 +1233,10 @@ function initCfg(){
   if(A&&A.ok){
     const keys=A.report.equipment.map(e=>e.key);
     if(!HM.cfg.eq){ // prima volta: attrezzatura del profilo che compare nell'archivio
-      const pw=(P.eq||[]).flatMap(k=>[HC.norm(k),HC.norm(EQN[k]||'')]).filter(Boolean);
-      HM.cfg.eq=keys.filter(k=>k===HC.BW||pw.some(w=>k.includes(w)||w.includes(k)));
+      // nomi del profilo → nomi dell'archivio (stesso attrezzo, parola diversa)
+      const SYN={palla:['med ball','palla medica'],box:['rialzo'],trx:['trx'],sbarra:['sbarra']};
+      const pw=(P.eq||[]).flatMap(k=>[HC.norm(k),HC.norm(EQN[k]||''),...(SYN[k]||[])]).filter(Boolean);
+      HM.cfg.eq=keys.filter(k=>k===HC.BW||pw.some(w=>k===w||k.includes(w)||w.includes(k)));
     }
     if(!HM.cfg.eq.includes(HC.BW)&&keys.includes(HC.BW))HM.cfg.eq.push(HC.BW);
   }
@@ -1287,6 +1292,7 @@ function archCard(){
   const R=A.report;
   return `<div class="hcard"><button class="hrow0" id="hArchT"><div><div class="m">Archivio esercizi</div><b>${A.exercises.length} esercizi</b><div class="note" style="margin-top:2px">${esc(HM.src)}</div></div><span class="m">${HM.showArch?'Chiudi':'Dettagli'}</span></button>
     ${HM.showArch?`<div class="tags" style="margin-top:12px">${Object.entries(HC.SLOT_NAMES).map(([k,n])=>`<span class="tag ${R.perSlot[k]?'':'hot'}">${n} ${R.perSlot[k]}</span>`).join('')}</div>
+    ${A.fonti.length?`<div class="m lbl">Fonti</div>${A.fonti.map(f=>f.url?`<a class="vlink" href="${esc(f.url)}" target="_blank" rel="noopener"><div><b>${esc(f.nome)}</b><span>${f.esercizi?f.esercizi+' esercizi':''}</span></div><span>↗</span></a>`:`<p class="muted">${esc(f.nome)}</p>`).join('')}`:''}
     ${R.warnings.length?`<ul class="hiss">${R.warnings.map(w=>`<li class="warn">${esc(w)}</li>`).join('')}</ul>`:'<p class="note">Nessun problema nei dati.</p>'}
     <div class="row" style="margin-top:12px"><label class="chip" style="position:relative;overflow:hidden">Importa un altro file<input type="file" accept=".json,application/json" id="hImp" style="position:absolute;inset:0;opacity:0;cursor:pointer"></label>
     <button class="chip" id="hReload">Ricarica</button>${store.get('m_archive',null)?'<button class="chip" id="hImpDel">Rimuovi file importato</button>':''}</div>`:''}</div>`;
@@ -1297,7 +1303,8 @@ function cfgCard(){
   const sumEq=(c.eq||[]).map(k=>A.eqLabels[k]||k).join(', ')||'nessuna';
   return `<div class="hcard"><button class="hrow0" id="hCfgT"><div><div class="m">Impostazioni</div><b>${LVN[c.level]} · ${esc(GN[c.goal]||'')}</b><div class="note" style="margin-top:2px">${esc(sumEq)}</div></div><span class="m">${HM.showCfg?'Chiudi':'Modifica'}</span></button>
   ${HM.showCfg?`<div class="m lbl">Attrezzatura disponibile (dall’archivio)</div>
-    <div class="row">${A.report.equipment.map(e=>`<button class="chip ${c.eq.includes(e.key)?'on':''}" data-heq="${esc(e.key)}">${esc(e.label)}</button>`).join('')}</div>
+    <div class="row">${A.report.equipment.map(e=>`<button class="chip ${c.eq.includes(e.key)?'on':''}" data-heq="${esc(e.key)}" title="${esc(A.eqInfo[e.key]||'')}">${esc(e.label)} <small class="muted">${e.count}</small></button>`).join('')}</div>
+    ${Object.keys(A.eqInfo).length?`<p class="note">${A.report.equipment.filter(e=>A.eqInfo[e.key]).map(e=>`<b style="color:var(--ink)">${esc(e.label)}</b>: ${esc(A.eqInfo[e.key])}`).join(' · ')}</p>`:''}
     <div class="m lbl">Livello</div><div class="row">${[1,2,3].map(v=>`<button class="chip ${c.level===v?'on':''}" data-hlv="${v}">${LVN[v]}</button>`).join('')}</div>
     <div class="m lbl">Obiettivo</div><div class="row">${GOALS.map(([v,l])=>`<button class="chip ${c.goal===v?'on':''}" data-hgoal="${v}">${l}</button>`).join('')}</div>
     <p class="note">L’obiettivo propone i parametri iniziali del circuito; le regole del CORE non cambiano.</p>
@@ -1465,13 +1472,13 @@ function openHx(id){
   const vid=e.video?(/\.(mp4|webm|ogg|m4v)(\?|$)/i.test(e.video)?`<video src="${esc(e.video)}" controls playsinline loop muted preload="metadata" style="width:100%;border-radius:18px;background:var(--card2)"></video>`:`<a class="vlink" href="${esc(e.video)}" target="_blank" rel="noopener"><div><b>Video dimostrativo</b><span>Si apre in una nuova finestra</span></div><span>↗</span></a>`):'';
   const grp=(t,l)=>l.length?`<div class="sec"><h3>${t}</h3>${l.map(ref).join('')}</div>`:'';
   $('#sheet').innerHTML=`<div class="grab"></div>
-   ${e.immagine?`<img src="${esc(e.immagine)}" alt="" style="width:100%;max-width:340px;display:block;margin:0 auto;border-radius:22px;background:var(--card2)">`:''}
+   ${e.immagine?`<img src="${esc(e.immagine)}" alt="Illustrazione: ${esc(e.nome)}" style="width:100%;max-width:420px;display:block;margin:0 auto;border-radius:22px;background:var(--card2);padding:8px">`:''}
    <h2 class="d">${esc(e.nome)}</h2>
-   <div class="tags">${e.distretto?`<span class="tag">${esc(e.distretto)}</span>`:''}${e.categoria?`<span class="tag">${esc(e.categoria)}</span>`:''}<span class="tag">${esc(eqTxt(e))}</span>${e.livello?`<span class="tag">${LVN[e.livello]}</span>`:''}<span class="tag">ID ${esc(e.id)}</span></div>
+   <div class="tags">${e.distretto?`<span class="tag">${esc(e.distretto)}</span>`:''}${e.categoria?`<span class="tag">${esc(e.categoria)}</span>`:''}<span class="tag">${esc(eqTxt(e))}</span>${e.livello?`<span class="tag">${LVN[e.livello]}</span>`:''}<span class="tag">ID ${esc(e.id)}</span></div>${e.fonte?`<p class="note">Fonte: ${esc(e.fonte)}</p>`:''}
    ${e.descrizione?`<div class="sec"><h3>Descrizione</h3><p>${esc(e.descrizione)}</p></div>`:''}
-   ${e.esecuzione.length?`<div class="sec"><h3>Come si esegue</h3><ol class="cues">${e.esecuzione.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>`:''}
+   ${e.esecuzione.length&&!(e.esecuzione.length===1&&e.esecuzione[0]===e.descrizione)?`<div class="sec"><h3>Come si esegue</h3><ol class="cues">${e.esecuzione.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>`:''}
    ${vid?`<div class="sec"><h3>Video</h3>${vid}</div>`:''}
-   ${grp('Varianti',e.varianti)}${grp('Versione più semplice (regressioni)',e.regressioni)}${grp('Versione più difficile (progressioni)',e.progressioni)}
+   ${grp('Varianti',e.varianti)}${grp('Versione più semplice (regressioni)',e.regressioni)}${grp('Progressione',e.progressioni)}
    <div class="g2" style="margin-top:20px"><button class="btn ghost" id="hxPref" ${c.prefer.includes(id)?'style="border-color:var(--volt);color:var(--volt)"':''}>${c.prefer.includes(id)?'★ Preferito':'☆ Preferito'}</button><button class="btn ghost" id="hxExcl" ${c.exclude.includes(id)?'style="border-color:var(--coral);color:var(--coral)"':''}>${c.exclude.includes(id)?'Escluso':'Escludi'}</button></div>
    <p class="note">I preferiti vengono proposti più spesso, gli esclusi mai. I dati vengono dall’archivio esercizi esterno.</p>
    <button class="btn ghost w" style="margin-top:14px" id="closeSheet">Chiudi</button>`;
@@ -1806,6 +1813,6 @@ else{
   route();
 }
 </script>
-<script src="aggiornamenti.js" data-version="1.2.0"></script>
+<script src="aggiornamenti.js" data-version="1.3.0"></script>
 </body>
 </html>
