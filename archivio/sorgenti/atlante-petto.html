@@ -1,0 +1,521 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Atlante Petto 100</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: atlante clinico — testata compatta, filtri, sezioni per attrezzo, schede con tavola illustrata */
+:root{
+  --bg:#eef2f4; --paper:#ffffff; --ink:#18232d; --ink-2:#8d9ba7; --muted:#5a6873; --line:#d5dde3;
+  --accent:#0f7c86; --accent-soft:#cfe8ea; --prop:#c9d3da;
+  --l1:#3d8b5a; --l2:#c08a1e; --l3:#b8452f;
+  --display:"Barlow Condensed","Arial Narrow",sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10171d; --paper:#18222a; --ink:#e6edf2; --ink-2:#6c7d8a; --muted:#9aa9b4; --line:#2a3741;
+  --accent:#4cc3cc; --accent-soft:#1d4247; --prop:#34434e;
+  --l1:#6cc28c; --l2:#e2b04e; --l3:#ee7a62; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10171d; --paper:#18222a; --ink:#e6edf2; --ink-2:#6c7d8a; --muted:#9aa9b4; --line:#2a3741;
+  --accent:#4cc3cc; --accent-soft:#1d4247; --prop:#34434e;
+  --l1:#6cc28c; --l2:#e2b04e; --l3:#ee7a62; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:28px 48px}
+header{display:grid;gap:14px;margin-bottom:22px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(40px,8vw,68px);line-height:.95;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.lede{max-width:66ch;color:var(--muted);margin:0}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:6px}
+.note{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:12px 14px;font-size:14px;min-width:0}
+.note b{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:2px;letter-spacing:.01em}
+.controls{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;display:grid;gap:8px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip{font:600 13px var(--body);border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:5px 11px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input[type=search]{font:15px var(--body);width:100%;max-width:340px;padding:7px 11px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink)}
+.count{font-family:var(--mono);font-size:12px;color:var(--muted)}
+section{margin-top:26px}
+.sh{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin-bottom:12px}
+.sh h2{font-family:var(--display);font-weight:600;font-size:30px;margin:0;line-height:1}
+.sh .tag{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.sh p{flex-basis:100%;margin:0;color:var(--muted);max-width:70ch;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.fig{background:linear-gradient(var(--paper),var(--bg));border-bottom:1px solid var(--line);padding:6px 8px 0}
+.fig svg{display:block;width:100%;height:auto;max-width:100%}
+.cb{padding:10px 14px 14px;display:grid;gap:6px}
+.top{display:flex;gap:8px;align-items:baseline}
+.num{font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:2.4em}
+.card h3{font-family:var(--display);font-weight:600;font-size:20px;line-height:1.1;margin:0;flex:1;text-wrap:balance}
+.lvl{font:600 11px var(--body);letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid currentColor;white-space:nowrap}
+.lvl.l1{color:var(--l1)}.lvl.l2{color:var(--l2)}.lvl.l3{color:var(--l3)}
+.cb p{margin:0;font-size:14px}
+.cb .pg{color:var(--muted);font-size:13.5px}
+.cb .pg b{color:var(--ink);font-weight:600}
+.empty{color:var(--muted);padding:20px 0}
+footer{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;font-size:13px;color:var(--muted);display:grid;gap:6px}
+footer a{color:var(--accent)}
+/* figure strokes */
+.fg .n{stroke:var(--ink)} .fg .f{stroke:var(--ink-2)}
+.fg .hn{fill:var(--paper);stroke:var(--ink)}
+.fg .floor{stroke:var(--line)}
+.fg .pr{fill:var(--prop);stroke:none}
+.fg .ac{stroke:var(--accent);fill:none}
+.fg .acf{fill:var(--accent)}
+.fg .ball{fill:var(--accent-soft);stroke:var(--accent)}
+.fg .wt{fill:var(--ink);stroke:var(--ink)}
+#ahp{fill:var(--accent)}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path id="ahp" d="M0,0 L10,5 L0,10 z"/></marker></defs></svg>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Spinta e pettorali · 100 esercizi illustrati</div>
+  <h1>Atlante Petto 100</h1>
+  <p class="lede">Esercizi per il petto a corpo libero, con powerbag, med ball e TRX, organizzati per attrezzo. Ogni scheda riporta esecuzione, livello e progressione: dalla base alle varianti esplosive e monolaterali.</p>
+  <div class="notes">
+    <div class="note"><b>Come dosare</b>Per la forza 3-5 serie da 5-10 ripetizioni con la variante che porta a cedimento tecnico in quel range; per l'ipertrofia 2-4 serie da 10-20 vicino al cedimento. Gli esplosivi (clap, lanci) vanno all'inizio della seduta, 3-5 ripetizioni di qualità.</div>
+    <div class="note"><b>Come regolare il carico</b>A corpo libero il carico cambia con l'angolo: mani rialzate più facile, piedi rialzati più difficile. Al TRX più ti inclini verso il pavimento, più la spinta è pesante. Si avanza quando la forma resta pulita per tutta la serie.</div>
+    <div class="note"><b>Cosa dice la ricerca</b>A parità di attivazione muscolare, push-up e panca piana producono guadagni di forza simili, e anche a carichi bassi portano a ipertrofia e forza comparabili. La spinta a corpo libero ben progressiva è un'alternativa reale ai pesi.</div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="row" id="cats" role="group" aria-label="Filtra per categoria"></div>
+  <div class="row">
+    <div class="row" id="lvls" role="group" aria-label="Filtra per livello"></div>
+    <input type="search" id="q" placeholder="Cerca un esercizio…" aria-label="Cerca un esercizio">
+    <span class="count" id="count"></span>
+  </div>
+</div>
+
+<main id="main"></main>
+
+<footer>
+  <div>Le illustrazioni sono schemi: la figura scura è il lato vicino, quella chiara il lato lontano; le frecce indicano il movimento, la linea continua sottile una cinghia TRX con il suo ancoraggio; il rettangolo scuro allungato è la powerbag, il cerchio azzurro la med ball.</div>
+  <div>Fonti: <a href="https://pubmed.ncbi.nlm.nih.gov/24983847/" target="_blank" rel="noopener">Calatayud et al. 2015, panca e push-up a parità di attivazione (PubMed)</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/29541130/" target="_blank" rel="noopener">Kikuchi &amp; Nakazato 2017, panca a basso carico e push-up (PubMed)</a></div>
+</footer>
+</div>
+
+<script>
+const CATS={
+ A:{t:"Push-up fondamentali",tag:"corpo libero · prese e angoli",p:"La base della spinta orizzontale: cambiando presa, inclinazione del corpo e tempo di esecuzione si sposta il lavoro tra petto alto, petto basso, tricipiti e spalle."},
+ B:{t:"Corpo libero avanzato ed esplosivo",tag:"monolaterali · pliometria · dip",p:"Varianti che aumentano il carico su un braccio, introducono la componente esplosiva o portano il peso del corpo in verticale."},
+ C:{t:"Powerbag",tag:"press a terra · zavorra · lanci",p:"La sacca permette spinte a terra con presa neutra o compressa, push-up zavorrati e lanci di potenza. Il carico si sposta dentro la sacca: più controllo richiesto rispetto a un manubrio."},
+ D:{t:"Med ball",tag:"instabilità · potenza",p:"La palla rende instabile l'appoggio delle mani e, soprattutto, permette lanci di petto esplosivi: la spinta senza fase di frenata."},
+ E:{t:"TRX",tag:"sospensione · angolo regolabile",p:"Il carico si regola con l'inclinazione del corpo: più i piedi sono avanti rispetto all'ancoraggio, più la spinta è pesante. L'instabilità delle cinghie aumenta il lavoro di spalla e core."}
+};
+const LV={1:"Base",2:"Intermedio",3:"Avanzato"};
+
+/* pose base: r = lato vicino, l = lato lontano. viewBox 0 -12 160 110, pavimento y=90, testa a destra */
+const B={
+ up:{H:[128,49],S:[116,54],P:[72,70],rE:[116,71],rW:[116,89],rK:[50,79],rF:[28,89]},
+ down:{H:[132,72],S:[120,77],P:[74,82],rE:[104,70],rW:[118,89],rK:[50,85],rF:[28,89]},
+ knee:{H:[128,54],S:[116,59],P:[82,77],rE:[116,74],rW:[116,89],rK:[64,89],rF:[46,80]},
+ decl:{H:[130,60],S:[118,65],P:[74,56],rE:[118,78],rW:[118,89],rK:[52,52],rF:[30,50]},
+ incl:{H:[124,30],S:[114,37],P:[72,62],rE:[114,50],rW:[114,62],rK:[50,76],rF:[28,89]},
+ pike:{H:[118,66],S:[110,60],P:[78,38],rE:[112,74],rW:[114,89],rK:[60,62],rF:[44,89]},
+ supB:{H:[24,84],S:[36,86],P:[78,86],rE:[38,72],rW:[40,58],rK:[98,68],rF:[112,89]},
+ supD:{H:[24,84],S:[36,86],P:[78,86],rE:[48,88],rW:[46,76],rK:[98,68],rF:[112,89]},
+ bridgeP:{H:[22,84],S:[34,86],P:[72,66],rE:[36,72],rW:[38,58],rK:[98,62],rF:[106,89]},
+ stand:{H:[80,20],S:[80,30],P:[80,57],rE:[82,43],rW:[82,57],rK:[82,73],rF:[82,89],lE:[78,43],lW:[78,57],lK:[78,73],lF:[78,89]},
+ push:{H:[84,20],S:[82,30],P:[78,57],rE:[96,32],rW:[112,30],rK:[86,73],rF:[90,89],lK:[72,73],lF:[66,89]},
+ chest:{H:[84,20],S:[82,30],P:[78,57],rE:[86,44],rW:[96,36],rK:[86,73],rF:[90,89],lK:[72,73],lF:[66,89]},
+ tallK:{H:[80,34],S:[80,44],P:[80,68],rE:[94,46],rW:[110,44],rK:[80,89],rF:[56,89]},
+ lungeP:{H:[90,24],S:[88,34],P:[80,62],rE:[102,36],rW:[118,34],rK:[104,66],rF:[106,89],lK:[70,84],lF:[52,89]},
+ dip:{H:[90,22],S:[86,32],P:[76,58],rE:[80,44],rW:[84,56],rK:[68,74],rF:[84,84]},
+ trxP:{H:[114,30],S:[106,38],P:[68,62],rE:[118,32],rW:[132,24],rK:[52,76],rF:[40,89]},
+ trxD:{H:[120,36],S:[112,44],P:[70,64],rE:[104,30],rW:[124,32],rK:[54,77],rF:[40,89]},
+ trxPU:{H:[128,49],S:[116,54],P:[72,64],rE:[116,71],rW:[116,89],rK:[50,64],rF:[28,64]},
+ bear:{H:[124,54],S:[112,60],P:[72,60],rE:[112,74],rW:[112,89],rK:[78,80],rF:[52,89]},
+ none:{}
+};
+const X=[];
+function e(n,c,l,name,base,o,pr,d,p){X.push({n,c,l,name,pose:Object.assign({},B[base],o||{}),pr:pr||[],d,p})}
+const DN=['arrow',140,40,140,56], UPA=['arrow',140,60,140,44];
+const T=(x,y)=>[['hook',150,-8],['strap',150,-8,x,y]];
+const TF=(x,y)=>[['hook',28,-8],['strap',28,-8,x,y]];
+
+/* A — Push-up fondamentali */
+e(1,'A',1,"Push-up classico",'up',{},[DN],
+"Mani poco più larghe delle spalle, corpo in linea da testa a talloni. Scendi finché il petto sfiora il pavimento con i gomiti a circa 45° dal busto, poi spingi.",
+"Dalle ginocchia o mani rialzate al classico; poi tempo lento, pause e zavorra.");
+e(2,'A',1,"Push-up sulle ginocchia",'knee',{},[DN],
+"Ginocchia a terra, linea retta da testa a ginocchia. Stesso schema del push-up classico con metà del carico circa.",
+"Aumenta le ripetizioni fino a 15-20 puliti, poi passa al push-up inclinato o classico.");
+e(3,'A',1,"Push-up inclinato (mani rialzate)",'incl',{},[['bench',100,62,30,28]],
+"Mani su una panca, un gradino o un muro. Più alto è l'appoggio, più facile l'esercizio: ottimo per imparare la tecnica.",
+"Abbassa progressivamente l'appoggio fino al pavimento.");
+e(4,'A',2,"Push-up declinato (piedi rialzati)",'decl',{},[['bench',14,52,30,38],DN],
+"Piedi su una panca, mani a terra. Il carico sulle braccia aumenta e il lavoro si sposta verso il petto alto e le spalle.",
+"Appoggio dei piedi più alto, poi zavorra sulla schiena.");
+e(5,'A',1,"Push-up presa larga",'up',{rW:[112,89]},[['arrow',104,94,92,94],['arrow',128,94,140,94]],
+"Mani circa una volta e mezza la larghezza delle spalle. Ampiezza un po' ridotta, maggiore allungamento del petto.",
+"Pausa in basso, poi presa larga con piedi rialzati.");
+e(6,'A',2,"Push-up diamante (presa stretta)",'up',{rE:[118,72],rW:[118,89]},[DN],
+"Pollici e indici a formare un rombo sotto lo sterno, gomiti vicini al corpo. Molto lavoro di tricipiti e petto interno.",
+"Dalle ginocchia al completo, poi piedi rialzati.");
+e(7,'A',1,"Push-up mani sfalsate",'up',{lW:[124,89],lE:[122,72]},[],
+"Una mano più avanti dell'altra di circa un palmo. Il braccio arretrato lavora di più: alterna il lato a ogni serie.",
+"Aumenta la distanza tra le mani fino all'archer push-up.");
+e(8,'A',2,"Push-up 1½",'up',{},[['arrow',146,40,146,62],['arrow',146,62,146,52]],
+"Scendi completamente, risali a metà, torna giù e poi risali del tutto: conta come una ripetizione. Più tempo sotto tensione nel punto più duro.",
+"Abbinalo ai piedi rialzati o a una zavorra.");
+e(9,'A',1,"Push-up con fermo in basso",'down',{},[],
+"Scendi e tieni il petto a 2-3 cm dal pavimento per 3-5 s prima di spingere. Elimina il rimbalzo e migliora il controllo.",
+"Fermo più lungo, poi fermi multipli nella stessa ripetizione.");
+e(10,'A',2,"Push-up con eccentrica lenta",'up',{},[['arrow',142,40,142,64]],
+"Discesa in 4-5 s, risalita normale. Ottimo per costruire forza anche con poche ripetizioni.",
+"Discesa di 6-8 s, poi eccentrica lenta con zavorra.");
+e(11,'A',1,"Isometria a metà push-up",'up',{H:[130,62],S:[118,66],P:[73,76],rE:[110,74],rK:[50,83]},[],
+"Tieni il corpo a metà della discesa, gomiti a circa 90°, per 15-30 s. Corpo in linea, respirazione regolare.",
+"Tenute più lunghe o piedi rialzati.");
+e(12,'A',1,"Plank up-down",'up',{rE:[116,76],rW:[128,89]},[['arc',116,80,14,200,320]],
+"Dal plank sugli avambracci sali sulle mani un braccio alla volta e torna giù. Bacino fermo, senza ondeggiare.",
+"Più veloce, oppure con push-up a ogni salita.");
+e(13,'A',1,"Push-up con tocco della spalla",'up',{lE:[120,62],lW:[124,56]},[['arc',122,62,8,100,250]],
+"Al termine di ogni push-up tocca la spalla opposta con una mano, poi l'altra. Il bacino non deve ruotare.",
+"Piedi più vicini tra loro per ridurre la base d'appoggio.");
+e(14,'A',2,"Scapular push-up",'up',{},[['arrow',110,48,110,38]],
+"Braccia tese: lascia avvicinare le scapole facendo scendere il petto di pochi centimetri, poi allontanale spingendo il pavimento. Allena il dentato anteriore.",
+"Sulle ginocchia per iniziare, poi in pike o con piedi rialzati.");
+e(15,'A',2,"Push-up su una gamba",'up',{lK:[52,72],lF:[30,66]},[DN],
+"Push-up classico con un piede sollevato dal pavimento. Il core deve impedire la rotazione del bacino.",
+"Gamba sollevata più alta, poi abbinato alle mani sfalsate.");
+e(16,'A',2,"Push-up sulle nocche",'up',{rW:[116,86]},[DN],
+"Pugni chiusi a terra, polsi dritti. Aumenta leggermente l'ampiezza e scarica il polso in estensione.",
+"Usa un tappetino morbido; poi aggiungi pause.");
+e(17,'A',3,"Push-up sulla punta delle dita",'up',{rW:[116,86]},[DN],
+"Mani a ventaglio sulle punte delle dita. Rafforza presa e avambracci oltre al petto.",
+"Dalle ginocchia al classico, poi riduci il numero di dita.");
+e(18,'A',2,"Spiderman push-up",'down',{lK:[96,78],lF:[84,86]},[['arrow',72,72,92,72]],
+"Scendendo porta un ginocchio verso il gomito dello stesso lato, risalendo riporta la gamba. Alterna i lati.",
+"Più lento con pausa in basso, poi piedi rialzati.");
+e(19,'A',2,"Push-up con ginocchio al gomito opposto",'up',{lK:[94,76],lF:[84,82]},[['arc',90,74,10,200,330]],
+"Dopo ogni push-up porta un ginocchio verso il gomito opposto incrociando sotto il corpo. Lavoro combinato di petto e obliqui.",
+"Più veloce, quasi da mountain climber.");
+e(20,'A',2,"Push-up con passo laterale",'up',{},[['arrow',100,0,132,0]],
+"Fai un push-up, poi sposta mani e piedi di lato di un passo e ripeti. Alterna la direzione.",
+"Passi più ampi, oppure con clap tra un passo e l'altro.");
+
+/* B — Avanzato ed esplosivo */
+e(21,'B',2,"Archer push-up",'up',{lE:[126,80],lW:[146,89]},[['arrow',130,94,148,94]],
+"Mani molto larghe: scendi verso un lato piegando quel braccio mentre l'altro resta quasi teso. Quasi tutto il carico è su un braccio.",
+"Riduci l'aiuto del braccio teso fino al push-up a un braccio.");
+e(22,'B',3,"Push-up a un braccio",'up',{lE:[110,46],lW:[104,58],rK:[50,79],rF:[22,89]},[DN],
+"Piedi larghi, una mano sotto il petto e l'altra dietro la schiena. Il busto ruota leggermente: limita la rotazione.",
+"Inizia con mano su panca, poi riduci l'altezza; infine piedi più vicini.");
+e(23,'B',2,"Typewriter push-up",'down',{},[['arrow',100,94,132,94],['arrow',132,94,100,94]],
+"Presa larga: scendi verso un lato, scivola in basso verso l'altro restando vicino al pavimento, poi risali.",
+"Più lento, poi con piedi rialzati.");
+e(24,'B',2,"Hindu push-up",'pike',{},[['arc',96,62,26,200,340]],
+"Dalla posizione a V rovesciata scendi in avanti con il petto vicino al pavimento e risali in cobra; torna indietro a V.",
+"Più ampiezza e controllo, poi versione inversa (dive bomber).");
+e(25,'B',3,"Dive bomber",'pike',{},[['arc',96,64,26,340,200]],
+"Simile all'hindu push-up ma il ritorno ripercorre la stessa traiettoria al contrario. Molto lavoro di spalle e petto alto.",
+"Pause nei punti chiave, poi piedi rialzati.");
+e(26,'B',3,"Pseudo-planche push-up",'up',{H:[132,49],S:[120,54],P:[78,70],rW:[106,89],rE:[110,72]},[DN],
+"Mani all'altezza della vita con dita ruotate verso i piedi, spalle spostate in avanti oltre le mani. Carico elevato su petto e spalle anteriori.",
+"Spalle più avanti, poi piedi rialzati.");
+e(27,'B',2,"T push-up (con rotazione)",'up',{lE:[118,40],lW:[120,24]},[['arc',116,48,14,250,350]],
+"Dopo ogni push-up ruota il corpo di lato portando un braccio verso il soffitto. Torna e ripeti sull'altro lato.",
+"Con un manubrio leggero o una powerbag piccola in mano.");
+e(28,'B',2,"Clap push-up",'up',{rW:[118,80],rE:[118,64]},[['arrow',134,44,134,30],['arrow',150,44,150,30]],
+"Spingi in modo esplosivo da staccare le mani, batti un colpo e atterra con i gomiti morbidi.",
+"Doppio clap, oppure clap dietro la schiena.");
+e(29,'B',2,"Push-up pliometrico con stacco",'up',{rW:[118,80],rE:[118,64]},[['arrow',140,44,140,30]],
+"Spinta esplosiva fino a staccare le mani dal pavimento, senza battito. Atterraggio controllato.",
+"Prima dalle ginocchia, poi completo e con piedi rialzati.");
+e(30,'B',2,"Push-up esplosivo con cambio mani",'up',{rW:[118,80],rE:[118,64]},[['arrow',104,94,132,94],['arrow',132,94,104,94]],
+"In volo passa da presa larga a stretta e viceversa, oppure sfalsa le mani alternando i lati.",
+"Più ripetizioni consecutive senza pausa.");
+e(31,'B',1,"Burpee con push-up",'down',{},[['arrow',150,60,150,20]],
+"Accovacciati, porta i piedi indietro, esegui un push-up completo, riporta i piedi e salta.",
+"Più rapido, poi abbinato a un clap push-up.");
+e(32,'B',2,"Dip tra due panche",'dip',{H:[82,30],S:[80,40],P:[76,64],rE:[70,48],rW:[74,60],rK:[100,68],rF:[118,89]},[['bench',62,60,18,30]],
+"Mani su una panca dietro di te, gambe avanti. Scendi a circa 90° di gomito tenendo il busto vicino alla panca.",
+"Piedi su una seconda panca, poi zavorra sulle cosce.");
+e(33,'B',3,"Dip alle parallele, busto inclinato",'dip',{},[['bar',72,56,98,56]],
+"Sospeso sulle parallele, inclina il busto in avanti e scendi finché le spalle sono appena sotto i gomiti. L'inclinazione porta il lavoro sul petto.",
+"Da dip assistito con banda o negativo lento al completo, poi zavorrato.");
+e(34,'B',2,"Bear crawl con push-up",'bear',{},[['arrow',98,38,128,38]],
+"In bear crawl, ogni due passi esegui un push-up. Coordinazione e resistenza della spinta.",
+"Distanze maggiori, push-up più profondi.");
+e(35,'B',2,"Croci a terra su asciugamano",'up',{rW:[100,89],lW:[132,89]},[['slider',100,90],['slider',132,90],['arrow',96,94,108,94],['arrow',136,94,124,94]],
+"Su pavimento liscio, mani su due asciugamani: lascia scivolare le mani verso l'esterno e riportale insieme stringendo il petto.",
+"Dalle ginocchia al completo, poi ampiezza maggiore.");
+
+/* C — Powerbag */
+e(36,'C',1,"Floor press",'supB',{},[['bag',40,52,24]],
+"Supino, ginocchia piegate, powerbag tenuta per le maniglie sopra il petto. Scendi finché i tricipiti toccano il pavimento e spingi.",
+"Sacca più pesante, poi pausa a terra.");
+e(37,'C',1,"Floor press presa neutra",'supB',{},[['bag',40,52,20],['arrow',58,70,58,54]],
+"Presa sulle maniglie laterali con palmi che si guardano. Meno stress sulla spalla, più lavoro di tricipiti.",
+"Carico maggiore o eccentrica lenta.");
+e(38,'C',2,"Floor press a un braccio",'supB',{lE:[44,88],lW:[60,88]},[['bag',40,52,16]],
+"Una sola mano sulla maniglia centrale: il core deve impedire al busto di ruotare.",
+"Sacca più pesante, poi in ponte glutei.");
+e(39,'C',2,"Floor press in ponte glutei",'bridgeP',{},[['bag',38,52,24]],
+"Mantieni il bacino sollevato in ponte mentre spingi la sacca. Lavoro combinato di petto e catena posteriore.",
+"Una gamba sollevata durante il ponte.");
+e(40,'C',2,"Floor press con isometria e pulse",'supB',{rE:[42,78],rW:[44,66]},[['bag',44,60,24],['arrow',62,70,62,62],['arrow',62,62,62,70]],
+"Tieni la sacca a metà spinta per 10 s, poi esegui piccole spinte ravvicinate per altri 10 s.",
+"Tempi più lunghi, poi carico maggiore.");
+e(41,'C',2,"Push-up zavorrato",'up',{},[['bag',96,56,24],DN],
+"Powerbag appoggiata sulla parte alta della schiena, tra le scapole. Tienila ferma senza inarcare la lombare.",
+"Sacca più pesante, poi piedi rialzati.");
+e(42,'C',1,"Push-up con mani sulle maniglie",'up',{rW:[116,82],rE:[116,66]},[['bag',116,86,24],DN],
+"Mani sulle maniglie della sacca appoggiata a terra: l'appoggio rialzato aumenta l'ampiezza e la base morbida richiede controllo.",
+"Pausa in basso, poi piedi rialzati.");
+e(43,'C',3,"Push-up con trascinamento della sacca",'up',{lW:[124,89]},[['bag',104,85,18],['arrow',96,94,126,94]],
+"Dalla posizione alta, afferra la sacca con una mano e trascinala sotto il corpo dall'altro lato, poi fai un push-up. Alterna.",
+"Sacca più pesante, ritmo più rapido.");
+e(44,'C',1,"Push-up inclinato sulla sacca",'incl',{rW:[114,66],rE:[114,52]},[['bag',114,72,26],['bag',114,80,26],['bag',114,88,26]],
+"Mani sulla powerbag posata in verticale o su una pila di sacche: angolo inclinato, appoggio instabile.",
+"Abbassa l'appoggio fino al push-up classico.");
+e(45,'C',2,"Squeeze press da sdraiato",'supB',{rE:[40,74],rW:[40,58]},[['bag',40,52,14],['arrow',22,52,32,52],['arrow',58,52,48,52]],
+"Schiaccia la sacca tra i palmi come per comprimerla e spingi verso l'alto mantenendo la pressione. Petto interno molto attivo.",
+"Pausa a braccia tese, poi più lento.");
+e(46,'C',2,"Pullover a terra",'supB',{rE:[20,78],rW:[6,82]},[['bag',4,78,18],['arc',30,82,22,190,280]],
+"Supino, sacca tenuta a braccia quasi tese sopra il petto: portala dietro la testa e riportala su. Petto e gran dorsale.",
+"Sacca più pesante, ampiezza maggiore.");
+e(47,'C',2,"Around the world da sdraiato",'supB',{},[['bag',40,52,20],['arc',40,64,18,180,360]],
+"Supino, fai girare la sacca sopra il petto in un cerchio ampio passando da sopra la testa ai fianchi.",
+"Cerchi più ampi, poi in ponte glutei.");
+e(48,'C',2,"Chest pass/lancio di petto",'push',{},[['bag',118,30,16],['arrow',126,22,150,22]],
+"In piedi, sacca al petto: lanciala in avanti estendendo le braccia con forza, verso un partner o un muro robusto.",
+"Sacca più pesante, oppure con passo in avanti.");
+e(49,'C',1,"Spinta orizzontale da in piedi",'push',{},[['bag',114,30,20],['arrow',96,20,120,20]],
+"Sacca tenuta per le maniglie al petto: spingila in avanti fino a braccia tese e riportala, tenendo il busto fermo.",
+"Più lento in ritorno, poi su una gamba.");
+e(50,'C',2,"Clean + spinta di petto",'chest',{},[['bag',96,32,20],['arrow',100,20,126,20]],
+"Solleva la sacca da terra al petto con un clean, poi spingila in avanti. Ripeti fluido.",
+"Sacca più pesante, ritmo da circuito.");
+e(51,'C',2,"Affondo + spinta orizzontale",'lungeP',{},[['bag',120,34,18],['arrow',102,22,126,22]],
+"Scendi in affondo e, nel punto più basso, spingi la sacca in avanti. Ritorna e alterna la gamba.",
+"Affondo camminato con spinta a ogni passo.");
+e(52,'C',2,"Sprawl + push-up con sacca",'up',{rW:[116,82],rE:[116,66]},[['bag',116,86,24],['arrow',148,64,148,40]],
+"Mani sulle maniglie, lancia i piedi indietro in sprawl, push-up, riporta i piedi e solleva la sacca al petto.",
+"Ritmo più rapido, sacca più pesante.");
+e(53,'C',2,"Bear crawl con trascinamento",'bear',{},[['bag',112,86,18],['arrow',98,38,128,38]],
+"In bear crawl, trascina la sacca in avanti con una mano a ogni passo, alternando.",
+"Distanza maggiore, sacca più pesante.");
+e(54,'C',3,"Lancio verso l'alto da sdraiato",'supB',{},[['bag',40,40,16],['arrow',40,30,40,10]],
+"Supino, lancia una sacca leggera verso l'alto in modo esplosivo e riprendila frenandola. Solo con carichi leggeri e in sicurezza.",
+"Più rapidità, non più peso.");
+e(55,'C',1,"Tenuta isometrica davanti al petto",'push',{},[['bag',116,30,18]],
+"In piedi, sacca tenuta a braccia tese davanti al petto per 20-40 s, schiacciandola tra i palmi.",
+"Tenute più lunghe, braccia più distese.");
+
+/* D — Med ball */
+e(56,'D',2,"Push-up con una mano sulla palla",'up',{lW:[126,80],lE:[124,66]},[['ball',126,82,8],DN],
+"Una mano sul pallone, l'altra a terra. Il lato sulla palla lavora con ampiezza diversa: alterna i lati.",
+"Pallone più piccolo, poi abbinato al roll-over.");
+e(57,'D',2,"Push-up con roll-over",'up',{lW:[126,80],lE:[124,66]},[['ball',126,82,8],['arrow',104,94,132,94]],
+"Push-up con una mano sulla palla, poi fai rotolare il pallone all'altra mano e ripeti sul lato opposto.",
+"Ritmo più rapido, oppure aggiungi un passo laterale.");
+e(58,'D',3,"Push-up con due mani sulla palla",'up',{rW:[116,76],rE:[116,62]},[['ball',116,82,8],DN],
+"Entrambe le mani sul pallone sotto lo sterno: presa stretta e instabile, molto lavoro di tricipiti e stabilizzatori.",
+"Pausa in basso, poi piedi rialzati.");
+e(59,'D',2,"Push-up con piedi sulla palla",'decl',{rK:[52,62],rF:[30,68]},[['ball',30,80,10],DN],
+"Piedi sul pallone, mani a terra. Angolo leggermente declinato e base instabile per i piedi.",
+"Un piede solo sulla palla.");
+e(60,'D',3,"Archer push-up con palla",'up',{lE:[126,80],lW:[146,80]},[['ball',146,82,8]],
+"Una mano a terra, l'altra sul pallone lontano di lato: scendi sul braccio a terra facendo rotolare la palla in fuori.",
+"Palla più lontana, poi braccio sulla palla quasi senza appoggio.");
+e(61,'D',3,"Drop push-up",'up',{rW:[116,76],rE:[116,62]},[['ball',116,82,8],['arrow',102,94,92,94],['arrow',130,94,140,94]],
+"Mani sulla palla, staccale e atterra con le mani a terra ai lati, assorbi in push-up ed esplodi di nuovo sulla palla.",
+"Più rapidità tra una ripetizione e l'altra.");
+e(62,'D',3,"Push-up con salto laterale sopra la palla",'up',{rW:[116,80],rE:[116,64]},[['ball',128,82,8],['arc',122,74,14,200,340]],
+"Push-up esplosivo con una mano sulla palla, in volo passa sopra il pallone e atterra con l'altra mano sulla palla.",
+"Ripetizioni continue senza pausa.");
+e(63,'D',2,"Tenuta isometrica sulla palla",'up',{H:[130,62],S:[118,66],P:[73,76],rE:[110,74],rW:[116,80],rK:[50,83]},[['ball',116,82,8]],
+"Mani sul pallone, tieni la posizione a metà push-up per 15-30 s senza far muovere la palla.",
+"Tenute più lunghe, piedi più vicini.");
+e(64,'D',2,"Plank up-down sulla palla",'up',{rW:[116,80],rE:[116,64]},[['ball',116,82,8],['arc',116,78,14,200,320]],
+"Dal plank sugli avambracci porta una mano alla volta sulla palla fino a braccia tese, poi torna giù.",
+"Ritmo più rapido.");
+e(65,'D',1,"Chest pass al muro",'push',{},[['ball',116,30,6],['wall',150],['arrow',122,30,146,30]],
+"In piedi a un passo e mezzo dal muro, lancia la palla di petto e riprendila al rimbalzo. Gomiti larghi, spinta con tutto il corpo.",
+"Palla più pesante o distanza maggiore.");
+e(66,'D',2,"Chest pass in coppia, esplosivo",'push',{},[['ball',116,30,6],['arrow',124,26,152,26]],
+"Due persone a 3-4 m: lanci di petto massimali, riprendi e rilancia il più velocemente possibile.",
+"Palla più pesante, distanza maggiore.");
+e(67,'D',1,"Chest pass da in ginocchio",'tallK',{},[['ball',114,44,6],['arrow',120,38,148,38]],
+"In ginocchio con busto eretto: senza aiuto delle gambe, la spinta viene tutta da petto e braccia.",
+"Palla più pesante, poi in mezzo ginocchio.");
+e(68,'D',2,"Chest pass con passo avanti",'lungeP',{},[['ball',122,34,6],['arrow',128,30,154,30]],
+"Lancia di petto facendo un passo avanti: la forza parte dalle gambe e si trasferisce alle braccia.",
+"Massima distanza, poi rincorsa breve.");
+e(69,'D',2,"Lancio di petto da sdraiato",'supB',{},[['ball',40,46,6],['arrow',40,36,40,10]],
+"Supino, lancia la palla verticalmente in modo esplosivo e riprendila, oppure lanciala a un partner in piedi.",
+"Palla più pesante, ripetizioni più rapide.");
+e(70,'D',2,"Lancio laterale di petto",'push',{},[['ball',114,30,6],['arc',90,36,22,300,20]],
+"Di fianco al muro, ruota il busto e lancia con una spinta di petto laterale. Lavora su entrambi i lati.",
+"Palla più pesante, più velocità.");
+e(71,'D',2,"Burpee + chest pass",'push',{},[['ball',116,30,6],['arrow',124,26,150,26]],
+"Burpee con push-up, rialzati con la palla al petto e lanciala in avanti o al muro.",
+"Ritmo da circuito, palla più pesante.");
+e(72,'D',1,"Squeeze press da sdraiato",'supB',{},[['ball',40,52,7],['arrow',20,52,30,52],['arrow',60,52,50,52]],
+"Supino, schiaccia la palla tra i palmi e spingi verso l'alto mantenendo la compressione.",
+"Pausa a braccia tese, palla più pesante.");
+e(73,'D',1,"Floor press con palla",'supD',{},[['ball',46,70,7],['arrow',58,74,58,58]],
+"Supino, palla tenuta al petto: spingila in alto fino a braccia tese, poi riportala con i tricipiti a terra.",
+"Palla più pesante o un braccio alla volta.");
+e(74,'D',1,"Pullover con palla",'supB',{rE:[20,78],rW:[6,82]},[['ball',4,78,7],['arc',30,82,22,190,280]],
+"Supino, porta la palla da sopra il petto a dietro la testa a braccia quasi tese e ritorna.",
+"Palla più pesante, poi con lancio a un partner.");
+e(75,'D',1,"Squeeze isometrico in piedi",'push',{rW:[104,32]},[['ball',110,32,7],['arrow',94,24,104,28]],
+"In piedi, palla a braccia tese davanti al petto: schiacciala tra i palmi per 20-30 s.",
+"Tenute più lunghe, oppure piccoli cerchi mantenendo la pressione.");
+
+/* E — TRX */
+e(76,'E',1,"Chest press",'trxD',{},T(124,32),
+"Di spalle all'ancoraggio, braccia tese avanti con le maniglie, corpo inclinato in linea. Scendi piegando i gomiti e spingi per tornare.",
+"Porta i piedi più indietro per inclinarti di più.");
+e(77,'E',3,"Chest press a un braccio",'trxP',{lE:[100,50],lW:[96,60]},T(132,24),
+"Una sola maniglia al centro del petto: il corpo tende a ruotare, il core deve tenerlo frontale.",
+"Inclinazione maggiore, poi passo sfalsato.");
+e(78,'E',1,"Chest press gambe sfalsate",'trxP',{lK:[66,76],lF:[66,89]},T(132,24),
+"Un piede avanti e uno indietro: più stabile, utile per imparare il movimento o per i principianti.",
+"Avvicina i piedi, poi passa ai piedi uniti.");
+e(79,'E',2,"Chest press su una gamba",'trxP',{lK:[54,66],lF:[40,72]},T(132,24),
+"Chest press in equilibrio su una gamba, l'altra sollevata dietro. Più lavoro di core e anca.",
+"Maggiore inclinazione.");
+e(80,'E',2,"Chest press esplosivo",'trxP',{},T(132,24).concat([['arrow',120,10,140,2]]),
+"Scendi controllato e spingi con forza fino a staccare per un attimo il corpo dall'appoggio delle maniglie.",
+"Più inclinazione, ripetizioni continue.");
+e(81,'E',1,"Chest press con fermo",'trxD',{},T(124,32),
+"Fermo di 3 s nel punto più basso, mani all'altezza del petto, prima di spingere.",
+"Fermo più lungo, inclinazione maggiore.");
+e(82,'E',2,"Chest press 1½",'trxD',{},T(124,32).concat([['arrow',138,46,138,36]]),
+"Scendi del tutto, risali a metà, torna giù e risali completamente.",
+"Abbinalo all'inclinazione maggiore.");
+e(83,'E',2,"Chest press con rotazione alternata",'trxP',{lE:[100,26],lW:[92,14]},T(132,24),
+"Spingi con un braccio solo mentre l'altro si apre e ruota il busto, poi alterna. Simula un pugno con il corpo.",
+"Ritmo più rapido, inclinazione maggiore.");
+e(84,'E',2,"Chest press incrociato",'trxP',{},T(132,24).concat([['arc',132,30,10,200,340]]),
+"In fase di spinta incrocia leggermente le mani davanti al petto: chiusura completa e forte contrazione del petto interno.",
+"Pausa con le mani incrociate.");
+e(85,'E',3,"Archer press",'trxD',{lE:[118,46],lW:[134,46]},T(124,32),
+"Scendi su un braccio mentre l'altro si apre teso di lato. Il carico si concentra sul braccio piegato.",
+"Inclinazione maggiore, braccio teso meno coinvolto.");
+e(86,'E',2,"Sprinter start press",'trxP',{lK:[90,60],lF:[86,76]},T(132,24),
+"A ogni spinta porta un ginocchio verso il petto come in partenza da sprint. Alterna la gamba.",
+"Più esplosivo, inclinazione maggiore.");
+e(87,'E',1,"Chest fly",'trxP',{},T(132,24).concat([['arc',132,40,18,200,340]]),
+"Braccia quasi tese e gomiti leggermente piegati: apri le braccia lasciando scendere il corpo e richiudile davanti al petto.",
+"Inclinazione maggiore, poi a un braccio.");
+e(88,'E',3,"Chest fly a un braccio",'trxP',{lE:[100,50],lW:[96,60]},T(132,24).concat([['arc',132,40,18,200,340]]),
+"Una sola maniglia, apertura laterale controllata: richiede molta stabilità di spalla e core.",
+"Più inclinazione.");
+e(89,'E',2,"Chest fly con tenuta isometrica",'trxD',{rE:[110,26],rW:[124,22]},T(124,22),
+"Apri a metà della fly e tieni la posizione per 10-20 s, poi richiudi.",
+"Tenute più lunghe, inclinazione maggiore.");
+e(90,'E',2,"Press + fly combinato",'trxP',{},T(132,24).concat([['arc',132,40,18,200,340]]),
+"Alterna una ripetizione di chest press e una di fly senza pause.",
+"Più ripetizioni, inclinazione maggiore.");
+e(91,'E',2,"Push-up con piedi nelle cinghie",'trxPU',{},TF(28,64).concat([DN]),
+"Piedi nelle maniglie a circa 30-40 cm da terra, mani sul pavimento. Push-up con corpo in linea e piedi instabili.",
+"Piedi più alti, poi pause in basso.");
+e(92,'E',3,"Push-up su un piede",'trxPU',{lK:[52,58],lF:[30,52]},TF(28,64).concat([DN]),
+"Un solo piede nella cinghia, l'altro sollevato sopra. Il core lavora contro la rotazione.",
+"Più lento, poi con atomic.");
+e(93,'E',3,"Atomic push-up",'trxPU',{P:[80,58],rK:[96,72],rF:[84,72]},TF(84,72).concat([['arrow',62,72,90,72]]),
+"Piedi nelle cinghie: un push-up, poi porta le ginocchia al petto. Ritorna e ripeti.",
+"Ritmo più rapido, oppure push-up + pike.");
+e(94,'E',3,"Push-up + pike",'trxPU',{P:[86,32],rK:[60,46],rF:[40,58]},TF(40,58).concat([['arrow',72,58,82,36]]),
+"Piedi nelle cinghie: dopo il push-up solleva il bacino in alto a gambe tese, poi torna in plank.",
+"Più lento in discesa, poi con push-up in pike.");
+e(95,'E',2,"Push-up + mountain climber",'trxPU',{lK:[96,72],lF:[84,72]},TF(28,64).concat([['arrow',62,72,90,72]]),
+"Piedi nelle cinghie: un push-up e due ginocchia alternate al petto.",
+"Più ripetizioni di climber, ritmo più alto.");
+e(96,'E',3,"Body saw push-up",'trxPU',{rE:[118,89],rW:[134,89],H:[136,64],S:[124,68],P:[80,70]},TF(28,64).concat([['arrow',110,8,140,8],['arrow',140,8,110,8]]),
+"Avambracci a terra e piedi nelle cinghie: spingi il corpo avanti e indietro come una sega, poi aggiungi un push-up.",
+"Ampiezza maggiore.");
+e(97,'E',2,"Push-up con maniglie basse",'up',{rW:[116,80],rE:[116,64]},[['hook',116,-8],['strap',116,-8,116,80],DN],
+"Maniglie a pochi centimetri da terra, mani nelle maniglie: push-up instabile in stile anelli, con ampiezza maggiore.",
+"Ruota i palmi verso l'esterno in alto.");
+e(98,'E',3,"Dip",'dip',{H:[80,22],S:[80,32],P:[78,58],rE:[90,44],rW:[94,56]},[['hook',94,-8],['strap',94,-8,94,56]],
+"Maniglie all'altezza dei fianchi, corpo sospeso o piedi a terra: scendi e risali tenendo le cinghie vicine al corpo.",
+"Da piedi a terra a sospeso completo.");
+e(99,'E',2,"Support hold",'dip',{H:[80,20],S:[80,30],P:[80,56],rE:[90,42],rW:[94,56],rK:[78,74],rF:[90,82]},[['hook',94,-8],['strap',94,-8,94,56]],
+"Braccia tese nelle maniglie, corpo sospeso: tieni 15-30 s con spalle basse e cinghie aderenti ai fianchi.",
+"Ruota i palmi in avanti, poi tenute più lunghe.");
+e(100,'E',1,"Chest press presa neutra",'trxD',{},T(124,32),
+"Palmi che si guardano e gomiti vicini al busto: più lavoro di tricipiti e meno stress sulla spalla.",
+"Inclinazione maggiore.");
+
+/* render figure */
+const pt=a=>a[0]+","+a[1];
+function line(a,b,c,w){return `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" class="${c}" stroke-width="${w}" stroke-linecap="round"/>`}
+function limb(a,b,c,cls){return `<polyline points="${pt(a)} ${pt(b)} ${pt(c)}" class="${cls}" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>`}
+function arcPath(cx,cy,r,a1,a2){const t=d=>d*Math.PI/180;const x1=cx+r*Math.cos(t(a1)),y1=cy+r*Math.sin(t(a1)),x2=cx+r*Math.cos(t(a2)),y2=cy+r*Math.sin(t(a2));const span=((a2-a1)%360+360)%360;return `<path d="M${x1.toFixed(1)},${y1.toFixed(1)} A${r},${r} 0 ${span>180?1:0} 1 ${x2.toFixed(1)},${y2.toFixed(1)}" class="ac" stroke-width="1.8" marker-end="url(#ah)"/>`}
+function prop(q){const[k,a,b,c,d,f]=q;switch(k){
+ case 'bench':return `<rect x="${a}" y="${b}" width="${c}" height="${d}" rx="1.5" class="pr"/>`;
+ case 'ball':return `<circle cx="${a}" cy="${b}" r="${c}" class="ball" stroke-width="1.5"/>`;
+ case 'band':return `<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" class="ac" stroke-width="2" stroke-dasharray="4 3"/>`;
+ case 'anchor':return `<line x1="${a}" y1="${b}" x2="${a}" y2="90" class="ac" stroke-width="1.2" opacity=".5"/><circle cx="${a}" cy="${b}" r="2.6" class="acf"/>`;
+ case 'kb':return `<path d="M${a-3},${b+3} Q${a},${b-2} ${a+3},${b+3}" class="wt" fill="none" stroke-width="1.6"/><circle cx="${a}" cy="${b+6.5}" r="4.5" class="wt"/>`;
+ case 'kbup':return `<path d="M${a-3},${b-3} Q${a},${b+2} ${a+3},${b-3}" class="wt" fill="none" stroke-width="1.6"/><circle cx="${a}" cy="${b-6.5}" r="4.5" class="wt"/>`;
+ case 'db':return `<rect x="${a-6}" y="${b-1}" width="12" height="2" class="wt"/><rect x="${a-7}" y="${b-3.5}" width="3" height="7" rx=".8" class="wt"/><rect x="${a+4}" y="${b-3.5}" width="3" height="7" rx=".8" class="wt"/>`;
+ case 'wheel':return `<circle cx="${a}" cy="${b}" r="5" class="ball" stroke-width="1.5"/><circle cx="${a}" cy="${b}" r="1.4" class="acf"/>`;
+ case 'bar':return `<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" class="wt" stroke-width="2.6" stroke-linecap="round"/>`;
+ case 'strap':return `<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" class="ac" stroke-width="1.6"/>`;
+ case 'slider':return `<rect x="${a-6}" y="${b-2.5}" width="12" height="2.5" rx="1" class="acf"/>`;
+ case 'bag':return `<rect x="${a-(c||22)/2}" y="${b-4}" width="${c||22}" height="8" rx="4" class="wt"/>`;
+ case 'hook':return `<circle cx="${a}" cy="${b}" r="2.6" class="acf"/>`;
+ case 'wall':return `<rect x="${a}" y="34" width="4" height="56" class="pr"/>`;
+ case 'arrow':return `<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" class="ac" stroke-width="1.8" marker-end="url(#ah)"/>`;
+ case 'arc':return arcPath(a,b,c,d,f);
+ case 'breath':return [5,9,13].map(r=>`<path d="M${a-r},${b} A${r},${r} 0 0 1 ${a+r},${b}" class="ac" stroke-width="1.4" opacity="${1.15-r/14}"/>`).join('');
+ }return ''}
+function fig(x){
+ const P=x.pose;['E','W','K','F'].forEach(k=>{if(!P['l'+k])P['l'+k]=P['r'+k]});
+ let s=`<svg viewBox="0 -12 160 110" class="fg" role="img" aria-label="Illustrazione: ${x.name}">`;
+ s+=`<line x1="0" y1="90.5" x2="160" y2="90.5" class="floor" stroke-width="1.5"/>`;
+ const back=x.pr.filter(q=>['bench','wall','ball','wheel','bar','strap'].includes(q[0])&&!(q[0]==='ball'&&q[3]<7));
+ const front=x.pr.filter(q=>!back.includes(q));
+ s+=back.map(prop).join('');
+ if(P.front){
+  s+=limb(P.Pl,P.lK,P.lF,'n')+limb(P.Pr,P.rK,P.rF,'n');
+  s+=line(P.Sl,P.Sr,'n',5)+line(P.Pl,P.Pr,'n',5)+line(P.S,P.P,'n',6)+line(P.S,P.H,'n',4);
+  s+=limb(P.Sl,P.lE,P.lW,'n')+limb(P.Sr,P.rE,P.rW,'n');
+ }else{
+  s+=limb(P.S,P.lE,P.lW,'f')+limb(P.P,P.lK,P.lF,'f');
+  s+=line(P.S,P.P,'n',6)+line(P.S,P.H,'n',4);
+  s+=limb(P.P,P.rK,P.rF,'n')+limb(P.S,P.rE,P.rW,'n');
+ }
+ s+=`<circle cx="${P.H[0]}" cy="${P.H[1]}" r="6" class="hn" stroke-width="2.5"/>`;
+ s+=front.map(prop).join('');
+ return s+'</svg>';
+}
+
+/* page */
+const main=document.getElementById('main');
+const st={c:'all',l:'all',q:''};
+function chip(box,val,label,key){const b=document.createElement('button');b.className='chip';b.type='button';b.textContent=label;b.dataset.v=val;b.setAttribute('aria-pressed',st[key]===val);b.onclick=()=>{st[key]=val;box.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.v===val));apply()};box.appendChild(b)}
+const cb=document.getElementById('cats'),lb=document.getElementById('lvls');
+chip(cb,'all','Tutte','c');Object.keys(CATS).forEach(k=>chip(cb,k,CATS[k].t,'c'));
+chip(lb,'all','Tutti i livelli','l');Object.keys(LV).forEach(k=>chip(lb,k,LV[k],'l'));
+Object.keys(CATS).forEach(k=>{
+ const items=X.filter(x=>x.c===k);
+ const sec=document.createElement('section');sec.dataset.c=k;sec.id='cat-'+k;
+ sec.innerHTML=`<div class="sh"><h2>${CATS[k].t}</h2><span class="tag">${CATS[k].tag} · n. ${items[0].n}–${items[items.length-1].n}</span><p>${CATS[k].p}</p></div><div class="grid">`+
+ items.map(x=>`<article class="card" data-l="${x.l}" data-s="${(x.name+' '+x.d).toLowerCase()}"><div class="fig">${fig(x)}</div><div class="cb"><div class="top"><span class="num">${String(x.n).padStart(3,'0')}</span><h3>${x.name}</h3><span class="lvl l${x.l}">${LV[x.l]}</span></div><p>${x.d}</p><p class="pg"><b>Progressione:</b> ${x.p}</p></div></article>`).join('')+`</div>`;
+ main.appendChild(sec);
+});
+const emp=document.createElement('p');emp.className='empty';emp.textContent='Nessun esercizio corrisponde ai filtri.';emp.hidden=true;main.appendChild(emp);
+const cnt=document.getElementById('count');
+function apply(){let tot=0;main.querySelectorAll('section').forEach(sec=>{let v=0;sec.querySelectorAll('.card').forEach(c=>{const ok=(st.c==='all'||sec.dataset.c===st.c)&&(st.l==='all'||c.dataset.l===st.l)&&(!st.q||c.dataset.s.includes(st.q));c.hidden=!ok;if(ok)v++});sec.hidden=!v;tot+=v});cnt.textContent=tot+' / 100';emp.hidden=tot>0}
+document.getElementById('q').addEventListener('input',ev=>{st.q=ev.target.value.trim().toLowerCase();apply()});
+apply();
+</script>
+
+</body></html>

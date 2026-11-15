@@ -1,0 +1,589 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Atlante Dorso 100</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: atlante clinico — testata compatta, filtri, sezioni per attrezzo, schede con tavola illustrata */
+:root{
+  --bg:#eef2f4; --paper:#ffffff; --ink:#18232d; --ink-2:#8d9ba7; --muted:#5a6873; --line:#d5dde3;
+  --accent:#0f7c86; --accent-soft:#cfe8ea; --prop:#c9d3da;
+  --l1:#3d8b5a; --l2:#c08a1e; --l3:#b8452f;
+  --display:"Barlow Condensed","Arial Narrow",sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10171d; --paper:#18222a; --ink:#e6edf2; --ink-2:#6c7d8a; --muted:#9aa9b4; --line:#2a3741;
+  --accent:#4cc3cc; --accent-soft:#1d4247; --prop:#34434e;
+  --l1:#6cc28c; --l2:#e2b04e; --l3:#ee7a62; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10171d; --paper:#18222a; --ink:#e6edf2; --ink-2:#6c7d8a; --muted:#9aa9b4; --line:#2a3741;
+  --accent:#4cc3cc; --accent-soft:#1d4247; --prop:#34434e;
+  --l1:#6cc28c; --l2:#e2b04e; --l3:#ee7a62; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:28px 48px}
+header{display:grid;gap:14px;margin-bottom:22px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(40px,8vw,68px);line-height:.95;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.lede{max-width:66ch;color:var(--muted);margin:0}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:6px}
+.note{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:12px 14px;font-size:14px;min-width:0}
+.note b{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:2px;letter-spacing:.01em}
+.controls{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;display:grid;gap:8px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip{font:600 13px var(--body);border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:5px 11px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input[type=search]{font:15px var(--body);width:100%;max-width:340px;padding:7px 11px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink)}
+.count{font-family:var(--mono);font-size:12px;color:var(--muted)}
+section{margin-top:26px}
+.sh{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin-bottom:12px}
+.sh h2{font-family:var(--display);font-weight:600;font-size:30px;margin:0;line-height:1}
+.sh .tag{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.sh p{flex-basis:100%;margin:0;color:var(--muted);max-width:70ch;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.fig{background:linear-gradient(var(--paper),var(--bg));border-bottom:1px solid var(--line);padding:6px 8px 0}
+.fig svg{display:block;width:100%;height:auto;max-width:100%}
+.cb{padding:10px 14px 14px;display:grid;gap:6px}
+.top{display:flex;gap:8px;align-items:baseline}
+.num{font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:2.4em}
+.card h3{font-family:var(--display);font-weight:600;font-size:20px;line-height:1.1;margin:0;flex:1;text-wrap:balance}
+.lvl{font:600 11px var(--body);letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid currentColor;white-space:nowrap}
+.lvl.l1{color:var(--l1)}.lvl.l2{color:var(--l2)}.lvl.l3{color:var(--l3)}
+.cb p{margin:0;font-size:14px}
+.cb .pg{color:var(--muted);font-size:13.5px}
+.cb .pg b{color:var(--ink);font-weight:600}
+.empty{color:var(--muted);padding:20px 0}
+footer{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;font-size:13px;color:var(--muted);display:grid;gap:6px}
+footer a{color:var(--accent)}
+/* figure strokes */
+.fg .n{stroke:var(--ink)} .fg .f{stroke:var(--ink-2)}
+.fg .hn{fill:var(--paper);stroke:var(--ink)}
+.fg .floor{stroke:var(--line)}
+.fg .pr{fill:var(--prop);stroke:none}
+.fg .ac{stroke:var(--accent);fill:none}
+.fg .acf{fill:var(--accent)}
+.fg .ball{fill:var(--accent-soft);stroke:var(--accent)}
+.fg .wt{fill:var(--ink);stroke:var(--ink)}
+#ahp{fill:var(--accent)}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path id="ahp" d="M0,0 L10,5 L0,10 z"/></marker></defs></svg>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Dorsali, trapezio ed erettori · 100 esercizi illustrati</div>
+  <h1>Atlante Dorso 100</h1>
+  <p class="lede">Esercizi per la schiena a corpo libero, con powerbag, med ball e TRX, organizzati per attrezzo. Ogni scheda riporta esecuzione, livello e progressione: dalle estensioni prone agli stacchi, dal rematore sotto il tavolo alle tirate in sospensione.</p>
+  <div class="notes">
+    <div class="note"><b>Come dosare</b>Per la forza 3-5 serie da 5-8 ripetizioni con la variante più dura che controlli (rematore con piedi rialzati, TRX quasi orizzontale, stacco con sacca pesante); per l'ipertrofia 2-4 serie da 10-20 vicino al cedimento. Estensioni e tenute per gli erettori: 2-3 serie da 20-40 s. Lanci e slam a inizio seduta, 3-6 ripetizioni di qualità.</div>
+    <div class="note"><b>Come regolare il carico</b>A corpo libero e al TRX la tirata diventa più dura portando il corpo verso l'orizzontale: piedi più avanti, poi piedi rialzati. Senza sbarra, la trazione verticale si sostituisce con il pulldown in ginocchio al TRX e la scivolata al muro. Si avanza quando scapole e zona lombare restano sotto controllo per tutta la serie.</div>
+    <div class="note"><b>Cosa dice la ricerca</b>Confrontando diversi rematori, quello in piedi a busto flesso attiva molto la schiena ma dà il carico più alto sulla colonna lombare; il rematore inverso ha mostrato l'attivazione più alta del gran dorsale con meno carico lombare. E anche i carichi leggeri, portati vicino al cedimento, producono un'ipertrofia simile a quella dei carichi pesanti.</div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="row" id="cats" role="group" aria-label="Filtra per categoria"></div>
+  <div class="row">
+    <div class="row" id="lvls" role="group" aria-label="Filtra per livello"></div>
+    <input type="search" id="q" placeholder="Cerca un esercizio…" aria-label="Cerca un esercizio">
+    <span class="count" id="count"></span>
+  </div>
+</div>
+
+<main id="main"></main>
+
+<footer>
+  <div>Le illustrazioni sono schemi: la figura scura è il lato vicino, quella chiara il lato lontano. Le frecce indicano il movimento, la linea continua sottile una cinghia TRX con il suo ancoraggio; il rettangolo scuro allungato è la powerbag, il cerchio azzurro la med ball, la fascia grigia verticale il muro, il piano grigio orizzontale un tavolo robusto o un rialzo.</div>
+  <div>Fonti: <a href="https://pubmed.ncbi.nlm.nih.gov/19197209/" target="_blank" rel="noopener">Fenwick et al. 2009, rematori a confronto: attivazione e carico lombare (PubMed)</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/28834797/" target="_blank" rel="noopener">Schoenfeld et al. 2017, carichi bassi e alti a confronto (PubMed)</a></div>
+</footer>
+</div>
+
+<script>
+const CATS={
+ A:{t:"Corpo libero fondamentali",tag:"estensioni · prone · tavolo",p:"La base della schiena senza attrezzi: estensioni prone per gli erettori, alzate a T e W per trapezio medio e romboidi, rematore sotto un tavolo robusto per il gran dorsale."},
+ B:{t:"Corpo libero avanzato e isometrico",tag:"leve lunghe · tenute · ponti",p:"Leve lunghe, tenute e posizioni impegnative: superman a corpo teso, ponti, rematori inversi con piedi rialzati e a un braccio."},
+ C:{t:"Powerbag",tag:"rematori · stacchi · trasporti",p:"La sacca è fatta per tirare: rematori con prese diverse, stacchi, good morning, clean e trasporti che reclutano tutta la catena posteriore."},
+ D:{t:"Med ball",tag:"slam · pullover · lanci",p:"Potenza nelle tirate dall'alto e nei lanci all'indietro, pullover per il gran dorsale e appoggi instabili per erettori e glutei."},
+ E:{t:"TRX",tag:"rematori · pulldown · ponti",p:"Il carico si regola con l'inclinazione. Rivolto all'ancoraggio alleni rematori e tirate; in ginocchio sotto l'ancoraggio sostituisci la trazione alla sbarra."}
+};
+const LV={1:"Base",2:"Intermedio",3:"Avanzato"};
+
+/* pose base: r = lato vicino, l = lato lontano. viewBox 0 -12 160 110, pavimento y=90, testa a destra */
+const B={
+ up:{H:[128,49],S:[116,54],P:[72,70],rE:[116,71],rW:[116,89],rK:[50,79],rF:[28,89]},
+ down:{H:[132,72],S:[120,77],P:[74,82],rE:[104,70],rW:[118,89],rK:[50,85],rF:[28,89]},
+ knee:{H:[128,54],S:[116,59],P:[82,77],rE:[116,74],rW:[116,89],rK:[64,89],rF:[46,80]},
+ decl:{H:[130,60],S:[118,65],P:[74,56],rE:[118,78],rW:[118,89],rK:[52,52],rF:[30,50]},
+ incl:{H:[124,30],S:[114,37],P:[72,62],rE:[114,50],rW:[114,62],rK:[50,76],rF:[28,89]},
+ pike:{H:[118,66],S:[110,60],P:[78,38],rE:[112,74],rW:[114,89],rK:[60,62],rF:[44,89]},
+ supB:{H:[24,84],S:[36,86],P:[78,86],rE:[38,72],rW:[40,58],rK:[98,68],rF:[112,89]},
+ supD:{H:[24,84],S:[36,86],P:[78,86],rE:[48,88],rW:[46,76],rK:[98,68],rF:[112,89]},
+ bridgeP:{H:[22,84],S:[34,86],P:[72,66],rE:[36,72],rW:[38,58],rK:[98,62],rF:[106,89]},
+ stand:{H:[80,20],S:[80,30],P:[80,57],rE:[82,43],rW:[82,57],rK:[82,73],rF:[82,89],lE:[78,43],lW:[78,57],lK:[78,73],lF:[78,89]},
+ push:{H:[84,20],S:[82,30],P:[78,57],rE:[96,32],rW:[112,30],rK:[86,73],rF:[90,89],lK:[72,73],lF:[66,89]},
+ chest:{H:[84,20],S:[82,30],P:[78,57],rE:[86,44],rW:[96,36],rK:[86,73],rF:[90,89],lK:[72,73],lF:[66,89]},
+ tallK:{H:[80,34],S:[80,44],P:[80,68],rE:[94,46],rW:[110,44],rK:[80,89],rF:[56,89]},
+ lungeP:{H:[90,24],S:[88,34],P:[80,62],rE:[102,36],rW:[118,34],rK:[104,66],rF:[106,89],lK:[70,84],lF:[52,89]},
+ dip:{H:[90,22],S:[86,32],P:[76,58],rE:[80,44],rW:[84,56],rK:[68,74],rF:[84,84]},
+ trxP:{H:[114,30],S:[106,38],P:[68,62],rE:[118,32],rW:[132,24],rK:[52,76],rF:[40,89]},
+ trxD:{H:[120,36],S:[112,44],P:[70,64],rE:[104,30],rW:[124,32],rK:[54,77],rF:[40,89]},
+ trxPU:{H:[128,49],S:[116,54],P:[72,64],rE:[116,71],rW:[116,89],rK:[50,64],rF:[28,64]},
+ bear:{H:[124,54],S:[112,60],P:[72,60],rE:[112,74],rW:[112,89],rK:[78,80],rF:[52,89]},
+ ohp:{H:[80,20],S:[80,30],P:[80,57],rE:[86,17],rW:[84,3],lE:[86,17],lW:[84,3],rK:[82,73],rF:[82,89],lK:[78,73],lF:[78,89]},
+ dipS:{H:[84,28],S:[82,38],P:[74,62],rE:[92,46],rW:[90,34],rK:[90,74],rF:[82,89],lK:[88,75],lF:[80,89]},
+ tallKOH:{H:[80,34],S:[80,44],P:[80,68],rE:[86,31],rW:[84,17],rK:[80,89],rF:[56,89]},
+ hk:{H:[80,32],S:[80,42],P:[80,66],rE:[86,28],rW:[84,14],rK:[102,66],rF:[102,89],lK:[78,89],lF:[56,89]},
+ squat:{H:[94,42],S:[90,50],P:[66,70],rE:[100,58],rW:[98,48],rK:[90,70],rF:[82,89]},
+ hinge:{H:[112,42],S:[102,46],P:[72,54],rE:[102,60],rW:[102,74],rK:[78,72],rF:[72,89]},
+ lungeOH:{H:[90,24],S:[88,34],P:[80,62],rE:[94,20],rW:[92,6],rK:[104,66],rF:[106,89],lK:[70,84],lF:[52,89]},
+ sitOH:{H:[60,46],S:[60,56],P:[62,82],rE:[66,42],rW:[64,28],rK:[90,82],rF:[116,86]},
+ pikeK:{H:[116,68],S:[106,62],P:[74,66],rE:[108,76],rW:[110,89],rK:[70,89],rF:[50,89]},
+ pikeD:{H:[124,80],S:[114,70],P:[80,38],rE:[104,76],rW:[114,89],rK:[62,62],rF:[44,89]},
+ proneY:{H:[128,82],S:[118,84],P:[76,85],rE:[132,80],rW:[146,76],rK:[52,86],rF:[28,86]},
+ proneT:{H:[128,82],S:[118,84],P:[76,85],rE:[118,76],rW:[118,68],rK:[52,86],rF:[28,86]},
+ proneW:{H:[128,82],S:[118,84],P:[76,85],rE:[104,80],rW:[118,74],rK:[52,86],rF:[28,86]},
+ revP:{H:[34,56],S:[42,62],P:[78,66],rE:[38,76],rW:[36,89],rK:[102,76],rF:[126,89]},
+ crab:{H:[34,56],S:[42,62],P:[78,62],rE:[38,76],rW:[36,89],rK:[96,62],rF:[104,89]},
+ hs:{H:[84,68],S:[82,60],P:[78,30],rE:[86,74],rW:[88,89],rK:[76,14],rF:[74,-2]},
+ hsD:{H:[88,82],S:[80,72],P:[76,42],rE:[96,78],rW:[90,89],rK:[74,24],rF:[72,8]},
+ walkW:{H:[110,72],S:[100,66],P:[72,46],rE:[104,78],rW:[106,89],rK:[66,36],rF:[62,26]},
+ lean:{H:[136,52],S:[124,56],P:[80,70],rE:[118,72],rW:[114,89],rK:[56,80],rF:[34,89]},
+ frW:{front:1,H:[80,18],S:[80,28],P:[80,56],Sl:[70,30],Sr:[90,30],Pl:[74,56],Pr:[86,56],lK:[73,73],lF:[72,89],rK:[87,73],rF:[88,89],lE:[60,34],lW:[62,20],rE:[100,34],rW:[98,20]},
+ frLat:{front:1,H:[80,18],S:[80,28],P:[80,56],Sl:[70,30],Sr:[90,30],Pl:[74,56],Pr:[86,56],lK:[73,73],lF:[72,89],rK:[87,73],rF:[88,89],lE:[57,31],lW:[44,32],rE:[103,31],rW:[116,32]},
+ frOH:{front:1,H:[80,18],S:[80,28],P:[80,56],Sl:[70,30],Sr:[90,30],Pl:[74,56],Pr:[86,56],lK:[73,73],lF:[72,89],rK:[87,73],rF:[88,89],lE:[66,16],lW:[74,2],rE:[94,16],rW:[86,2]},
+ frHalo:{front:1,H:[80,18],S:[80,28],P:[80,56],Sl:[70,30],Sr:[90,30],Pl:[74,56],Pr:[86,56],lK:[73,73],lF:[72,89],rK:[87,73],rF:[88,89],lE:[64,18],lW:[76,6],rE:[96,18],rW:[84,6]},
+ tl:{H:[62,27],S:[68,36],P:[82,60],rE:[81,29],rW:[94,22],rK:[92,75],rF:[100,89]},
+ tlRow:{H:[62,27],S:[68,36],P:[82,60],rE:[56,42],rW:[70,32],rK:[92,75],rF:[100,89]},
+ tlY:{H:[62,27],S:[68,36],P:[82,60],rE:[74,22],rW:[80,7],rK:[92,75],rF:[100,89]},
+ tlT:{H:[62,27],S:[68,36],P:[82,60],rE:[74,32],rW:[80,30],rK:[92,75],rF:[100,89]},
+ tlW:{H:[62,27],S:[68,36],P:[82,60],rE:[60,46],rW:[62,30],rK:[92,75],rF:[100,89]},
+ tlI:{H:[62,27],S:[68,36],P:[82,60],rE:[64,20],rW:[60,5],rK:[92,75],rF:[100,89]},
+ tlFace:{H:[62,27],S:[68,36],P:[82,60],rE:[60,28],rW:[72,22],rK:[92,75],rF:[100,89]},
+ toh:{H:[92,27],S:[86,36],P:[72,60],rE:[96,22],rW:[106,10],rK:[64,74],rF:[58,89]},
+ tohD:{H:[92,27],S:[86,36],P:[72,60],rE:[92,48],rW:[96,34],rK:[64,74],rF:[58,89]},
+ tpike:{H:[118,66],S:[110,60],P:[80,36],rE:[112,74],rW:[114,89],rK:[64,48],rF:[48,60]},
+ tSaw:{H:[128,72],S:[116,76],P:[72,74],rE:[116,89],rW:[132,89],rK:[50,72],rF:[28,70]},
+ tFall:{H:[102,32],S:[94,38],P:[74,58],rE:[108,30],rW:[122,22],rK:[64,74],rF:[58,89]},
+ superman:{H:[126,80],S:[116,83],P:[74,85],rE:[134,78],rW:[148,74],rK:[52,83],rF:[30,79]},
+ ext:{H:[124,70],S:[114,76],P:[74,85],rE:[122,72],rW:[127,66],rK:[52,86],rF:[28,86]},
+ extA:{H:[124,70],S:[114,76],P:[74,85],rE:[100,80],rW:[86,80],rK:[52,86],rF:[28,86]},
+ quad:{H:[124,54],S:[112,60],P:[74,60],rE:[112,74],rW:[112,89],rK:[74,89],rF:[52,89]},
+ bird:{H:[124,54],S:[112,60],P:[74,60],rE:[112,74],rW:[112,89],rK:[74,89],rF:[52,89],lE:[126,58],lW:[142,56],lK:[54,60],lF:[34,60]},
+ gb:{H:[24,84],S:[36,86],P:[74,70],rE:[48,88],rW:[60,88],rK:[98,62],rF:[106,89]},
+ revPl:{H:[30,58],S:[38,64],P:[80,74],rE:[38,76],rW:[36,89],rK:[106,82],rF:[130,89]},
+ invB:{H:[126,72],S:[116,74],P:[74,80],rE:[118,62],rW:[118,50],rK:[50,84],rF:[28,89]},
+ invT:{H:[124,58],S:[114,62],P:[72,74],rE:[100,58],rW:[118,50],rK:[50,82],rF:[28,89]},
+ invK:{H:[124,58],S:[114,62],P:[80,72],rE:[100,58],rW:[118,50],rK:[60,66],rF:[54,89]},
+ invF:{H:[124,60],S:[114,63],P:[72,66],rE:[100,58],rW:[118,50],rK:[50,64],rF:[30,62]},
+ hingeR:{H:[112,42],S:[102,46],P:[72,54],rE:[86,46],rW:[96,58],rK:[78,72],rF:[72,89]},
+ hingeY:{H:[112,42],S:[102,46],P:[72,54],rE:[114,40],rW:[128,34],rK:[78,72],rF:[72,89]},
+ gm:{H:[112,42],S:[102,46],P:[72,54],rE:[96,34],rW:[108,40],rK:[78,72],rF:[72,89]},
+ dl:{H:[110,50],S:[100,54],P:[70,58],rE:[100,68],rW:[100,82],rK:[86,72],rF:[76,89]},
+ sl:{H:[118,52],S:[108,54],P:[76,58],rE:[108,68],rW:[110,80],rK:[78,74],rF:[76,89],lK:[56,56],lF:[36,54]},
+ slR:{H:[118,52],S:[108,54],P:[76,58],rE:[122,52],rW:[136,50],rK:[78,74],rF:[76,89],lK:[56,56],lF:[36,54]},
+ split:{H:[112,40],S:[104,44],P:[78,58],rE:[90,46],rW:[98,58],rK:[100,72],rF:[104,89],lK:[66,76],lF:[54,89]},
+ upRow:{H:[128,49],S:[116,54],P:[72,70],rE:[100,56],rW:[110,68],rK:[50,79],rF:[28,89]},
+ bearRow:{H:[124,54],S:[112,60],P:[72,60],rE:[98,60],rW:[108,72],rK:[78,80],rF:[52,89]},
+ supOH:{H:[44,84],S:[56,86],P:[96,86],rE:[42,82],rW:[28,82],rK:[118,68],rF:[132,89]},
+ wheel:{H:[58,78],S:[60,70],P:[84,48],rE:[54,80],rW:[50,89],rK:[106,64],rF:[112,89]},
+ gbF:{H:[24,84],S:[36,86],P:[74,70],rE:[48,88],rW:[60,88],rK:[98,60],rF:[120,64]},
+ tlLow:{H:[46,52],S:[54,58],P:[80,72],rE:[76,48],rW:[92,40],rK:[98,80],rF:[106,89]},
+ tlLowR:{H:[50,46],S:[58,52],P:[82,70],rE:[54,64],rW:[66,52],rK:[98,80],rF:[106,89]},
+ tHor:{H:[40,74],S:[50,76],P:[84,80],rE:[56,62],rW:[66,52],rK:[108,86],rF:[128,89]},
+ tk:{H:[74,36],S:[76,46],P:[82,68],rE:[90,30],rW:[104,18],rK:[80,89],rF:[56,89]},
+ tkPD:{H:[72,38],S:[76,48],P:[82,68],rE:[78,62],rW:[86,50],rK:[80,89],rF:[56,89]},
+ tsq:{H:[70,50],S:[74,58],P:[80,78],rE:[94,50],rW:[110,42],rK:[98,78],rF:[94,89]},
+ none:{}
+};
+const X=[];
+function e(n,c,l,name,base,o,pr,d,p){X.push({n,c,l,name,pose:Object.assign({},B[base],o||{}),pr:pr||[],d,p})}
+const T=(x,y)=>[['hook',150,-8],['strap',150,-8,x,y]];
+const TF=(x,y)=>[['hook',28,-8],['strap',28,-8,x,y]];
+const TB=[['bench',100,46,56,4],['bench',150,50,3,40]];
+const BOX=['bench',14,64,26,26];
+
+/* A — Corpo libero fondamentali */
+e(1,'A',1,"Superman",'superman',{},[['arrow',156,86,156,70],['arrow',22,88,22,74]],
+"Prono a braccia tese avanti: solleva insieme braccia, petto e gambe di pochi centimetri, sguardo a terra e glutei contratti. Tieni 2-3 s e scendi. È la base per gli erettori spinali.",
+"Tenute più lunghe, poi superman a Y-T-W e con palla tra le mani.");
+e(2,'A',1,"Estensione prona mani alle tempie",'ext',{},[['arrow',140,84,140,66]],
+"Prono, dita alle tempie e gomiti aperti: solleva il petto dal pavimento estendendo la parte alta della schiena, gambe a terra. Il lavoro è nella zona toracica, non nel collo.",
+"Pausa in alto, poi braccia tese avanti.");
+e(3,'A',1,"Estensione prona braccia ai fianchi",'extA',{},[['arrow',140,84,140,66]],
+"Prono, braccia lungo i fianchi con i palmi verso il basso: solleva il petto portando le mani verso i piedi e stringendo le scapole. La leva corta lo rende il primo passo.",
+"Pollici ruotati verso l'esterno, poi braccia a T.");
+e(4,'A',1,"Alzata prona a T",'proneT',{},[['arrow',134,86,134,70]],
+"Prono, braccia aperte a T con i pollici in alto: solleva le braccia stringendo le scapole verso la colonna. Lavora romboidi e trapezio medio.",
+"Pausa di 3 s in alto, poi con petto sollevato.");
+e(5,'A',1,"W prona",'proneW',{},[['arrow',130,86,130,72]],
+"Prono, gomiti piegati e vicini ai fianchi, mani all'altezza delle spalle: solleva gomiti e mani ruotando i pollici verso l'alto. Trapezio medio e rotatori esterni.",
+"Tenute più lunghe, poi alternata con la Y.");
+e(6,'A',1,"Rematore prono a vuoto",'ext',{rE:[102,72],rW:[112,78]},[['arrow',122,70,104,70]],
+"Prono con il petto appena sollevato, braccia tese avanti: tira i gomiti verso i fianchi come in un rematore e torna avanti. Scapole che scivolano in basso e indietro.",
+"Tempo lento, poi con tenuta di 3 s in chiusura.");
+e(7,'A',2,"Nuotatore",'superman',{lE:[100,78],lW:[86,80]},[['arc',116,80,14,200,340]],
+"Posizione di superman: alterna rapidamente braccio e gamba opposti senza mai appoggiarli, come in una nuotata a stile libero. Resistenza degli erettori.",
+"Serie a tempo di 20-40 s, poi più veloce.");
+e(8,'A',2,"Angelo nella neve prono",'proneT',{},[['arc',118,80,18,200,340]],
+"Prono, braccia sollevate dal pavimento: disegna un arco dalle mani sui glutei fino a sopra la testa e ritorno, sempre staccate da terra. Mobilità e forza della parte alta.",
+"Più lento, poi con petto sollevato.");
+e(9,'A',1,"Bird dog",'bird',{},[['arrow',146,62,154,58],['arrow',30,66,22,64]],
+"A carponi, allunga un braccio avanti e la gamba opposta indietro fino alla linea del corpo, senza ruotare il bacino. Torna e cambia lato. Stabilità di erettori e glutei.",
+"Pausa di 3 s, poi gomito al ginocchio sotto il corpo.");
+e(10,'A',1,"Bird dog con tocco gomito-ginocchio",'bird',{},[['arc',94,64,14,330,200]],
+"Dal bird dog porta gomito e ginocchio opposti a toccarsi sotto il busto, poi riallunga. Alterna estensione e chiusura senza appoggiare.",
+"Più lento, poi con ginocchia sollevate da terra.");
+e(11,'A',1,"Ponte glutei",'gb',{},[['arrow',74,86,74,72]],
+"Supino, piedi a terra vicini ai glutei: solleva il bacino fino alla linea spalle-ginocchia spingendo con i talloni. Rinforza la catena posteriore senza carico sulla colonna.",
+"Pausa in alto, poi su una gamba.");
+e(12,'A',2,"Ponte su una gamba",'gb',{rK:[100,56],rF:[118,46]},[['arrow',74,86,74,72]],
+"Una gamba sollevata in aria: spingi con il tallone a terra fino alla linea spalle-ginocchio. Il bacino non deve inclinarsi.",
+"Tenute più lunghe, poi con piede su rialzo.");
+e(13,'A',1,"Rematore sotto il tavolo a ginocchia piegate",'invK',{},TB.concat([['arrow',140,76,140,62]]),
+"Sdraiato sotto un tavolo robusto, mani al bordo e ginocchia piegate: tira il petto verso il bordo tenendo il corpo dritto dalle spalle alle ginocchia. Il gran dorsale tira, le gambe aiutano.",
+"Gambe tese, poi pausa in alto.");
+e(14,'A',2,"Rematore sotto il tavolo",'invT',{},TB.concat([['arrow',140,76,140,62]]),
+"Gambe tese, talloni a terra, corpo rigido: tira il petto verso il bordo stringendo le scapole e scendi in 2 s. È il rematore inverso a corpo libero, il migliore senza attrezzi.",
+"Fermo di 2 s in alto, poi piedi rialzati.");
+e(15,'A',2,"Rematore sotto il tavolo con fermo",'invT',{},TB,
+"Ogni ripetizione si ferma 3 s con il petto al bordo e le scapole strette, poi scende lenta. Insegna a chiudere la tirata con la schiena e non con le braccia.",
+"Fermi più lunghi, poi più ripetizioni.");
+e(16,'A',2,"Reverse plank",'revPl',{},[['arrow',80,88,80,76]],
+"Seduto, mani a terra dietro i glutei con le dita verso i piedi: solleva il bacino fino a una linea dritta dai talloni alle spalle. Tieni 20-40 s. Catena posteriore e retrazione scapolare.",
+"Tenute più lunghe, poi su una gamba.");
+e(17,'A',1,"Tavolino con retrazione",'crab',{},[['arrow',78,80,78,66]],
+"Seduto, piedi a terra e mani dietro: solleva il bacino fino a formare un tavolo, spalle lontane dalle orecchie e scapole strette. Tieni 20-30 s.",
+"Tenute più lunghe, poi reverse plank a gambe tese.");
+e(18,'A',1,"Good morning a corpo libero",'gm',{},[['arc',72,54,40,280,320]],
+"In piedi, mani dietro la nuca: spingi le anche indietro piegando il busto in avanti con la schiena neutra, fino a sentire tirare i femorali. Risali stringendo i glutei.",
+"Più lento, poi su una gamba.");
+e(19,'A',2,"Stacco a una gamba a corpo libero",'sl',{},[['arc',76,58,36,240,290]],
+"In equilibrio su un piede: busto in avanti e gamba libera indietro come un'unica leva, fino a quasi parallelo. Bacino dritto, risali con il gluteo d'appoggio.",
+"Braccia avanti, poi con carico.");
+e(20,'A',1,"Alzata a Y in hinge",'hingeY',{},[['arrow',134,44,138,28]],
+"Busto piegato in avanti a 45°, schiena neutra: solleva le braccia tese a formare una Y con i pollici in alto. Erettori in tenuta, trapezio inferiore in lavoro.",
+"Tenute più lunghe, poi alternata con T e W.");
+
+/* B — Avanzato e isometrico */
+e(21,'B',2,"Superman isometrico",'superman',{rE:[136,76],rW:[150,70],rK:[52,82],rF:[30,76]},[],
+"Posizione di superman più alta possibile, braccia e gambe tese e lontane: tieni 20-45 s respirando corto. Resistenza degli erettori in accorciamento.",
+"Tenute più lunghe, poi con palla tra le mani.");
+e(22,'B',2,"Pulldown prono",'superman',{rE:[106,76],rW:[120,72]},[['arc',116,80,22,320,240]],
+"Dal superman a braccia tese, tira i gomiti verso le costole come in una lat machine e ritorna avanti, sempre staccato da terra.",
+"Più lento, poi con fermo di 2 s in chiusura.");
+e(23,'B',3,"Superman oscillante",'superman',{},[['arc',80,74,30,30,150]],
+"In superman pieno, dondola avanti e indietro sul ventre come una barca, senza perdere la forma ad arco.",
+"Oscillazioni più ampie, poi più lunghe.");
+e(24,'B',2,"Estensione prona con rotazione",'ext',{lE:[116,62],lW:[118,48]},[['arc',116,72,14,270,360]],
+"Mani alle tempie, solleva il petto e ruota portando un gomito verso il soffitto, torna al centro e cambia lato. Erettori e muscoli rotatori della colonna.",
+"Pausa in rotazione, poi braccia tese.");
+e(25,'B',3,"Rematore sotto il tavolo con piedi rialzati",'invF',{},TB.concat([BOX,['arrow',140,78,140,62]]),
+"Talloni su una sedia o un rialzo, corpo quasi orizzontale: tira il petto al bordo del tavolo. Più il corpo è orizzontale, più carico va sulla schiena.",
+"Fermo in alto, poi a un braccio.");
+e(26,'B',3,"Rematore sotto il tavolo a un braccio",'invT',{lE:[112,72],lW:[102,68]},TB.concat([['arrow',140,76,140,62]]),
+"Una sola mano al bordo, l'altra sul petto: tira senza far ruotare il busto. Carico doppio sul lato che tira e lavoro antirotatorio per il core.",
+"Ginocchia piegate per iniziare, poi gambe tese.");
+e(27,'B',3,"Rematore inverso esplosivo",'invT',{},TB.concat([['arrow',138,80,138,56]]),
+"Tirata veloce e potente fino a staccare per un istante le mani dal bordo, ripresa e discesa controllata. Solo su un appoggio molto stabile.",
+"Più ripetizioni, poi piedi rialzati.");
+e(28,'B',3,"Ponte completo",'wheel',{},[['arrow',84,62,84,42]],
+"Supino, mani a terra vicino alle orecchie e piedi vicini ai glutei: spingi fino a sollevare tutto il corpo ad arco. Estensione completa della colonna, solo con buona mobilità.",
+"Tenute più lunghe, poi avvicina mani e piedi.");
+e(29,'B',2,"Reverse plank su una gamba",'revPl',{rK:[106,66],rF:[128,54]},[['arrow',140,66,140,50]],
+"Dal reverse plank solleva una gamba tesa senza che il bacino scenda o ruoti. Tieni 15-30 s per lato.",
+"Tenute più lunghe, poi alterna le gambe.");
+e(30,'B',1,"Scivolata al muro con retrazione",'ohp',{H:[82,20],rE:[74,17],rW:[76,3],lE:[74,17],lW:[76,3]},[['wallT',64],['arrow',90,4,90,22]],
+"Schiena, nuca e glutei al muro, braccia in alto contro la parete: scendi con i gomiti verso i fianchi stringendo le scapole, poi risali. È una trazione al muro senza carico.",
+"Più lento, poi con 3 s di tenuta in basso.");
+e(31,'B',1,"Ponte sui gomiti",'supD',{},[['arrow',38,94,38,78]],
+"Supino, gomiti piegati a terra vicino ai fianchi: spingi i gomiti nel pavimento sollevando il petto e stringendo le scapole. Romboidi e trapezio medio in isometria.",
+"Tenute più lunghe, poi con bacino sollevato.");
+e(32,'B',2,"Stacco a una gamba con allungo",'slR',{},[['arrow',140,46,152,44]],
+"Stacco a una gamba con le braccia tese avanti in linea con il busto: la leva più lunga chiede di più a erettori e gluteo d'appoggio.",
+"Tenuta di 3 s in basso, poi con carico in mano.");
+e(33,'B',3,"Bird dog in plank",'up',{lE:[132,48],lW:[146,44],lK:[50,70],lF:[28,66]},[['arrow',150,52,156,48]],
+"In plank a braccia tese, allunga un braccio avanti e la gamba opposta indietro senza ruotare. Tutto il peso su due appoggi.",
+"Tenute più lunghe, poi alternato in continuo.");
+e(34,'B',3,"Good morning su una gamba",'sl',{rE:[106,40],rW:[116,46]},[['arc',76,58,36,240,290]],
+"Mani dietro la nuca, in equilibrio su un piede: piega il busto in avanti con la gamba libera indietro e risali. La leva corta delle braccia sposta il lavoro sugli erettori.",
+"Più lento, poi con carico al petto.");
+e(35,'B',2,"Tenuta al petto sotto il tavolo",'invT',{},TB,
+"Raggiunta la posizione alta del rematore inverso, petto al bordo: tieni 15-30 s con il corpo rigido e le scapole strette.",
+"Tenute più lunghe, poi piedi rialzati.");
+
+/* C — Powerbag */
+e(36,'C',1,"Rematore busto flesso",'hingeR',{},[['bag',96,60,24],['arrow',112,74,112,58]],
+"Busto inclinato a circa 45°, schiena neutra, sacca per le maniglie: tirala verso l'ombelico guidando con i gomiti vicini al corpo. Il rematore base per il gran dorsale.",
+"Più carico, poi con fermo di 2 s.");
+e(37,'C',1,"Rematore presa larga",'hingeR',{rE:[92,40],rW:[98,52]},[['bag',100,54,28],['arrow',116,70,116,54]],
+"Presa larga sulla sacca e gomiti aperti: tira verso lo sterno. Sposta il lavoro su romboidi, trapezio medio e deltoide posteriore.",
+"Più carico, poi con tenuta in alto.");
+e(38,'C',1,"Rematore a un braccio in affondo",'split',{lE:[110,58],lW:[112,70]},[['bag',98,62,14],['arrow',112,78,112,62]],
+"Piedi sfalsati, mano libera sulla coscia avanti: tira la sacca per una maniglia lungo il fianco, senza ruotare il busto.",
+"Più carico, poi senza appoggio della mano.");
+e(39,'C',2,"Rematore dalla sacca a terra",'dl',{},[['bag',100,84,24],['arrow',116,84,116,62]],
+"Busto quasi parallelo al pavimento, sacca a terra: tirata esplosiva fino all'addome e ritorno a terra a ogni ripetizione. È il rematore Pendlay: forza e potenza dal punto morto.",
+"Più carico, poi più veloce.");
+e(40,'C',1,"Stacco rumeno",'hinge',{},[['bag',102,76,24],['arc',72,54,40,280,320]],
+"Sacca davanti alle cosce: spingi le anche indietro facendola scendere lungo le gambe fino a metà tibia, ginocchia morbide e schiena neutra. Risali con i glutei.",
+"Più carico, poi su una gamba.");
+e(41,'C',1,"Stacco da terra",'dl',{},[['bag',100,84,24],['arrow',122,84,122,58]],
+"Sacca a terra tra i piedi, anche indietro e petto alto: spingi il pavimento con le gambe e porta la sacca in alto fino a essere dritto. La schiena tiene la posizione, le gambe spingono.",
+"Più carico, poi stacco a una gamba.");
+e(42,'C',2,"Good morning con sacca sulle spalle",'gm',{rE:[100,42],rW:[104,46]},[['bag',100,40,26],['arc',72,54,40,280,320]],
+"Sacca appoggiata sulle spalle dietro la nuca: piega le anche portando il busto in avanti con la schiena neutra, poi risali. Erettori e femorali sotto carico.",
+"Più carico, poi con fermo in basso.");
+e(43,'C',2,"Stacco a una gamba con sacca",'sl',{},[['bag',110,82,16],['arc',76,58,36,240,290]],
+"Sacca per una maniglia nella mano opposta alla gamba d'appoggio: stacco a una gamba con il bacino dritto. Lavoro antirotatorio per tutta la catena posteriore.",
+"Più carico, poi sacca con due mani.");
+e(44,'C',2,"Clean dalla sacca a terra",'dl',{},[['bag',100,84,24],['arrow',122,82,122,40]],
+"Dallo stacco, estensione esplosiva di anche e ginocchia e tirata alta: ruota i gomiti sotto e ricevi la sacca alle spalle. Riporta a terra con la schiena neutra.",
+"Più carico, poi in serie continue.");
+e(45,'C',3,"Rematore in plank",'upRow',{},[['bag',112,70,16],['arrow',124,86,124,70]],
+"In plank a braccia tese, una mano a terra e l'altra sulla sacca: tira la sacca al fianco senza ruotare il bacino. Piedi larghi per iniziare.",
+"Piedi più stretti, poi push-up tra le ripetizioni.");
+e(46,'C',2,"Rematore in bear",'bearRow',{},[['bag',110,74,16],['arrow',122,86,122,72]],
+"In bear con le ginocchia sollevate di pochi centimetri: tira la sacca al fianco con una mano tenendo bacino e ginocchia fermi.",
+"Più carico, poi in plank completo.");
+e(47,'C',1,"Shrug",'stand',{},[['bag',82,58,24],['arrow',100,40,100,26]],
+"In piedi, sacca davanti alle cosce a braccia tese: solleva le spalle verso le orecchie, pausa di 1 s e scendi lentamente. Isola il trapezio superiore.",
+"Più carico, poi con pausa più lunga.");
+e(48,'C',2,"Tirata alta dallo stacco",'dl',{},[['bag',100,70,24],['arrow',122,72,122,42]],
+"Dalla posizione di stacco con la sacca sopra le ginocchia, estensione esplosiva delle anche e tirata con i gomiti alti fino allo sterno. Trapezio e catena posteriore in potenza.",
+"Più carico, poi dalla sacca a terra.");
+e(49,'C',2,"Pullover a busto flesso",'hingeY',{rE:[112,46],rW:[124,42]},[['bag',124,42,22],['arc',102,46,24,330,60]],
+"Busto inclinato, braccia tese avanti con la sacca: portala ad arco fino alle cosce senza piegare i gomiti. Gran dorsale nel suo movimento di estensione.",
+"Più carico, poi con fermo sulle cosce.");
+e(50,'C',1,"Trascinamento all'indietro",'squat',{rE:[102,64],rW:[112,74]},[['bag',124,86,26],['arrow',90,95,60,95]],
+"Mani sulla sacca a terra, anche basse: cammina all'indietro trascinandola. Schiena alta, braccia tese e gambe che spingono.",
+"Distanze più lunghe, poi sacca più pesante.");
+e(51,'C',2,"Rematore con fermo",'hingeR',{},[['bag',96,60,24]],
+"Rematore busto flesso con 3 s di fermo in alto e scapole strette, discesa in 3 s. Tempo sotto tensione per l'ipertrofia.",
+"Fermi più lunghi, poi più carico.");
+e(52,'C',2,"Good morning Zercher",'gm',{rE:[104,58],rW:[108,50]},[['bag',106,54,22],['arc',72,54,40,280,320]],
+"Sacca abbracciata davanti al petto nell'incavo dei gomiti: good morning con la schiena neutra. Il carico davanti chiede più lavoro agli erettori alti.",
+"Più carico, poi con fermo in basso.");
+e(53,'C',3,"Clean alla spalla alternato",'dl',{},[['bag',100,84,24],['arrow',122,82,122,36]],
+"Dalla sacca a terra, clean esplosivo che la porta su una spalla; giù a terra e clean sull'altra. Ritmo continuo, schiena neutra a ogni presa.",
+"Più carico, poi a tempo.");
+e(54,'C',2,"Rematore alternato alle maniglie",'dl',{rE:[92,58],rW:[100,68]},[['bag',100,70,24],['arrow',116,82,116,66]],
+"Busto quasi parallelo, una maniglia per mano: tira un lato alla volta lasciando l'altro teso, senza ruotare il busto. Squilibrio continuo per il core.",
+"Più carico, poi più veloce.");
+e(55,'C',1,"Trasporto in abbraccio",'stand',{rE:[90,46],rW:[94,40],lE:[90,46],lW:[94,40]},[['bag',94,44,22],['arrow',56,95,104,95]],
+"Sacca stretta al petto a braccia incrociate: cammina eretto. La parte alta della schiena lavora per non farti piegare in avanti.",
+"Distanze più lunghe, poi sacca più pesante.");
+
+/* D — Med ball */
+e(56,'D',1,"Slam dall'alto",'ohp',{},[['ball',84,-4,6],['arrow',106,2,106,78]],
+"Palla sopra la testa a braccia tese, sbattila a terra davanti ai piedi tirando con il gran dorsale e flettendo anche e busto. Raccogli e ripeti senza pause.",
+"Palla più pesante, poi in continuo per 20-30 s.");
+e(57,'D',2,"Slam in ginocchio alto",'tallKOH',{},[['ball',84,10,6],['arrow',104,16,104,80]],
+"In ginocchio alto, senza l'aiuto delle gambe: slam a terra davanti alle ginocchia. Tutta la potenza viene da dorsali e addome.",
+"Palla più pesante, poi in mezzo ginocchio.");
+e(58,'D',1,"Pullover supino",'supOH',{},[['ball',24,82,6],['arc',58,84,26,190,270]],
+"Supino a ginocchia piegate, palla a braccia tese oltre la testa: portala ad arco fino sopra il petto senza piegare i gomiti, poi torna lentamente. Gran dorsale in allungamento.",
+"Palla più pesante, poi con bacino sollevato.");
+e(59,'D',2,"Lancio da pullover",'supOH',{},[['ball',24,82,6],['wallT',150],['arrow',60,70,140,40]],
+"Supino davanti al muro, palla dietro la testa: con un pullover esplosivo e un crunch lancia la palla contro il muro. Riprendi e torna giù.",
+"Palla più pesante, poi da seduto con passaggio di un compagno.");
+e(60,'D',1,"Stacco rumeno con med ball",'hinge',{},[['ball',102,76,6],['arc',72,54,40,280,320]],
+"Palla tra le mani davanti alle cosce: anche indietro, schiena neutra, scendi fino a metà tibia e risali. Ideale per imparare lo stacco.",
+"Palla più pesante, poi su una gamba.");
+e(61,'D',2,"Stacco a una gamba con med ball",'sl',{},[['ball',110,82,6],['arc',76,58,36,240,290]],
+"Palla tra le mani, in equilibrio su un piede: stacco a una gamba portando la palla verso il pavimento con il bacino dritto.",
+"Palla più pesante, poi toccando la palla a terra.");
+e(62,'D',2,"Superman con palla",'superman',{},[['ball',152,72,6],['arrow',22,88,22,74]],
+"Superman con la palla tra le mani a braccia tese: il peso in fondo alla leva aumenta il lavoro di erettori e trapezio inferiore.",
+"Tenute più lunghe, poi pulldown prono con palla.");
+e(63,'D',2,"Passaggio della palla in superman",'superman',{},[['ball',152,72,6],['arc',116,78,20,330,200]],
+"Prono con il petto sollevato: passa la palla da mani avanti a mani dietro la schiena con un arco laterale e ritorno, sempre staccato da terra.",
+"Palla più pesante, poi con gambe sollevate.");
+e(64,'D',2,"Ponte con piedi sulla palla",'gb',{rK:[96,64],rF:[112,76]},[['ball',114,82,8],['arrow',74,86,74,72]],
+"Supino, talloni sulla palla: solleva il bacino fino alla linea spalle-ginocchia senza far rotolare la palla. Femorali e glutei sotto instabilità.",
+"Pausa in alto, poi su una gamba.");
+e(65,'D',3,"Ponte su una gamba sulla palla",'gb',{rK:[96,64],rF:[112,76],lK:[100,54],lF:[118,44]},[['ball',114,82,8],['arrow',74,86,74,72]],
+"Un solo tallone sulla palla, l'altra gamba in aria: bacino in alto e fermo. Massima richiesta di stabilità alla catena posteriore.",
+"Tenute più lunghe, poi più ripetizioni.");
+e(66,'D',2,"Estensione prona sulla palla",'ext',{H:[124,62],S:[114,68],P:[76,76]},[['ball',80,82,8],['arrow',140,78,140,58]],
+"Prono con la palla sotto le anche, mani alle tempie: estendi la schiena oltre la linea del corpo e torna. La palla allunga l'escursione degli erettori.",
+"Braccia tese avanti, poi con rotazione.");
+e(67,'D',2,"Lancio all'indietro dal basso",'squat',{rE:[90,64],rW:[86,76]},[['ball',86,76,6],['arc',84,42,30,95,250]],
+"Palla tra le gambe in squat, estensione esplosiva delle anche e lancio sopra la testa all'indietro. Potenza di tutta la catena posteriore.",
+"Palla più pesante, poi distanza massima.");
+e(68,'D',2,"Lancio rotazionale al muro",'stand',{rE:[96,52],rW:[104,58]},[['ball',106,58,6],['wallT',140],['arc',80,50,24,120,20]],
+"Di fianco al muro, palla al fianco opposto: ruota anche e busto e lancia la palla contro la parete. Dorsale e obliqui lavorano insieme.",
+"Palla più pesante, poi con passo laterale.");
+e(69,'D',1,"Woodchop dal basso all'alto",'stand',{rE:[90,56],rW:[96,68],lE:[88,56],lW:[94,68]},[['ball',96,70,6],['arrow',100,68,112,10]],
+"Palla all'esterno di un ginocchio, porta la palla in diagonale sopra la spalla opposta estendendo anche e busto. Erettori e trapezio in rotazione.",
+"Palla più pesante, poi in mezzo ginocchio.");
+e(70,'D',3,"Rematore in plank con mano sulla palla",'upRow',{lW:[118,80]},[['ball',118,84,6],['arrow',124,86,124,70]],
+"Plank con una mano sulla palla: tira l'altro gomito al fianco senza ruotare. L'appoggio instabile moltiplica il lavoro antirotatorio.",
+"Piedi più stretti, poi più ripetizioni.");
+e(71,'D',1,"Good morning con palla al petto",'gm',{rE:[104,58],rW:[108,50]},[['ball',108,52,6],['arc',72,54,40,280,320]],
+"Palla stretta al petto: good morning con le anche che vanno indietro e la schiena neutra. Facile da imparare, ottimo nel riscaldamento.",
+"Palla più pesante, poi su una gamba.");
+e(72,'D',2,"Lancio tra le gambe all'indietro",'dl',{rE:[94,70],rW:[84,82]},[['ball',82,82,6],['arrow',70,84,20,70]],
+"Di spalle al bersaglio, palla tra le gambe in posizione di stacco: lancia indietro tra le gambe con una spinta di anche, come nello snap del football.",
+"Palla più pesante, poi distanza massima.");
+e(73,'D',2,"Stacco con slam",'dl',{},[['ball',100,82,6],['arrow',122,82,122,20]],
+"Stacco della palla da terra, estensione completa fino a sopra la testa, poi slam. Ogni ripetizione unisce tirata dal basso e tirata dall'alto.",
+"Palla più pesante, poi a tempo.");
+e(74,'D',2,"Bird dog con mano sulla palla",'bird',{rW:[112,82]},[['ball',112,84,6],['arrow',30,66,22,64]],
+"A carponi con una mano sulla palla: allunga il braccio libero e la gamba opposta senza far muovere la palla.",
+"Pausa di 3 s, poi ginocchia sollevate.");
+e(75,'D',3,"Superman con palla tra i piedi",'superman',{},[['ball',28,78,6],['arrow',156,86,156,70]],
+"Palla stretta tra le caviglie: superman sollevando insieme braccia e gambe. Il peso alle estremità rende più duro il lavoro dei lombari bassi e dei glutei.",
+"Tenute più lunghe, poi palla anche tra le mani.");
+
+/* E — TRX */
+e(76,'E',1,"Rematore",'tlRow',{},T(70,32).concat([['arrow',92,62,104,50]]),
+"Rivolto all'ancoraggio, corpo inclinato all'indietro e rigido: tira le maniglie ai lati del petto con i gomiti vicini al corpo. Il rematore di base in sospensione.",
+"Piedi più avanti per inclinarti di più, poi con fermo.");
+e(77,'E',1,"Rematore con fermo",'tlRow',{},T(70,32),
+"Rematore con 3 s di fermo in alto e scapole strette, discesa in 3 s. Insegna a chiudere la tirata con la schiena.",
+"Fermi più lunghi, poi più inclinazione.");
+e(78,'E',2,"Rematore a un braccio",'tlRow',{lE:[70,50],lW:[68,60]},T(70,32).concat([['arrow',92,62,104,50]]),
+"Una sola maniglia, l'altro braccio lungo il fianco: tira senza ruotare il busto verso il lato libero. Carico doppio e lavoro antirotatorio.",
+"Più inclinazione, poi con fermo in alto.");
+e(79,'E',2,"Power pull",'tlRow',{lE:[56,24],lW:[50,10]},T(70,32).concat([['arc',62,30,14,150,260]]),
+"Una sola maniglia: parti ruotato con il braccio libero verso il pavimento, tira e ruota aprendo il braccio libero verso il soffitto. Dorsale e rotazione del busto.",
+"Più inclinazione, poi più veloce.");
+e(80,'E',2,"Rematore inclinato",'tlLow',{},T(92,40).concat([['arrow',84,82,92,66]]),
+"Piedi più avanti, corpo vicino all'orizzontale: tira il petto alle maniglie. La versione più vicina al rematore inverso alla sbarra.",
+"Ancora più orizzontale, poi piedi rialzati.");
+e(81,'E',3,"Rematore con piedi rialzati",'tHor',{rK:[108,74],rF:[128,70]},T(66,52).concat([['bench',118,72,30,18],['arrow',88,90,92,74]]),
+"Talloni su un rialzo, corpo orizzontale sotto le cinghie: tira il petto alle maniglie. È il rematore più duro senza sbarra.",
+"Fermo in alto, poi a un braccio.");
+e(82,'E',1,"Rematore presa supina",'tlRow',{},T(70,32).concat([['arrow',92,62,104,50]]),
+"Palmi verso l'alto, gomiti stretti: tira verso l'addome. Coinvolge di più il gran dorsale basso e i bicipiti.",
+"Più inclinazione, poi con fermo.");
+e(83,'E',1,"Rematore a gomiti larghi",'tlRow',{rE:[66,24],rW:[72,30]},T(72,30).concat([['arrow',92,62,104,50]]),
+"Palmi verso il basso e gomiti aperti a 70-90°: tira all'altezza del petto. Lavora romboidi, trapezio medio e deltoide posteriore.",
+"Più inclinazione, poi con fermo.");
+e(84,'E',1,"Pulldown in ginocchio",'tk',{},T(104,18).concat([['arrow',90,58,98,40]]),
+"In ginocchio rivolto all'ancoraggio, braccia tese in alto e corpo inclinato indietro: tira i gomiti verso le costole portando il busto verso le maniglie. Sostituisce la trazione alla sbarra.",
+"Più inclinazione, poi a un braccio.");
+e(85,'E',2,"Pulldown in ginocchio a un braccio",'tk',{lE:[78,58],lW:[80,68]},T(104,18).concat([['arrow',90,58,98,40]]),
+"Una sola maniglia: pulldown in ginocchio senza ruotare il busto. Tutto il carico su un gran dorsale.",
+"Più inclinazione, poi con fermo.");
+e(86,'E',2,"Pullover in piedi a braccia tese",'tlI',{},T(60,5).concat([['arc',68,36,26,240,330]]),
+"Rivolto all'ancoraggio, braccia tese sopra la testa: portale ad arco verso i fianchi sollevando il corpo, senza piegare i gomiti. Gran dorsale isolato.",
+"Più inclinazione, poi con fermo ai fianchi.");
+e(87,'E',1,"Trazione dallo squat",'tsq',{},T(110,42).concat([['arrow',72,80,72,30]]),
+"Rivolto all'ancoraggio, accosciato con le braccia tese: risali tirando le maniglie al petto e spingendo con le gambe. Le gambe aiutano quanto serve.",
+"Usa meno le gambe, poi pulldown in ginocchio.");
+e(88,'E',1,"Rematore in squat",'tsq',{rE:[80,52],rW:[90,50]},T(90,50),
+"Mantieni lo squat profondo e rema portando le maniglie al petto. Gambe ferme: tira solo la schiena.",
+"Fermo in alto, poi a un braccio.");
+e(89,'E',2,"Rematore da affondo a un braccio",'tlRow',{rK:[92,72],rF:[94,89],lK:[100,78],lF:[112,89],lE:[70,50],lW:[68,60]},T(70,32),
+"Piedi sfalsati, una sola maniglia: tira portando il gomito oltre il fianco. Base più stretta, più controllo richiesto.",
+"Più inclinazione, poi senza fermarti.");
+e(90,'E',1,"Stacco a una gamba con TRX",'slR',{rE:[122,50],rW:[134,44]},T(134,44),
+"Maniglie in mano rivolto all'ancoraggio: stacco a una gamba usando le cinghie come equilibrio. Bacino dritto, risali con il gluteo.",
+"Meno appoggio, poi senza cinghie.");
+e(91,'E',2,"Ponte con talloni nelle cinghie",'gbF',{},[['hook',122,-8],['strap',122,-8,120,64],['arrow',74,86,74,72]],
+"Supino, talloni nelle cinghie: solleva il bacino fino alla linea del corpo senza far oscillare le cinghie. Femorali, glutei ed erettori.",
+"Pausa in alto, poi su una gamba.");
+e(92,'E',3,"Ponte in sospensione a una gamba",'gbF',{lK:[100,52],lF:[114,40]},[['hook',122,-8],['strap',122,-8,120,64],['arrow',74,86,74,72]],
+"Un solo tallone nella cinghia, l'altra gamba in alto: ponte con il bacino che non ruota.",
+"Tenute più lunghe, poi più ripetizioni.");
+e(93,'E',2,"Rematore con estensione d'anca",'tlLowR',{P:[82,82],rK:[98,82]},T(66,52).concat([['arrow',74,92,74,76]]),
+"Parti quasi seduto sotto le cinghie: tira e spingi le anche in avanti fino al corpo dritto nello stesso movimento. Rematore e catena posteriore insieme.",
+"Più lento, poi più orizzontale.");
+e(94,'E',3,"Rematore orizzontale",'tHor',{},T(66,52).concat([['arrow',88,92,92,76]]),
+"Piedi molto avanti, corpo quasi parallelo al pavimento: tira il petto alle maniglie con il corpo rigido. Massimo carico a piedi a terra.",
+"Fermo in alto, poi piedi rialzati.");
+e(95,'E',3,"Rematore esplosivo con battuta",'tlRow',{},T(70,32).concat([['arrow',90,64,106,46]]),
+"Tirata potente che ti solleva abbastanza da lasciare le maniglie per un istante e batterle; riprendi e scendi controllato.",
+"Più inclinazione, poi più ripetizioni.");
+e(96,'E',1,"Tenuta isometrica in alto",'tlRow',{},T(70,32),
+"In posizione alta del rematore, maniglie al petto: tieni 20-40 s con il corpo in linea e le scapole basse e strette.",
+"Tenute più lunghe, poi più inclinazione.");
+e(97,'E',2,"Rematore alternato",'tlRow',{lE:[86,30],lW:[96,26]},T(70,32).concat([['arc',70,34,10,180,320]]),
+"Due maniglie: tira con un braccio mentre l'altro resta teso, poi scambia senza scendere. Lavoro continuo di dorsale e core.",
+"Più inclinazione, poi più veloce.");
+e(98,'E',2,"Pullover in ginocchio a braccia tese",'tk',{rE:[92,24],rW:[106,16]},T(106,16).concat([['arc',80,44,28,300,30]]),
+"In ginocchio, braccia tese verso le maniglie in alto: tira ad arco fino ai fianchi senza piegare i gomiti, il busto sale verso l'ancoraggio.",
+"Più inclinazione, poi con fermo.");
+e(99,'E',3,"Pulldown in ginocchio esplosivo",'tkPD',{},T(86,50).concat([['arrow',90,58,98,40]]),
+"Pulldown in ginocchio con tirata rapida e potente fino ai fianchi, ritorno in 3 s. Potenza per chi non ha la sbarra.",
+"Più inclinazione, poi a un braccio.");
+e(100,'E',3,"Rematore con Y finale",'tlY',{},T(80,7).concat([['arc',70,26,14,250,340]]),
+"Rematore classico e, senza scendere, estendi le braccia sopra la testa a formare una Y. Dorsale e trapezio inferiore nella stessa ripetizione.",
+"Più inclinazione, poi più ripetizioni.");
+
+
+/* render figure */
+const pt=a=>a[0]+","+a[1];
+function line(a,b,c,w){return `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" class="${c}" stroke-width="${w}" stroke-linecap="round"/>`}
+function limb(a,b,c,cls){return `<polyline points="${pt(a)} ${pt(b)} ${pt(c)}" class="${cls}" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>`}
+function arcPath(cx,cy,r,a1,a2){const t=d=>d*Math.PI/180;const x1=cx+r*Math.cos(t(a1)),y1=cy+r*Math.sin(t(a1)),x2=cx+r*Math.cos(t(a2)),y2=cy+r*Math.sin(t(a2));const span=((a2-a1)%360+360)%360;return `<path d="M${x1.toFixed(1)},${y1.toFixed(1)} A${r},${r} 0 ${span>180?1:0} 1 ${x2.toFixed(1)},${y2.toFixed(1)}" class="ac" stroke-width="1.8" marker-end="url(#ah)"/>`}
+function prop(q){const[k,a,b,c,d,f]=q;switch(k){
+ case 'bench':return `<rect x="${a}" y="${b}" width="${c}" height="${d}" rx="1.5" class="pr"/>`;
+ case 'ball':return `<circle cx="${a}" cy="${b}" r="${c}" class="ball" stroke-width="1.5"/>`;
+ case 'band':return `<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" class="ac" stroke-width="2" stroke-dasharray="4 3"/>`;
+ case 'anchor':return `<line x1="${a}" y1="${b}" x2="${a}" y2="90" class="ac" stroke-width="1.2" opacity=".5"/><circle cx="${a}" cy="${b}" r="2.6" class="acf"/>`;
+ case 'kb':return `<path d="M${a-3},${b+3} Q${a},${b-2} ${a+3},${b+3}" class="wt" fill="none" stroke-width="1.6"/><circle cx="${a}" cy="${b+6.5}" r="4.5" class="wt"/>`;
+ case 'kbup':return `<path d="M${a-3},${b-3} Q${a},${b+2} ${a+3},${b-3}" class="wt" fill="none" stroke-width="1.6"/><circle cx="${a}" cy="${b-6.5}" r="4.5" class="wt"/>`;
+ case 'db':return `<rect x="${a-6}" y="${b-1}" width="12" height="2" class="wt"/><rect x="${a-7}" y="${b-3.5}" width="3" height="7" rx=".8" class="wt"/><rect x="${a+4}" y="${b-3.5}" width="3" height="7" rx=".8" class="wt"/>`;
+ case 'wheel':return `<circle cx="${a}" cy="${b}" r="5" class="ball" stroke-width="1.5"/><circle cx="${a}" cy="${b}" r="1.4" class="acf"/>`;
+ case 'bar':return `<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" class="wt" stroke-width="2.6" stroke-linecap="round"/>`;
+ case 'strap':return `<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" class="ac" stroke-width="1.6"/>`;
+ case 'slider':return `<rect x="${a-6}" y="${b-2.5}" width="12" height="2.5" rx="1" class="acf"/>`;
+ case 'bag':return `<rect x="${a-(c||22)/2}" y="${b-4}" width="${c||22}" height="8" rx="4" class="wt"/>`;
+ case 'hook':return `<circle cx="${a}" cy="${b}" r="2.6" class="acf"/>`;
+ case 'wallT':return `<rect x="${a}" y="-12" width="4" height="102" class="pr"/>`;
+ case 'wall':return `<rect x="${a}" y="34" width="4" height="56" class="pr"/>`;
+ case 'arrow':return `<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" class="ac" stroke-width="1.8" marker-end="url(#ah)"/>`;
+ case 'arc':return arcPath(a,b,c,d,f);
+ case 'breath':return [5,9,13].map(r=>`<path d="M${a-r},${b} A${r},${r} 0 0 1 ${a+r},${b}" class="ac" stroke-width="1.4" opacity="${1.15-r/14}"/>`).join('');
+ }return ''}
+function fig(x){
+ const P=x.pose;['E','W','K','F'].forEach(k=>{if(!P['l'+k])P['l'+k]=P['r'+k]});
+ let s=`<svg viewBox="0 -12 160 110" class="fg" role="img" aria-label="Illustrazione: ${x.name}">`;
+ s+=`<line x1="0" y1="90.5" x2="160" y2="90.5" class="floor" stroke-width="1.5"/>`;
+ const back=x.pr.filter(q=>['bench','wall','wallT','ball','wheel','bar','strap'].includes(q[0])&&!(q[0]==='ball'&&q[3]<7));
+ const front=x.pr.filter(q=>!back.includes(q));
+ s+=back.map(prop).join('');
+ if(P.front&&P.Sl){
+  s+=limb(P.Pl,P.lK,P.lF,'n')+limb(P.Pr,P.rK,P.rF,'n');
+  s+=line(P.Sl,P.Sr,'n',5)+line(P.Pl,P.Pr,'n',5)+line(P.S,P.P,'n',6)+line(P.S,P.H,'n',4);
+  s+=limb(P.Sl,P.lE,P.lW,'n')+limb(P.Sr,P.rE,P.rW,'n');
+ }else{
+  s+=limb(P.S,P.lE,P.lW,'f')+limb(P.P,P.lK,P.lF,'f');
+  s+=line(P.S,P.P,'n',6)+line(P.S,P.H,'n',4);
+  s+=limb(P.P,P.rK,P.rF,'n')+limb(P.S,P.rE,P.rW,'n');
+ }
+ s+=`<circle cx="${P.H[0]}" cy="${P.H[1]}" r="6" class="hn" stroke-width="2.5"/>`;
+ s+=front.map(prop).join('');
+ return s+'</svg>';
+}
+
+/* page */
+const main=document.getElementById('main');
+const st={c:'all',l:'all',q:''};
+function chip(box,val,label,key){const b=document.createElement('button');b.className='chip';b.type='button';b.textContent=label;b.dataset.v=val;b.setAttribute('aria-pressed',st[key]===val);b.onclick=()=>{st[key]=val;box.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.v===val));apply()};box.appendChild(b)}
+const cb=document.getElementById('cats'),lb=document.getElementById('lvls');
+chip(cb,'all','Tutte','c');Object.keys(CATS).forEach(k=>chip(cb,k,CATS[k].t,'c'));
+chip(lb,'all','Tutti i livelli','l');Object.keys(LV).forEach(k=>chip(lb,k,LV[k],'l'));
+Object.keys(CATS).forEach(k=>{
+ const items=X.filter(x=>x.c===k);
+ const sec=document.createElement('section');sec.dataset.c=k;sec.id='cat-'+k;
+ sec.innerHTML=`<div class="sh"><h2>${CATS[k].t}</h2><span class="tag">${CATS[k].tag} · n. ${items[0].n}–${items[items.length-1].n}</span><p>${CATS[k].p}</p></div><div class="grid">`+
+ items.map(x=>`<article class="card" data-l="${x.l}" data-s="${(x.name+' '+x.d).toLowerCase()}"><div class="fig">${fig(x)}</div><div class="cb"><div class="top"><span class="num">${String(x.n).padStart(3,'0')}</span><h3>${x.name}</h3><span class="lvl l${x.l}">${LV[x.l]}</span></div><p>${x.d}</p><p class="pg"><b>Progressione:</b> ${x.p}</p></div></article>`).join('')+`</div>`;
+ main.appendChild(sec);
+});
+const emp=document.createElement('p');emp.className='empty';emp.textContent='Nessun esercizio corrisponde ai filtri.';emp.hidden=true;main.appendChild(emp);
+const cnt=document.getElementById('count');
+function apply(){let tot=0;main.querySelectorAll('section').forEach(sec=>{let v=0;sec.querySelectorAll('.card').forEach(c=>{const ok=(st.c==='all'||sec.dataset.c===st.c)&&(st.l==='all'||c.dataset.l===st.l)&&(!st.q||c.dataset.s.includes(st.q));c.hidden=!ok;if(ok)v++});sec.hidden=!v;tot+=v});cnt.textContent=tot+' / 100';emp.hidden=tot>0}
+document.getElementById('q').addEventListener('input',ev=>{st.q=ev.target.value.trim().toLowerCase();apply()});
+apply();
+</script>
+
+
+</body></html>
