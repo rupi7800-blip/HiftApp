@@ -16,7 +16,6 @@ Web app per allenamenti funzionali ad alta intensità (HIFT).
 - **Analisi**: minuti parziali e totali per disciplina, calorie e MET stimati (Compendium of Physical Activities), obiettivo OMS settimanale, grafici di minuti, progressi degli esercizi e velocità di corsa (vedi `ANALISI.md`)
 - **Registro dell'allenamento**: pesi, ripetizioni, tempi, recuperi e serie di ogni allenamento, segnati dal vivo nel timer o a fine sessione (recuperi misurati in automatico), modificabili dal Diario; allenamento libero per le sessioni fatte fuori dall'app (vedi `REGISTRO.md`)
 - Diario con RPE e note, dettaglio ed eliminazione delle voci
-- Collegamento a **S.C.T. TrainingLab**, attivabile o disattivabile dall'amministratore in `config.json` (vedi `AMMINISTRATORE.md`)
 - Marchio **HIFT Lab**: logo e colori (arancio #FA8C1D, grigio #4D4B4C); `tools/logo.py` rigenera logo trasparente e icone dall'originale in `archivio/marchio/`
 - Libreria di 45 esercizi con figure animate, istruzioni, errori comuni e link a video gratuiti (Pexels, Pixabay, Wikimedia Commons)
 
@@ -30,7 +29,6 @@ App installabile (PWA): si aggiunge alla schermata Home, si apre a tutto schermo
 - `registro-core.js`, `REGISTRO.md` — registro serie per serie
 - `ARCHIVIO.md` — come collegare l'archivio esercizi esterno
 - `archivio-esercizi.json`, `archivio/img/` — archivio esercizi con le illustrazioni
-- `config.json` — impostazioni dell'amministratore (collegamenti)
 - `tools/estrai-atlanti.js` — rigenera l'archivio dagli atlanti
 - `tests/` — test automatici (`node --test tests/*.test.js`, `node tests/e2e.js`, `node tests/e2e-progressi.js`, `node tests/e2e-crea.js`, `node tests/e2e-attivita.js`, `node tests/e2e-registro.js`)
 - `manifest.json`, `sw.js` — installazione e offline
