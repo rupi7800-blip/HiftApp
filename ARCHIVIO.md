@@ -18,7 +18,7 @@ La libreria interna della scheda *Esercizi* (45 esercizi con figure animate) res
 | Atlante Glutei 100 | `GLU-001…100` | Stazione 4 | come sopra |
 | Atlante Dorso 100 | `DOR-001…100` | Stazione 5 | come sopra |
 
-**Come è stato costruito.** `node tools/estrai-atlanti.js` legge le pagine degli atlanti (copie in `archivio/sorgenti/`) eseguendo solo il loro codice dati, senza interfaccia, e scrive il JSON e le 600 illustrazioni in `archivio/img/`. Le illustrazioni sono le stesse figure degli atlanti, ricolorate per il tema scuro dell'app. Nome, livello, esecuzione e progressione sono copiati senza modifiche, e un test verifica che corrispondano all'atlante, numero per numero. Se un atlante cambia, si aggiorna la sua copia in `archivio/sorgenti/` e si rilancia lo script.
+**Come è stato costruito.** `node tools/estrai-atlanti.js <cartella>` legge le pagine degli atlanti (scaricate a parte: per scelta non sono nel repository né pubblicate con l'app) eseguendo solo il loro codice dati, senza interfaccia, e scrive il JSON e le 600 illustrazioni in `archivio/img/`. Le illustrazioni sono le stesse figure degli atlanti, ricolorate per il tema scuro dell'app. Nome, livello, esecuzione e progressione sono copiati senza modifiche, e un test verifica che corrispondano all'atlante, numero per numero. Se un atlante cambia, si scarica di nuovo la pagina nella cartella e si rilancia lo script. Nell'app gli atlanti non compaiono: niente fonti né collegamenti, solo gli esercizi.
 
 **Attrezzatura.** Gli atlanti non hanno un campo "attrezzatura", quindi lo script la ricava così:
 
@@ -100,7 +100,7 @@ Le schede salvate contengono solo gli **ID** degli esercizi. Se un ID non esiste
 ## Test
 
 ```bash
-node --test tests/*.test.js                      # logica del metodo e archivio reale (29 test)
+node --test tests/*.test.js                      # logica e archivio reale (con ATLANTI_DIR=<cartella> anche il confronto con gli atlanti)
 python3 -m http.server 8765 & node tests/e2e.js  # browser (48 controlli, richiede Playwright)
 ```
 

@@ -1,10 +1,10 @@
 {
-  "version": "1.7.0",
+  "version": "1.8.0",
   "date": "16/11/2026",
   "notes": [
-    "Registro dell'allenamento: pesi, ripetizioni, tempi, recuperi e serie di ogni allenamento nel Diario",
-    "Durante la seduta segni kg e ripetizioni sotto “Serie fatta”; i recuperi li misura il timer",
-    "A fine allenamento tabella serie per serie con “Come previsto”; modificabile dal Diario",
-    "Allenamento libero per le sessioni fatte fuori dall'app; il carico accetta la virgola"
+    "Nuovo marchio HIFT Lab: logo e colori",
+    "Nel timer: salta un esercizio, torna al precedente o scegli dall'elenco",
+    "HIFT Method: stop tra CORE e circuito, si riparte con “Inizia il circuito”",
+    "Collegamento a S.C.T. TrainingLab nella Home e nel Profilo"
   ]
 }

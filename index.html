@@ -3,12 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0D0E0B">
+<meta name="theme-color" content="#1B1A1C">
 <title>Hift App</title>
 <meta name="description" content="Allenamenti funzionali ad alta intensità su misura: obiettivi, fisico e attrezzatura.">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
-<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -19,9 +18,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0D0E0B;--bg2:#14150F;--card:#1A1B15;--card2:#22231C;
-  --ink:#F3F1EA;--mute:#A09F94;--dim:#5E5E56;
-  --volt:#D4FF1E;--coral:#FF5B3A;--sky:#7FD6FF;
+  /* marchio HIFT Lab: arancio #FA8C1D e grigio #4D4B4C (fondo scuro dal grigio del logo) */
+  --bg:#1B1A1C;--bg2:#222123;--card:#2A292B;--card2:#343335;--brand-gray:#4D4B4C;
+  --ink:#F5F3F1;--mute:#A9A6A8;--dim:#6C696B;
+  --volt:#FA8C1D;--coral:#EF4F4A;--sky:#7FD6FF;
   --line:rgba(243,241,234,.10);--line2:rgba(243,241,234,.18);
   --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#0ca30c;
   --r:20px;--sb:env(safe-area-inset-bottom,0px);--st:env(safe-area-inset-top,0px);
@@ -42,7 +42,7 @@ input,textarea,select{font:inherit;color:var(--ink)}
 /* top */
 .top{display:flex;align-items:center;justify-content:space-between;padding:4px 0 10px}
 .logo{font-stretch:62%;font-weight:900;font-size:30px;letter-spacing:.02em;display:flex;align-items:center;gap:1px}
-.logo i{display:inline-block;width:9px;height:24px;background:var(--volt);transform:skewX(-18deg);margin:0 3px 0 2px}
+.logo img{height:51px;width:auto;display:block}
 .marq{overflow:hidden;white-space:nowrap;border-block:1px solid var(--line);margin:0 -18px 18px;padding:9px 0}
 .marq span{display:inline-block;animation:mq 38s linear infinite;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--mute)}
 .marq b{color:var(--volt);font-weight:700}
@@ -71,18 +71,18 @@ input,textarea,select{font:inherit;color:var(--ink)}
 /* buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:56px;padding:0 24px;border-radius:999px;font-weight:800;font-stretch:75%;font-size:17px;letter-spacing:.06em;text-transform:uppercase;transition:transform .1s}
 .btn:active{transform:scale(.97)}
-.btn.volt{background:var(--volt);color:#0D0E0B}
+.btn.volt{background:var(--volt);color:#1B1A1C}
 .btn.ghost{border:1px solid var(--line2)}
-.btn.coral{background:var(--coral);color:#0D0E0B}
+.btn.coral{background:var(--coral);color:#1B1A1C}
 .btn.w{width:100%}
 .ico{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* ticket */
 .ticket{margin-top:22px;background:var(--card);border-radius:24px;overflow:hidden;border:1px solid var(--line);position:relative}
-.thead{background:repeating-linear-gradient(-45deg,var(--volt) 0 12px,#C6F000 12px 24px);color:#0D0E0B;padding:16px 18px 18px;position:relative}
-.thead .m{color:#0D0E0B;opacity:.75}
+.thead{background:repeating-linear-gradient(-45deg,var(--volt) 0 12px,#E57D12 12px 24px);color:#1B1A1C;padding:16px 18px 18px;position:relative}
+.thead .m{color:#1B1A1C;opacity:.75}
 .thead .fmt{font-size:clamp(54px,18vw,76px);margin-top:8px;overflow-wrap:anywhere}
-.thead .ttl{font-size:28px;margin-top:6px;color:transparent;-webkit-text-stroke:1.3px #0D0E0B}
+.thead .ttl{font-size:28px;margin-top:6px;color:transparent;-webkit-text-stroke:1.3px #1B1A1C}
 .perf{height:0;border-top:2px dashed var(--line2);margin:0 18px;position:relative}
 .perf::before,.perf::after{content:"";position:absolute;top:-13px;width:24px;height:24px;border-radius:50%;background:var(--bg)}
 .perf::before{left:-31px}.perf::after{right:-31px}
@@ -105,24 +105,24 @@ input,textarea,select{font:inherit;color:var(--ink)}
 .why li::before{content:"";position:absolute;left:0;top:8px;width:8px;height:3px;background:var(--coral)}
 .cta{position:fixed;left:0;right:0;bottom:calc(74px + var(--sb));z-index:20;pointer-events:none}
 .cta .in{max-width:560px;margin:0 auto;padding:0 18px;display:flex;gap:10px;pointer-events:auto}
-.cta .btn.volt{flex:1;box-shadow:0 10px 40px rgba(212,255,30,.25)}
-.cta .btn.ghost{background:rgba(13,14,11,.85);backdrop-filter:blur(8px);width:56px;padding:0}
+.cta .btn.volt{flex:1;box-shadow:0 10px 40px rgba(250,140,29,.25)}
+.cta .btn.ghost{background:rgba(27,26,28,.85);backdrop-filter:blur(8px);width:56px;padding:0}
 
 /* figure */
 .lim{fill:none;stroke:var(--ink);stroke-width:7.5;stroke-linecap:round;stroke-linejoin:round}
 .far{stroke-opacity:.33}
 .hd{fill:var(--ink)}
 .gnd{stroke:rgba(243,241,234,.22);stroke-width:2;stroke-dasharray:2 6}
-.pw,.pkb,.phub,.pball{fill:var(--coral)}
-.pkbh{stroke:var(--coral);stroke-width:3.5;fill:none;stroke-linecap:round}
+.pw,.pkb,.phub,.pball{fill:var(--volt)}
+.pkbh{stroke:var(--volt);stroke-width:3.5;fill:none;stroke-linecap:round}
 .farp{opacity:.4}
-.pplate{fill:var(--bg2);stroke:var(--coral);stroke-width:4.5}
-.pbox{fill:#2B2C24;stroke:#45463C;stroke-width:2}
-.pbar{stroke:#9A9A90;stroke-width:5;stroke-linecap:round}
-.ppost,.prail{stroke:#45463C;stroke-width:4;stroke-linecap:round}
+.pplate{fill:var(--bg2);stroke:var(--volt);stroke-width:4.5}
+.pbox{fill:#3C3B3E;stroke:#5A585B;stroke-width:2}
+.pbar{stroke:#A9A6A8;stroke-width:5;stroke-linecap:round}
+.ppost,.prail{stroke:#5A585B;stroke-width:4;stroke-linecap:round}
 .pstrap,.prope,.pband{stroke:var(--sky);stroke-width:2.6;fill:none;stroke-linecap:round}
 .ptarget{fill:var(--volt);opacity:.85}
-.pfly{fill:none;stroke:#5A5B51;stroke-width:3.5}
+.pfly{fill:none;stroke:#6A686B;stroke-width:3.5}
 .pdot{fill:var(--sky)}
 
 /* library */
@@ -137,7 +137,7 @@ input,textarea,select{font:inherit;color:var(--ink)}
 .toggle{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:14px;color:var(--mute);text-align:left}
 .sw{width:44px;height:26px;border-radius:13px;background:var(--line2);position:relative;transition:.2s;flex:none}
 .sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--ink);transition:.2s}
-.sw.on{background:var(--volt)}.sw.on::after{left:21px;background:#0D0E0B}
+.sw.on{background:var(--volt)}.sw.on::after{left:21px;background:#1B1A1C}
 
 /* sheet */
 .sw-wrap{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:60;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
@@ -149,7 +149,7 @@ input,textarea,select{font:inherit;color:var(--ink)}
 .sheet h2{font-size:44px;margin:18px 0 10px}
 .tags{display:flex;gap:6px;flex-wrap:wrap}
 .tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border-radius:6px;background:var(--card2);color:var(--mute)}
-.tag.hot{background:rgba(255,91,58,.15);color:var(--coral)}
+.tag.hot{background:rgba(239,79,74,.15);color:var(--coral)}
 .sec{margin-top:22px}
 .sec h3{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--volt);font-weight:700;margin-bottom:10px}
 .sec p,.sec li{font-size:15px;line-height:1.5}
@@ -173,7 +173,7 @@ ul.err li::before{content:"×";position:absolute;left:0;top:-1px;color:var(--cor
 .opt{display:block;width:100%;text-align:left;padding:14px 16px;border-radius:16px;border:1px solid var(--line2);margin-top:8px;transition:.15s}
 .opt b{display:block;font-size:17px;font-stretch:80%;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
 .opt span{display:block;font-size:13px;color:var(--mute);margin-top:3px}
-.opt.on{border-color:var(--volt);background:rgba(212,255,30,.07)}
+.opt.on{border-color:var(--volt);background:rgba(250,140,29,.07)}
 .opt.on b{color:var(--volt)}
 
 /* onboarding */
@@ -189,10 +189,10 @@ ul.err li::before{content:"×";position:absolute;left:0;top:-1px;color:var(--cor
 .check{display:flex;gap:12px;align-items:flex-start;margin-top:22px;font-size:14px;color:var(--mute);line-height:1.45;text-align:left}
 .check .box{width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line2);flex:none;display:grid;place-items:center}
 .check.on .box{background:var(--volt);border-color:var(--volt)}
-.check.on .box::after{content:"";width:10px;height:6px;border-left:2.5px solid #0D0E0B;border-bottom:2.5px solid #0D0E0B;transform:rotate(-45deg) translate(1px,-1px)}
+.check.on .box::after{content:"";width:10px;height:6px;border-left:2.5px solid #1B1A1C;border-bottom:2.5px solid #1B1A1C;transform:rotate(-45deg) translate(1px,-1px)}
 
 /* nav */
-.nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(13,14,11,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding-bottom:var(--sb)}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(27,26,28,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding-bottom:var(--sb)}
 .nav .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr)}
 .nav button{height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--dim);font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
 .nav button.on{color:var(--volt)}
@@ -211,7 +211,7 @@ ul.err li::before{content:"×";position:absolute;left:0;top:-1px;color:var(--cor
 /* player */
 .pl{position:fixed;inset:0;z-index:80;background:var(--bg);display:flex;flex-direction:column;padding:calc(12px + var(--st)) 18px calc(18px + var(--sb));transition:background .4s}
 .pl[data-k="rest"]{background:#0B1215}
-.pl[data-k="prep"]{background:#150E0B}
+.pl[data-k="prep"]{background:#26191A}
 .pl .ph{display:flex;align-items:center;justify-content:space-between;max-width:560px;width:100%;margin:0 auto}
 .pl .pbody{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;max-width:560px;width:100%;margin:0 auto;gap:6px;min-height:0}
 .ring{position:relative;width:min(64vw,300px,40vh);aspect-ratio:1}
@@ -233,7 +233,7 @@ ul.err li::before{content:"×";position:absolute;left:0;top:-1px;color:var(--cor
 .pnext b{color:var(--ink)}
 .pctl{display:flex;align-items:center;justify-content:center;gap:18px;max-width:560px;width:100%;margin:8px auto 0}
 .cbtn{width:58px;height:58px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center}
-.cbtn.main{width:84px;height:84px;background:var(--volt);color:#0D0E0B;border:0}
+.cbtn.main{width:84px;height:84px;background:var(--volt);color:#1B1A1C;border:0}
 .plist{width:100%;max-width:420px}
 .plist .it{grid-template-columns:52px 1fr}
 .extra{display:flex;gap:10px;justify-content:center;margin-top:8px;flex-wrap:wrap}
@@ -241,7 +241,7 @@ ul.err li::before{content:"×";position:absolute;left:0;top:-1px;color:var(--cor
 .cnt b{color:var(--volt);font-size:30px}
 .rpe{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px;width:100%}
 .rpe button{height:46px;border-radius:12px;border:1px solid var(--line2);font-weight:800;font-size:17px}
-.rpe button.on{background:var(--volt);color:#0D0E0B;border-color:var(--volt)}
+.rpe button.on{background:var(--volt);color:#1B1A1C;border-color:var(--volt)}
 .ta{width:100%;min-height:80px;border-radius:14px;border:1px solid var(--line2);background:var(--card);padding:12px 14px;font-size:15px;outline:none;margin-top:10px;resize:vertical}
 
 /* player a pannelli */
@@ -257,7 +257,7 @@ ul.err li::before{content:"×";position:absolute;left:0;top:-1px;color:var(--cor
 .sl-b:first-of-type{margin-top:6px}
 .sl-i{padding:6px 8px;border-radius:10px;font-size:13px;font-weight:600;line-height:1.2}
 .sl-i small{display:block;color:var(--mute);font-size:11px;font-weight:400;margin-top:2px}
-.sl-i.now{background:rgba(212,255,30,.13);color:var(--volt)}
+.sl-i.now{background:rgba(250,140,29,.13);color:var(--volt)}
 .sl-i.now small{color:var(--volt);opacity:.8}
 .done{opacity:.38}
 .pnx .fig{max-width:min(150px,15vh);margin:8px auto 6px;width:100%}
@@ -266,7 +266,7 @@ ul.err li::before{content:"×";position:absolute;left:0;top:-1px;color:var(--cor
 .nx-s{font-size:12px;color:var(--mute);margin-top:4px;line-height:1.3}
 .nx-s b{color:var(--ink)}
 .nx-end{font-size:30px;margin:18px 0 8px;color:var(--volt)}
-.sideb{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:999px;background:var(--coral);color:#0D0E0B;font-weight:800;font-stretch:75%;font-size:14px;text-transform:uppercase;letter-spacing:.06em;margin-top:6px}
+.sideb{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:999px;background:var(--coral);color:#1B1A1C;font-weight:800;font-stretch:75%;font-size:14px;text-transform:uppercase;letter-spacing:.06em;margin-top:6px}
 .sideb.alt{background:var(--sky)}
 .sideb.sm{font-size:11px;padding:5px 10px}
 @media (min-width:860px),(orientation:landscape) and (min-width:640px){
@@ -295,11 +295,11 @@ ul.err li::before{content:"×";position:absolute;left:0;top:-1px;color:var(--cor
 }
 /* HIFT method */
 .hcard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px 16px;margin-top:12px}
-.hcard.warn{border-color:rgba(255,91,58,.45)}
+.hcard.warn{border-color:rgba(239,79,74,.45)}
 .hcard b{font-size:20px;font-stretch:75%;font-weight:800;display:block;margin-top:3px}
 .hrow0{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;width:100%;text-align:left}
 .hplan{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:24px;overflow:hidden}
-.hph{padding:16px 18px 14px;background:linear-gradient(160deg,rgba(212,255,30,.10),transparent 70%)}
+.hph{padding:16px 18px 14px;background:linear-gradient(160deg,rgba(250,140,29,.10),transparent 70%)}
 .hname{width:100%;background:none;border:0;border-bottom:1px dashed var(--line2);font-size:36px;color:var(--ink);outline:none;padding:2px 0}
 .hname:focus{border-bottom-color:var(--volt)}
 .hsec{padding:16px 18px;border-top:1px solid var(--line)}
@@ -328,19 +328,27 @@ ul.err li::before{content:"×";position:absolute;left:0;top:-1px;color:var(--cor
 .sumt .muted{font-size:12.5px}
 .hiss{list-style:none;margin-top:12px}
 .hiss li{font-size:13.5px;line-height:1.4;padding:9px 12px;border-radius:12px;margin-top:6px;background:rgba(127,214,255,.08);color:var(--sky)}
-.hiss li.error{background:rgba(255,91,58,.12);color:var(--coral)}
-.hiss li.warn{background:rgba(212,255,30,.08);color:var(--volt)}
+.hiss li.error{background:rgba(239,79,74,.12);color:var(--coral)}
+.hiss li.warn{background:rgba(250,140,29,.08);color:var(--volt)}
 .hiss .alts{margin-top:6px;display:flex;flex-direction:column;gap:3px;color:var(--mute);font-size:12.5px}
 .hbtns{padding:16px 18px 18px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .g2 .btn{padding:0 12px;font-size:15px}
 .btn[disabled]{opacity:.45;pointer-events:none}
-.tag.ok{background:rgba(212,255,30,.12);color:var(--volt)}
-.hhome{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;text-align:left;margin-bottom:6px;padding:14px 16px;border-radius:18px;border:1px solid var(--volt);background:rgba(212,255,30,.06)}
+.tag.ok{background:rgba(250,140,29,.12);color:var(--volt)}
+.hhome{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;text-align:left;margin-bottom:6px;padding:14px 16px;border-radius:18px;border:1px solid var(--volt);background:rgba(250,140,29,.06)}
 .hhome b{display:block;font-size:24px;margin-top:4px}
 .toast{position:fixed;left:50%;bottom:calc(150px + var(--sb));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:999px;font-weight:700;font-size:14px;z-index:120;opacity:0;pointer-events:none;transition:.25s;max-width:calc(100% - 32px);text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 @media (max-width:380px){.hx{grid-template-columns:48px minmax(0,1fr) auto;gap:9px}.hx-img{width:48px;height:48px}.ov{padding-left:0}.nav button{font-size:9px;letter-spacing:.04em}}
+/* timer: navigazione tra esercizi */
+.pnav{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;max-width:560px;width:100%;margin:8px auto 0}
+.pnav .chip{height:34px;font-size:13px;padding:0 12px}
+button.sl-i{display:block;width:100%;text-align:left;color:inherit}
+.pj{position:absolute;inset:0;z-index:5;background:rgba(27,26,28,.97);overflow:auto;padding:calc(14px + var(--st)) 18px calc(20px + var(--sb))}
+.pjs{max-width:560px;margin:0 auto}
+.pj .vlink.now{border-color:var(--volt)}.pj .vlink.done{opacity:.55}
+.hhome.sct{border-color:var(--sky);background:rgba(127,214,255,.06);text-decoration:none;color:var(--ink);margin-top:10px}
 /* registro dell'allenamento */
 .lgt{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
 .lgt th{font:400 10px 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);text-align:left;padding:0 4px 4px}
@@ -408,8 +416,8 @@ details.hcard[open]>summary{margin-bottom:4px}
 /* aggiornamenti */
 .updslot{position:fixed;top:calc(12px + var(--st));right:max(18px,calc(50% - 262px));z-index:35}
 body.has-upd .top>.m,body.has-upd #instChip{visibility:hidden}
-.upd-card{background:#1A1B15!important;border:1px solid rgba(243,241,234,.18)}
-.upd-card .upd-go{background:#D4FF1E!important;color:#0D0E0B!important}
+.upd-card{background:#2A292B!important;border:1px solid rgba(243,241,234,.18)}
+.upd-card .upd-go{background:#FA8C1D!important;color:#1B1A1C!important}
 @media (prefers-reduced-motion:reduce){.marq span{animation:none}}
 </style>
 </head>
@@ -455,6 +463,12 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const NS='http://www.w3.org/2000/svg';
+/* impostazioni dell'amministratore (config.json): collegamenti esterni attivabili/disattivabili */
+let CFG=store.get('cfg',{});
+function sctLink(){const l=CFG&&CFG.collegamenti&&CFG.collegamenti.sct;return l&&l.attivo===true&&/^https:\/\//.test(l.url||'')?l:null}
+function linkCard(l){return `<a class="hhome sct" href="${esc(l.url)}" target="_blank" rel="noopener"><div><div class="m" style="color:var(--sky)">Collegamento</div><b class="d">${esc(l.nome||'S.C.T. TrainingLab')}</b>${l.descrizione?`<div class="note" style="margin-top:4px">${esc(l.descrizione)}</div>`:''}</div><span style="font-size:22px">↗</span></a>`}
+if(location.protocol.startsWith('http'))fetch('config.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(c=>{if(!c)return;const was=JSON.stringify(CFG);CFG=c;store.set('cfg',c);
+  if(was!==JSON.stringify(c)){const r=(location.hash||'#oggi').slice(1);if((r==='oggi'||r==='profilo')&&state.P)route()}}).catch(()=>{});
 /* progressi dell'utente: facoltativi, usati da tutte le sezioni (vedi progressi-core.js) */
 const PR=window.HiftProgressi;
 let PROG=PR.load(store.get('prog',null));
@@ -557,7 +571,7 @@ function propsSVG(ex,p){
       case 'pullbar': b+=`<line x1="44" y1="22" x2="44" y2="184" class="ppost"/><line x1="156" y1="22" x2="156" y2="184" class="ppost"/><line x1="38" y1="22" x2="162" y2="22" class="pbar"/>`;break;
       case 'trx': b+=`<circle cx="${pr.x}" cy="${pr.y}" r="3.5" class="pdot"/><line x1="${pr.x}" y1="${pr.y}" x2="${f1(p.hL[0])}" y2="${f1(p.hL[1])}" class="pstrap"/>`;break;
       case 'target': b+=`<rect x="${pr.x}" y="${pr.y}" width="${pr.w}" height="${pr.h}" rx="2" class="ptarget"/>`;break;
-      case 'rower': b+=`<line x1="30" y1="177" x2="160" y2="177" class="prail"/><circle cx="172" cy="160" r="15" class="pfly"/><line x1="150" y1="148" x2="154" y2="176" class="ppost"/><rect x="${f1(p.hip[0]-11)}" y="${f1(p.hip[1]+3)}" width="22" height="6" rx="2" fill="#45463C"/><line x1="${f1(p.hL[0])}" y1="${f1(p.hL[1])}" x2="164" y2="158" stroke="#6b6b62" stroke-width="2"/>`;break;
+      case 'rower': b+=`<line x1="30" y1="177" x2="160" y2="177" class="prail"/><circle cx="172" cy="160" r="15" class="pfly"/><line x1="150" y1="148" x2="154" y2="176" class="ppost"/><rect x="${f1(p.hip[0]-11)}" y="${f1(p.hip[1]+3)}" width="22" height="6" rx="2" fill="#5A585B"/><line x1="${f1(p.hL[0])}" y1="${f1(p.hL[1])}" x2="164" y2="158" stroke="#7A787B" stroke-width="2"/>`;break;
       case 'db': for(const h of pr.h||['hL']) f+=`<circle cx="${f1(p[h][0])}" cy="${f1(p[h][1])}" r="6.5" class="pw ${h==='hR'&&ex.view!=='front'?'farp':''}"/>`;break;
       case 'kb':{
         const h=p.hL; let c;
@@ -1081,7 +1095,7 @@ function renderHome(){
   const wod=s.blocks.find(b=>b.kind==='wod');
   const mq='FORZA · <b>FIATO</b> · COSTANZA · TECNICA · <b>INTENSITÀ</b> · RECUPERO · ';
   $('#view').innerHTML=`
-  <div class="top"><div class="logo">H<i></i>FT</div><div class="m">${new Date().toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'short'})}</div></div>
+  <div class="top"><div class="logo"><img src="icons/logo.png" alt="HIFT Lab" width="38" height="51"></div><div class="m">${new Date().toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'short'})}</div></div>
   <div class="marq"><span>${mq.repeat(8)}</span></div>
   <div class="hello d">Ciao<br><em>${esc(P.name||'atleta')}.</em></div>
   <p class="quote">${QUOTES[(new Date().getDate()+tot)%QUOTES.length]}</p>
@@ -1091,6 +1105,7 @@ function renderHome(){
     <div class="stat"><div class="m">Minuti</div><div class="v d">${mins}</div></div>
   </div>
   <button class="hhome" id="toMethod"><div><div class="m" style="color:var(--volt)">HIFT Method</div><b class="d">Core + circuito 5 stazioni</b><div class="note" style="margin-top:4px">Programma con l’archivio esercizi e la tua attrezzatura</div></div><svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  ${sctLink()?linkCard(sctLink()):''}
   <button class="btn ghost w" id="toAtt" style="height:46px;margin-top:4px">+ Corsa, camminata, bici, nuoto, stretching, pilates, yoga</button>
   <div class="m lbl">Durata</div>
   <div class="scroll">${[15,20,30,45,60].map(m=>`<button class="chip ${s.T===m?'on':''}" data-min="${m}">${m}'</button>`).join('')}</div>
@@ -1138,7 +1153,7 @@ document.addEventListener('app-update-available',()=>document.body.classList.add
 const LCAT={all:['Tutti',null],gambe:['Gambe',['squat','hinge','lunge','plyo']],push:['Spinta',['push']],pull:['Trazione',['pull']],core:['Core',['core']],cardio:['Cardio',['cardio']],full:['Total body',['full','carry']],mob:['Mobilità',['mob']]};
 function renderLib(){
   const L=state.lib,P=state.P; const eqSet=new Set(['corpo',...(P?P.eq:[])]);
-  $('#view').innerHTML=`<div class="top"><div class="logo">H<i></i>FT</div><div class="m">${Object.keys(EX).length} esercizi</div></div>
+  $('#view').innerHTML=`<div class="top"><div class="logo"><img src="icons/logo.png" alt="HIFT Lab" width="38" height="51"></div><div class="m">${Object.keys(EX).length} esercizi</div></div>
   <h1 class="h1 d">Esercizi</h1>
   <input class="search" id="q" placeholder="Cerca: squat, swing, core…" value="${esc(L.q)}">
   <div class="scroll" style="margin-top:12px">${Object.entries(LCAT).map(([k,v])=>`<button class="chip ${L.c===k?'on':''}" data-c="${k}">${v[0]}</button>`).join('')}</div>
@@ -1195,7 +1210,7 @@ function renderDiary(){
   const tabs=`<div class="row" style="margin:-4px 0 18px"><button class="chip ${tab==='sessioni'?'on':''}" data-dtab="sessioni">Sessioni</button><button class="chip ${tab==='progressi'?'on':''}" data-dtab="progressi">Progressi${PROG.entries.length?' · '+new Set(PROG.entries.map(e=>e.k)).size:''}</button><button class="chip ${tab==='analisi'?'on':''}" data-dtab="analisi">Analisi</button></div>`;
   const bindTabs=()=>$$('[data-dtab]').forEach(b=>b.onclick=()=>{state.dtab=b.dataset.dtab;renderDiary()});
   if(tab==='analisi'){
-    $('#view').innerHTML=`<div class="top"><div class="logo">H<i></i>FT</div><div class="m">Analisi</div></div><h1 class="h1 d">Diario</h1>${tabs}${anPage()}`;
+    $('#view').innerHTML=`<div class="top"><div class="logo"><img src="icons/logo.png" alt="HIFT Lab" width="38" height="51"></div><div class="m">Analisi</div></div><h1 class="h1 d">Diario</h1>${tabs}${anPage()}`;
     bindTabs();bindCharts($('#view'));
     $$('[data-anp]').forEach(b=>b.onclick=()=>{state.anP=b.dataset.anp==='Infinity'?Infinity:+b.dataset.anp;renderDiary()});
     $$('[data-anx]').forEach(b=>b.onclick=()=>{state.anX=b.dataset.anx;const y=window.scrollY;renderDiary();window.scrollTo(0,y)});
@@ -1203,7 +1218,7 @@ function renderDiary(){
     return;
   }
   if(tab==='progressi'){
-    $('#view').innerHTML=`<div class="top"><div class="logo">H<i></i>FT</div><div class="m">${PROG.entries.length} registrazioni</div></div><h1 class="h1 d">Diario</h1>${tabs}${progPage()}`;
+    $('#view').innerHTML=`<div class="top"><div class="logo"><img src="icons/logo.png" alt="HIFT Lab" width="38" height="51"></div><div class="m">${PROG.entries.length} registrazioni</div></div><h1 class="h1 d">Diario</h1>${tabs}${progPage()}`;
     bindTabs();
     if($('#prOn'))$('#prOn').onclick=()=>{PROG.on=true;saveProg();renderDiary()};
     if($('#prAdd'))$('#prAdd').onclick=()=>openProgAdd();
@@ -1214,7 +1229,7 @@ function renderDiary(){
   const now=new Date(); const d=(now.getDay()+6)%7; const w0=new Date(now.getFullYear(),now.getMonth(),now.getDate()-d).getTime();
   const weeks=Array.from({length:8},(_,i)=>{const a=w0-(7-i)*7*864e5,b=a+7*864e5;return H.filter(h=>{const t=new Date(h.date).getTime();return t>=a&&t<b}).reduce((s,h)=>s+(h.min||0),0)});
   const mx=Math.max(30,...weeks);
-  $('#view').innerHTML=`<div class="top"><div class="logo">H<i></i>FT</div><div class="m">${H.length} sessioni</div></div>
+  $('#view').innerHTML=`<div class="top"><div class="logo"><img src="icons/logo.png" alt="HIFT Lab" width="38" height="51"></div><div class="m">${H.length} sessioni</div></div>
   <h1 class="h1 d">Diario</h1>${tabs}
   <div class="g2" style="margin-bottom:16px"><button class="btn ghost" id="dLib" style="height:48px;font-size:14px">+ Allenamento libero</button><button class="btn ghost" id="dAtt" style="height:48px;font-size:14px">+ Attività</button></div>
   <div class="m">Minuti per settimana</div>
@@ -1462,7 +1477,7 @@ function onboarding(){
   const paint=()=>{
     const [h,s,body]=steps[step];
     root.innerHTML=`<div class="ob"><div class="app">
-      <div class="top"><div class="logo">H<i></i>FT</div><div class="m">${step+1} / ${steps.length}</div></div>
+      <div class="top"><div class="logo"><img src="icons/logo.png" alt="HIFT Lab" width="38" height="51"></div><div class="m">${step+1} / ${steps.length}</div></div>
       <div class="prog">${steps.map((_,i)=>`<i class="${i<=step?'on':''}"></i>`).join('')}</div>
       <h1 class="d">${h}</h1><p class="muted" style="font-size:16px;line-height:1.45">${s}</p>
       ${body()}
@@ -1478,12 +1493,13 @@ function onboarding(){
 function showChrome(on){$('#nav').classList.toggle('hide',!on);if(!on)$('#cta').classList.add('hide')}
 function renderProfile(){
   const D=JSON.parse(JSON.stringify(state.P));
-  $('#view').innerHTML=`<div class="top"><div class="logo">H<i></i>FT</div><div class="m">Profilo</div></div>
+  $('#view').innerHTML=`<div class="top"><div class="logo"><img src="icons/logo.png" alt="HIFT Lab" width="38" height="51"></div><div class="m">Profilo</div></div>
   <h1 class="h1 d">Il tuo<br>profilo</h1>
   ${secBody(D)}<div style="height:12px"></div>${secGoal(D)}<div style="height:12px"></div>${secEq(D)}${secLim(D,false)}
   <div class="m lbl" style="margin-top:24px">Progressi</div>
   <button class="toggle" id="progT" style="margin-top:4px"><span class="sw ${PROG.on?'on':''}"></span>Registra i progressi e adatta gli allenamenti</button>
   <p class="note">Carichi, ripetizioni, tempi, serie, recuperi e sensazioni: facoltativi, a fine allenamento o dal Diario. Valgono per il WOD di Oggi e per HIFT Method.</p>
+  ${sctLink()?`<div class="m lbl" style="margin-top:24px">Collegamenti</div>${linkCard(sctLink())}`:''}
   <div class="sec" id="installBox"></div>
   <button class="btn volt w" style="margin-top:26px" id="saveP">Salva e rigenera</button>
   <button class="btn ghost w" style="margin-top:10px" id="resetAll">Cancella tutti i dati</button>
@@ -1516,7 +1532,7 @@ async function loadArchive(){
   catch(e){HM.err='Il modulo esterno dell’archivio ha restituito un errore: '+(e&&e.message||e)}
   if(!raw&&window.HIFT_ARCHIVIO){raw=window.HIFT_ARCHIVIO;src='Modulo esterno collegato (HIFT_ARCHIVIO)'}
   if(!raw&&location.protocol.startsWith('http')){try{const r=await fetch('archivio-esercizi.json',{cache:'no-cache'});if(r.ok){raw=await r.json();src='File archivio-esercizi.json'}}catch(e){if(e instanceof SyntaxError)HM.err='Il file archivio-esercizi.json non è un JSON valido.'}}
-  if(raw&&src==='File archivio-esercizi.json'&&Array.isArray(raw.fonti)&&raw.fonti.length)src='Archivio dell’app · '+raw.fonti.length+' atlanti';
+  if(raw&&src==='File archivio-esercizi.json')src='Archivio esercizi HIFT Lab';
   if(!raw){const imp=store.get('m_archive',null);if(imp&&imp.data){raw=imp.data;src='Importato da file: '+imp.name+' ('+new Date(imp.date).toLocaleDateString('it-IT')+')'}}
   HM.arch=raw?HC.normalizeArchive(raw,{src}):null;HM.src=src;HM.loading=false;HM.loaded=true;
   if(HM.arch&&!HM.arch.ok&&!HM.err)HM.err='L’archivio è stato trovato ma non contiene esercizi utilizzabili.';
@@ -1593,7 +1609,6 @@ function archCard(){
   const R=A.report;
   return `<div class="hcard"><button class="hrow0" id="hArchT"><div><div class="m">Archivio esercizi</div><b>${A.exercises.length} esercizi</b><div class="note" style="margin-top:2px">${esc(HM.src)}</div></div><span class="m">${HM.showArch?'Chiudi':'Dettagli'}</span></button>
     ${HM.showArch?`<div class="tags" style="margin-top:12px">${Object.entries(HC.SLOT_NAMES).map(([k,n])=>`<span class="tag ${R.perSlot[k]?'':'hot'}">${n} ${R.perSlot[k]}</span>`).join('')}</div>
-    ${A.fonti.length?`<div class="m lbl">Fonti</div>${A.fonti.map(f=>f.url?`<a class="vlink" href="${esc(f.url)}" target="_blank" rel="noopener"><div><b>${esc(f.nome)}</b><span>${f.esercizi?f.esercizi+' esercizi':''}</span></div><span>↗</span></a>`:`<p class="muted">${esc(f.nome)}</p>`).join('')}`:''}
     ${R.warnings.length?`<ul class="hiss">${R.warnings.map(w=>`<li class="warn">${esc(w)}</li>`).join('')}</ul>`:'<p class="note">Nessun problema nei dati.</p>'}
     <div class="row" style="margin-top:12px"><label class="chip" style="position:relative;overflow:hidden">Importa un altro file<input type="file" accept=".json,application/json" id="hImp" style="position:absolute;inset:0;opacity:0;cursor:pointer"></label>
     <button class="chip" id="hReload">Ricarica</button>${store.get('m_archive',null)?'<button class="chip" id="hImpDel">Rimuovi file importato</button>':''}</div>`:''}</div>`;
@@ -1681,7 +1696,7 @@ function renderMethod(){
   if(ok&&HM.draft)HM.draft.issues=HC.check(HM.draft,A,hctx());
   const list=HM.plans.filter(p=>HM.filt==='archiviate'?p.archiviata:!p.archiviata);
   const y=window.scrollY;
-  $('#view').innerHTML=`<div class="top"><div class="logo">H<i></i>FT</div><div class="m">Metodo</div></div>
+  $('#view').innerHTML=`<div class="top"><div class="logo"><img src="icons/logo.png" alt="HIFT Lab" width="38" height="51"></div><div class="m">Metodo</div></div>
   <h1 class="h1 d">HIFT<br><em style="font-style:normal;color:var(--volt)">Method</em></h1>
   <p class="quote" style="margin-top:-6px">Core 3 × 4 × 30"/30" e circuito funzionale su 5 stazioni fisse: petto, quadricipiti, spalle, glutei, dorso.</p>
   ${archCard()}
@@ -1776,7 +1791,7 @@ function openHx(id){
   $('#sheet').innerHTML=`<div class="grab"></div>
    ${e.immagine?`<img src="${esc(e.immagine)}" alt="Illustrazione: ${esc(e.nome)}" style="width:100%;max-width:420px;display:block;margin:0 auto;border-radius:22px;background:var(--card2);padding:8px">`:''}
    <h2 class="d">${esc(e.nome)}</h2>
-   <div class="tags">${e.distretto?`<span class="tag">${esc(e.distretto)}</span>`:''}${e.categoria?`<span class="tag">${esc(e.categoria)}</span>`:''}<span class="tag">${esc(eqTxt(e))}</span>${e.livello?`<span class="tag">${LVN[e.livello]}</span>`:''}<span class="tag">ID ${esc(e.id)}</span></div>${e.fonte?`<p class="note">Fonte: ${esc(e.fonte)}</p>`:''}
+   <div class="tags">${e.distretto?`<span class="tag">${esc(e.distretto)}</span>`:''}${e.categoria?`<span class="tag">${esc(e.categoria)}</span>`:''}<span class="tag">${esc(eqTxt(e))}</span>${e.livello?`<span class="tag">${LVN[e.livello]}</span>`:''}<span class="tag">ID ${esc(e.id)}</span></div>
    ${e.descrizione?`<div class="sec"><h3>Descrizione</h3><p>${esc(e.descrizione)}</p></div>`:''}
    ${e.esecuzione.length&&!(e.esecuzione.length===1&&e.esecuzione[0]===e.descrizione)?`<div class="sec"><h3>Come si esegue</h3><ol class="cues">${e.esecuzione.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>`:''}
    ${vid?`<div class="sec"><h3>Video</h3>${vid}</div>`:''}
@@ -1801,6 +1816,8 @@ function hiftSource(p){
     if(s.kind==='work')segs.push({...B,x:1,type:'timed',kind:'work',dur:s.dur,label:nm(cid(s.index)),sub:`Esercizio ${s.index+1}/3 · Serie ${s.set}/${s.sets} · 30"`,key:'c'+s.index,img:img(cid(s.index)),dist:'Core',load:kgOf(cid(s.index)),lk:'c'+s.index,set:s.set-1});
     else{const nx=s.why==='serie'?s.index:s.why==='esercizio'?s.index+1:null;
       segs.push({...B,type:'timed',kind:'rest',dur:s.dur,label:'Recupero',sub:s.why==='serie'?`Prossima: serie ${s.set+1}/${s.sets}`:s.why==='esercizio'?'Prossimo: '+nm(cid(nx)):'Poi il circuito: '+nm(sid(0)),key:nx!=null?'c'+nx:'s0',img:img(nx!=null?cid(nx):sid(0)),dist:nx!=null?'Core':HC.SLOT_NAMES.petto,lk:'c'+s.index,set:s.set-1})}});
+  // stop: il circuito parte solo quando lo decidi tu
+  segs.push({block:'Circuito',bi:1,type:'manual',kind:'prep',label:'Stop · CORE completato',sub:'Riprendi fiato, prepara le 5 stazioni e parti quando sei pronto',btn:'Inizia il circuito',key:'s0',img:img(sid(0)),dist:'Pausa'});
   const ST=p.circuito.stazioni;
   HC.expandCircuit(p.circuito).forEach(s=>{const B={block:'Circuito',bi:1},k=ST[s.index].k,D=HC.SLOT_NAMES[k];
     const base=`Giro ${s.round}/${s.rounds} · Stazione ${s.index+1}/5${s.sets>1?` · Serie ${s.set}/${s.sets}`:''}`;
@@ -1888,7 +1905,7 @@ function renderCrea(){
   bindCrea();
 }
 function crList(){
-  return `<div class="top"><div class="logo">H<i></i>FT</div><div class="m">Programmi</div></div>
+  return `<div class="top"><div class="logo"><img src="icons/logo.png" alt="HIFT Lab" width="38" height="51"></div><div class="m">Programmi</div></div>
   <h1 class="h1 d">Crea il tuo<br><em style="font-style:normal;color:var(--volt)">programma</em></h1>
   <p class="quote" style="margin-top:-6px">Esercizi, carichi, tempi, serie, ripetizioni, giorni e settimane: con il controllo delle regole della programmazione e l’esportazione in più formati.</p>
   <button class="btn volt w" id="crNew">+ Nuovo programma</button>
@@ -2314,11 +2331,35 @@ function nextIdx(){
     return j}
   return -1;
 }
+/* navigazione tra esercizi: inizio di ogni serie di tappe dello stesso esercizio */
+function exStarts(){const st=[];let prev=null;PL.segs.forEach((s,i)=>{if(!s.x)return;const k=s.bi+'|'+(kOf(s)||s.label);if(k!==prev)st.push(i);prev=k});return st}
+function jumpTo(j){if(j>=PL.segs.length){PL.i=PL.segs.length-1;PL.jumpEnd=true;return finishPlayer()}
+  PL.i=Math.max(0,j);PL.acc=0;PL.t0=performance.now();PL.rounds=0;PL.beeped=-1;PL.finished=false;beep(990,.2,.08);renderPlayer()}
+function exNav(d){const st=exStarts(),cur=st.filter(i=>i<=PL.i).pop();
+  if(d>0){const n=st.find(i=>i>PL.i);return jumpTo(n!=null?n:PL.segs.length)}
+  // indietro: all'inizio dell'esercizio in corso se sei già avanti, altrimenti all'esercizio precedente
+  if(cur!=null&&(PL.i>cur||el()>3))return jumpTo(cur);
+  const pv=st.filter(i=>i<(cur==null?PL.i:cur)).pop();jumpTo(pv!=null?pv:0)}
+function jumpKey(bi,key){const inB=exStarts().filter(i=>PL.segs[i].bi===bi);
+  // AMRAP e For Time: tutti i movimenti in un'unica tappa → si salta all'inizio del blocco
+  let st=inB.filter(i=>kOf(PL.segs[i])===key||(PL.segs[i].items||[]).some(it=>it.id===key));if(!st.length)st=inB;if(!st.length)return;
+  jumpTo(st.find(i=>i>=PL.i)??st[0])}
+function openJump(){
+  const st=exStarts(),cur=st.filter(i=>i<=PL.i).pop();let lastB=-1;
+  const box=document.createElement('div');box.className='pj';box.id='pj';
+  box.innerHTML=`<div class="pjs"><div class="hrow0"><h2 class="d" style="font-size:36px">Scegli l’esercizio</h2><button class="cbtn" id="pjX" aria-label="Chiudi" style="width:42px;height:42px">×</button></div>
+    <p class="note">Salta in avanti o torna indietro: il tempo dell’esercizio scelto riparte da capo.</p>
+    ${st.map(i=>{const s=PL.segs[i],hd=s.bi!==lastB?`<div class="sl-b">${esc(PL.view[s.bi]?PL.view[s.bi].label:s.block)}</div>`:'';lastB=s.bi;
+      return hd+`<button class="vlink ${i===cur?'now':''} ${i<cur?'done':''}" style="width:100%;text-align:left" data-pj="${i}"><div><b>${esc(s.label)}</b><span>${esc(s.sub||'')}</span></div><span>${i===cur?'ora':i<PL.i?'↺':'→'}</span></button>`}).join('')}</div>`;
+  $('.pl').appendChild(box);
+  $('#pjX').onclick=()=>box.remove();
+  $$('[data-pj]',box).forEach(b=>b.onclick=()=>{box.remove();jumpTo(+b.dataset.pj)});
+}
 function sessionList(){
   const c=PL.segs[PL.i];
   return '<div class="m">Sessione</div>'+PL.view.map((b,bi)=>`<div class="sl-b ${bi<c.bi?'done':''}">${esc(b.label)} · ${esc(b.format)}</div>`+
     b.items.map(it=>{const now=bi===c.bi&&c.kind!=='prep'&&(kOf(c)?kOf(c)===it.key:true);
-      return `<div class="sl-i ${now?'now':''} ${bi<c.bi?'done':''}">${esc(it.name)}<small>${esc(it.txt)}</small></div>`}).join('')).join('');
+      return `<button class="sl-i ${now?'now':''} ${bi<c.bi?'done':''}" data-jk="${bi}|${esc(it.key)}">${esc(it.name)}<small>${esc(it.txt)}</small></button>`}).join('')).join('');
 }
 function nextPanel(){
   const j=PL.nx=nextIdx();
@@ -2357,6 +2398,7 @@ function renderPlayer(){
       </section>
       <aside class="pside pnx">${nextPanel()}</aside>
     </div>
+    <div class="pnav"><button class="chip" id="pxPrev">‹ Esercizio prec.</button><button class="chip" id="pxPick">Scegli</button><button class="chip" id="pxNext">Salta esercizio ›</button></div>
     <div class="pctl">
       <button class="cbtn" id="pPrev" aria-label="Indietro">${IC.prev}</button>
       <button class="cbtn main" id="pPlay" aria-label="Pausa">${PL.paused?IC.play:IC.pause}</button>
@@ -2376,6 +2418,8 @@ function renderPlayer(){
     else{PL.acc=el();PL.paused=true;PL.musicWas=MUSIC.playing;if(MUSIC.playing)MUSIC.stop()}
     renderPlayer()};
   $('#pNext').onclick=()=>nextSeg(); $('#pPrev').onclick=prevSeg;
+  $('#pxPrev').onclick=()=>exNav(-1);$('#pxNext').onclick=()=>exNav(1);$('#pxPick').onclick=openJump;
+  $$('[data-jk]').forEach(b=>b.onclick=()=>{const [bi,...k]=b.dataset.jk.split('|');jumpKey(+bi,k.join('|'))});
   if($('#setDone'))$('#setDone').onclick=()=>nextSeg();
   $$('[data-live]').forEach(i=>i.oninput=()=>{const x=PL.L[PL.Lk[s.lk]];REG.imposta(x,s.set,i.dataset.live,i.value)});
   if($('#rPlus'))$('#rPlus').onclick=()=>{PL.rounds++;$('#rc').textContent=PL.rounds;beep(1200,.08,.06);vib(30)};
@@ -2560,6 +2604,6 @@ else{
   route();
 }
 </script>
-<script src="aggiornamenti.js" data-version="1.7.0"></script>
+<script src="aggiornamenti.js" data-version="1.8.0"></script>
 </body>
 </html>

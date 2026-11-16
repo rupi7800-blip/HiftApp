@@ -1,6 +1,7 @@
 /* =========================================================
    tools/estrai-atlanti.js — costruisce l'archivio esercizi di HIFT App
-   a partire dai sei "Atlante … 100" (modulo esterno, in archivio/sorgenti/).
+   a partire dai sei "Atlante … 100" (modulo esterno). Le pagine sorgente NON sono
+   nel repository (il sito è pubblico): si scaricano a parte e si indica la cartella.
 
    Non inventa esercizi: legge i dati che ogni atlante contiene (numero,
    categoria, livello, nome, esecuzione, progressione, illustrazione) eseguendo
@@ -8,22 +9,23 @@
    dalla categoria dell'atlante e dagli attrezzi disegnati; i casi in cui serve
    il testo sono elencati qui sotto con il motivo.
 
-   Uso:  node tools/estrai-atlanti.js
+   Uso:  node tools/estrai-atlanti.js <cartella con atlante-core.html, atlante-petto.html, …>
+         (oppure variabile d'ambiente ATLANTI_DIR)
    Scrive: archivio-esercizi.json e archivio/img/<ID>.svg
    ========================================================= */
 'use strict';
 const fs = require('fs'), vm = require('vm'), path = require('path');
 const ROOT = path.join(__dirname, '..');
-const SRC = path.join(ROOT, 'archivio', 'sorgenti');
+const SRC = process.env.ATLANTI_DIR || (require.main === module && process.argv[2]) || path.join(ROOT, 'archivio', 'sorgenti');
 const IMG = path.join(ROOT, 'archivio', 'img');
 
 const ATLANTI = [
-  { k: 'core', file: 'atlante-core.html', pref: 'CORE', distretto: 'Core', hift: 'core', url: 'https://claude.ai/artifact/WWSbveH43XNKFgLGVMLnUj' },
-  { k: 'petto', file: 'atlante-petto.html', pref: 'PET', distretto: 'Petto', hift: 'petto', url: 'https://claude.ai/artifact/Tnz955xdYyonF7jawEnC6Y' },
-  { k: 'quadricipiti', file: 'atlante-quadricipiti.html', pref: 'QUA', distretto: 'Quadricipiti', hift: 'quadricipiti', url: 'https://claude.ai/artifact/88jQkeYo4sDuG4mUX2EbY8' },
-  { k: 'spalle', file: 'atlante-spalle.html', pref: 'SPA', distretto: 'Spalle', hift: 'spalle', url: 'https://claude.ai/artifact/D3tppThDYuMqj3wSCf4V11' },
-  { k: 'glutei', file: 'atlante-glutei.html', pref: 'GLU', distretto: 'Glutei', hift: 'glutei', url: 'https://claude.ai/artifact/RCCncpg7EJah2RQthtTjWo' },
-  { k: 'dorso', file: 'atlante-dorso.html', pref: 'DOR', distretto: 'Dorso', hift: 'dorso', url: 'https://claude.ai/artifact/RmpXnCdsVJ8A8JP3zpf7oU' }
+  { k: 'core', file: 'atlante-core.html', pref: 'CORE', distretto: 'Core', hift: 'core' },
+  { k: 'petto', file: 'atlante-petto.html', pref: 'PET', distretto: 'Petto', hift: 'petto' },
+  { k: 'quadricipiti', file: 'atlante-quadricipiti.html', pref: 'QUA', distretto: 'Quadricipiti', hift: 'quadricipiti' },
+  { k: 'spalle', file: 'atlante-spalle.html', pref: 'SPA', distretto: 'Spalle', hift: 'spalle' },
+  { k: 'glutei', file: 'atlante-glutei.html', pref: 'GLU', distretto: 'Glutei', hift: 'glutei' },
+  { k: 'dorso', file: 'atlante-dorso.html', pref: 'DOR', distretto: 'Dorso', hift: 'dorso' }
 ];
 
 /* nomi degli attrezzi: senza virgole, "/", "+" o " o " (sono separatori nel formato dell'archivio) */
@@ -101,8 +103,8 @@ const CORE_EQ = {
 
 /* --- illustrazioni: stesse figure dell'atlante, colori del tema scuro di HIFT App --- */
 const SVG_STYLE = '<defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7FD6FF"/></marker></defs>' +
-  '<style>.n{stroke:#F3F1EA}.f{stroke:#77776D}.hn{fill:#22231C;stroke:#F3F1EA}.floor{stroke:rgba(243,241,234,.2)}.pr{fill:#3E3F36;stroke:none}' +
-  '.ac{stroke:#7FD6FF;fill:none}.acf{fill:#7FD6FF}.ball{fill:rgba(127,214,255,.18);stroke:#7FD6FF}.wt{fill:#FF5B3A;stroke:#FF5B3A}</style>';
+  '<style>.n{stroke:#F5F3F1}.f{stroke:#7A777A}.hn{fill:#343335;stroke:#F5F3F1}.floor{stroke:rgba(243,241,234,.2)}.pr{fill:#4D4B4C;stroke:none}' +
+  '.ac{stroke:#7FD6FF;fill:none}.acf{fill:#7FD6FF}.ball{fill:rgba(127,214,255,.18);stroke:#7FD6FF}.wt{fill:#FA8C1D;stroke:#FA8C1D}</style>';
 function standaloneSvg(svg) {
   return svg.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ').replace(/(<svg[^>]*>)/, '$1' + SVG_STYLE);
 }
@@ -129,7 +131,7 @@ function build() {
   for (const A of ATLANTI) {
     const R = load(A.file);
     if (R.X.length !== 100) problemi.push(A.title + ': ' + R.X.length + ' esercizi invece di 100');
-    fonti.push({ atlante: R.title, sottotitolo: R.eyebrow, artifact: A.url, esercizi: R.X.length });
+    fonti.push({ atlante: R.title, sottotitolo: R.eyebrow, esercizi: R.X.length });
     const byNum = new Map(R.X.map(x => [x.n, x]));
     for (const x of R.X) {
       const id = A.pref + '-' + pad(x.n);

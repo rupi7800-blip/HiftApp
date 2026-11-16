@@ -19,7 +19,9 @@ test('archivio reale: 600 esercizi validi, 100 per CORE e per ogni stazione', ()
   assert.equal(A.report.noLevel, 0);
   for (const k of ['core', ...ORDER]) assert.equal(A.exercises.filter(e => e.primary === k).length, 100, k);
 });
-test('archivio reale: ogni esercizio corrisponde al suo atlante (nessun esercizio aggiunto o cambiato)', () => {
+// le pagine degli atlanti non sono nel repository: questo controllo gira solo se indichi la cartella (ATLANTI_DIR)
+const HAS_SRC = !!process.env.ATLANTI_DIR && fs.existsSync(path.join(process.env.ATLANTI_DIR, 'atlante-core.html'));
+test('archivio reale: ogni esercizio corrisponde al suo atlante (nessun esercizio aggiunto o cambiato)', { skip: !HAS_SRC && 'pagine degli atlanti non disponibili (imposta ATLANTI_DIR)' }, () => {
   const files = { CORE: 'core', PET: 'petto', QUA: 'quadricipiti', SPA: 'spalle', GLU: 'glutei', DOR: 'dorso' };
   for (const [pref, k] of Object.entries(files)) {
     const R = load('atlante-' + k + '.html');

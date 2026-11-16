@@ -143,7 +143,7 @@ const ok = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) fails++
   await p.unroute('**/archivio-esercizi.json');
   await p.evaluate(() => { location.hash = 'metodo'; }); await p.waitForTimeout(300);
   await p.click('#hReload'); await p.waitForTimeout(800);
-  ok(await p.evaluate(() => HM.arch.exercises.length === 600 && /atlanti/.test(HM.src)), 'archivio reale: 600 esercizi dagli atlanti (' + await p.evaluate(() => HM.src) + ')');
+  ok(await p.evaluate(() => HM.arch.exercises.length === 600 && HM.src === 'Archivio esercizi HIFT Lab'), 'archivio reale: 600 esercizi (' + await p.evaluate(() => HM.src) + ')');
   ok(await p.evaluate(() => HM.draft && HM.draft.issues.some(i => i.level === 'error')), 'scheda della prova: esercizi non più in archivio segnalati');
   await p.evaluate(() => { HM.draft = null; HM.tab = 'prog'; store.del('m_draft'); renderMethod(); });
   await p.click('#hCfgT');
@@ -155,7 +155,7 @@ const ok = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) fails++
   const imgs = await p.evaluate(() => Promise.all([...document.querySelectorAll('.hx-img img')].map(i => i.complete ? i.naturalWidth : new Promise(r => { i.onload = () => r(i.naturalWidth); i.onerror = () => r(0); }))));
   ok(imgs.length === 8 && imgs.every(w => w > 0), 'archivio reale: illustrazioni caricate (' + imgs.length + ')');
   await p.click('.hx-txt >> nth=0'); await p.waitForTimeout(250);
-  ok(await p.isVisible('#sheet >> text=Fonte: Atlante Core 100'), 'scheda esercizio: fonte e illustrazione');
+  ok(await p.isVisible('#sheet img') && !/Atlante|claude\.ai/i.test(await p.innerHTML('#sheet')), 'scheda esercizio: illustrazione, nessun riferimento agli atlanti');
   if (OUT) await p.screenshot({ path: OUT + '/7-esercizio-atlante.png' });
   await p.click('#closeSheet');
   if (OUT) { await p.waitForTimeout(300); await p.screenshot({ path: OUT + '/8-scheda-atlanti.png', fullPage: true }); }
