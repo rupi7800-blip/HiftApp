@@ -1,10 +1,10 @@
 {
-  "version": "1.3.0",
-  "date": "15/11/2026",
+  "version": "1.4.0",
+  "date": "16/11/2026",
   "notes": [
-    "HIFT Method collegato all'archivio esercizi: 600 esercizi dagli Atlanti 100 (Core, Petto, Quadricipiti, Spalle, Glutei, Dorso)",
-    "Ogni esercizio con illustrazione, esecuzione, livello e progressione",
-    "Attrezzatura dagli atlanti: corpo libero, TRX, powerbag, med ball, rialzo, muro e altri",
-    "Lo stesso esercizio non compare mai due volte nella stessa scheda"
+    "Nuovo: Progressi. A fine allenamento o dal Diario puoi registrare carichi, ripetizioni, tempi, serie e recuperi",
+    "L'app elabora i progressi e adatta ripetizioni, carichi, tempi e recuperi al tuo obiettivo, nel WOD di Oggi e in HIFT Method",
+    "Diario → Progressi: record, andamento, prossimo carico e suggerimento di livello",
+    "Funzione facoltativa: si attiva o disattiva dal Profilo"
   ]
 }
