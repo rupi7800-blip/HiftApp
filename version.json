@@ -1,10 +1,7 @@
 {
-  "version": "1.8.0",
+  "version": "1.8.1",
   "date": "16/11/2026",
   "notes": [
-    "Nuovo marchio HIFT Lab: logo e colori",
-    "Nel timer: salta un esercizio, torna al precedente o scegli dall'elenco",
-    "HIFT Method: stop tra CORE e circuito, si riparte con “Inizia il circuito”",
-    "Collegamento a S.C.T. TrainingLab nella Home e nel Profilo"
+    "Nuovo nome: HIFT Lab"
   ]
 }

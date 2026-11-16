@@ -1,5 +1,5 @@
 /* =========================================================
-   tools/estrai-atlanti.js — costruisce l'archivio esercizi di HIFT App
+   tools/estrai-atlanti.js — costruisce l'archivio esercizi di HIFT Lab
    a partire dai sei "Atlante … 100" (modulo esterno). Le pagine sorgente NON sono
    nel repository (il sito è pubblico): si scaricano a parte e si indica la cartella.
 
@@ -101,7 +101,7 @@ const CORE_EQ = {
   95: ['Rialzo', KM], 97: ['Slitta'], 98: ['Fitball'], 99: ['Med ball', 'Compagno'], 100: [EL]
 };
 
-/* --- illustrazioni: stesse figure dell'atlante, colori del tema scuro di HIFT App --- */
+/* --- illustrazioni: stesse figure dell'atlante, colori del tema scuro di HIFT Lab --- */
 const SVG_STYLE = '<defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7FD6FF"/></marker></defs>' +
   '<style>.n{stroke:#F5F3F1}.f{stroke:#7A777A}.hn{fill:#343335;stroke:#F5F3F1}.floor{stroke:rgba(243,241,234,.2)}.pr{fill:#4D4B4C;stroke:none}' +
   '.ac{stroke:#7FD6FF;fill:none}.acf{fill:#7FD6FF}.ball{fill:rgba(127,214,255,.18);stroke:#7FD6FF}.wt{fill:#FA8C1D;stroke:#FA8C1D}</style>';
@@ -158,7 +158,7 @@ function build() {
     }
   }
   const out = {
-    _info: 'Archivio esercizi di HIFT App generato da tools/estrai-atlanti.js a partire dagli Atlanti 100 (non modificare a mano: rigenera).',
+    _info: 'Archivio esercizi di HIFT Lab generato da tools/estrai-atlanti.js a partire dagli Atlanti 100 (non modificare a mano: rigenera).',
     versione: new Date().toISOString().slice(0, 10),
     fonti,
     attrezzi: ATTREZZI,

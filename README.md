@@ -1,6 +1,6 @@
 <p align="center"><img src="icons/logo.png" alt="HIFT Lab" width="260"></p>
 
-# Hift App
+# HIFT Lab
 
 Web app per allenamenti funzionali ad alta intensità (HIFT).
 
@@ -8,7 +8,7 @@ Web app per allenamenti funzionali ad alta intensità (HIFT).
 - Formati WOD: AMRAP, EMOM, Tabata, intervalli, For Time, più blocchi di forza e potenza
 - Player con timer, segnali sonori e contagiri: lista della sessione sempre visibile e anteprima del prossimo esercizio; si può **saltare un esercizio, tornare all'esercizio precedente o sceglierne uno** dall'elenco (anche toccandolo nella lista laterale). In HIFT Method il timer **si ferma tra il CORE e il circuito** finché non premi "Inizia il circuito"
 - Esercizi su due lati contati per lato, con indicazione del lato da eseguire
-- Musica: tracce Hift Beats generate dall'app o brani dal proprio dispositivo
+- Musica: tracce HIFT Lab Beats generate dall'app o brani dal proprio dispositivo
 - **HIFT Method**: CORE fisso (3 esercizi × 4 serie, 30" lavoro / 30" recupero) e circuito funzionale su 5 stazioni in ordine fisso (petto, quadricipiti, spalle, glutei, dorso), con 5 metodi configurabili (a tempo, a intervalli, a tempo fisso, a ripetizioni, personalizzato). Gli esercizi vengono dall'archivio esterno: oggi i 600 esercizi illustrati degli Atlanti 100 (vedi `ARCHIVIO.md`) e rispettano attrezzatura, livello, esclusioni e storico. Le schede si possono salvare, modificare, duplicare, rinominare, archiviare ed eliminare
 - **Crea**: programmi personali con esercizi, carichi, tempi, serie, ripetizioni, giorni, settimane e mesi, controllo delle regole scientifiche della programmazione, progressione, scarichi, timer ed esportazione in PDF, CSV, Excel, calendario (.ics), HTML, Markdown, testo e JSON (vedi `PROGRAMMA.md`)
 - **Progressi** (facoltativi): carichi, ripetizioni, tempi, serie, recuperi e sensazioni registrati a fine allenamento o dal Diario; l'app li elabora e adatta gli allenamenti di tutte le sezioni all'obiettivo (vedi `PROGRESSI.md`)

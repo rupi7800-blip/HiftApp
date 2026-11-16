@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1B1A1C">
-<title>Hift App</title>
+<title>HIFT Lab</title>
 <meta name="description" content="Allenamenti funzionali ad alta intensità su misura: obiettivi, fisico e attrezzatura.">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Hift">
+<meta name="apple-mobile-web-app-title" content="HIFT Lab">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -1133,7 +1133,7 @@ function renderHome(){
     </section>`).join('')}
     <div class="why"><div class="m" style="color:var(--coral)">Perché questa sessione</div><ul>${s.why.map(w=>`<li>${esc(w)}</li>`).join('')}</ul></div>
   </article>
-  <p class="note" style="margin-top:16px">Hift non sostituisce il parere di un medico o di un professionista. Se senti dolore (non semplice fatica) fermati e scala l’esercizio.</p>`;
+  <p class="note" style="margin-top:16px">HIFT Lab non sostituisce il parere di un medico o di un professionista. Se senti dolore (non semplice fatica) fermati e scala l’esercizio.</p>`;
   hydrate($('#view'));
   paintInstallChip();
   $$('[data-min]').forEach(b=>b.onclick=()=>{state.opt.minutes=+b.dataset.min;newSession();renderHome()});
@@ -1456,7 +1456,7 @@ function secLim(D,withOk){return `
   <div class="m lbl">Zone da proteggere (fastidi o infortuni passati)</div>
   <div class="row">${LIMS.map(([v,l])=>`<button class="chip ${D.lim.includes(v)?'on':''}" data-many="lim" data-v="${v}">${l}</button>`).join('')}</div>
   <p class="note">Gli esercizi che caricano molto queste zone vengono esclusi o sostituiti con varianti più gestibili.</p>
-  ${withOk?`<button class="check ${D.ok?'on':''}" data-ok="1"><span class="box"></span><span>Ho capito che Hift dà indicazioni generali: se ho patologie o dolori chiedo prima a un medico, e durante l’allenamento mi fermo se sento dolore.</span></button>`:''}`}
+  ${withOk?`<button class="check ${D.ok?'on':''}" data-ok="1"><span class="box"></span><span>Ho capito che HIFT Lab dà indicazioni generali: se ho patologie o dolori chiedo prima a un medico, e durante l’allenamento mi fermo se sento dolore.</span></button>`:''}`}
 function bindForm(root,D,onChange){
   $$('[data-t]',root).forEach(i=>i.oninput=()=>{D[i.dataset.t]=i.value.trim();onChange&&onChange()});
   $$('[data-n]',root).forEach(i=>i.oninput=()=>{const v=parseFloat(i.value);if(!isNaN(v))D[i.dataset.n]=v;onChange&&onChange()});
@@ -1888,7 +1888,7 @@ const EXPORTS=[
   ['html','Pagina web (.html)','Da aprire in qualsiasi browser o stampare','text/html;charset=utf-8','html'],
   ['md','Markdown (.md)','Per note, Notion, Obsidian, GitHub','text/markdown;charset=utf-8','md'],
   ['txt','Testo (.txt)','Semplice da leggere o incollare in un messaggio','text/plain;charset=utf-8','txt'],
-  ['json','JSON (backup)','Copia completa: si reimporta in Hift App su un altro dispositivo','application/json','json']];
+  ['json','JSON (backup)','Copia completa: si reimporta in HIFT Lab su un altro dispositivo','application/json','json']];
 function crExport(p,kind,share){
   const rm=crRM(),f={csv:PGM.toCSV,xls:PGM.toXLS,ics:PGM.toICS,html:PGM.toHTML,md:PGM.toMarkdown,txt:PGM.toText,json:PGM.toJSON};
   if(kind==='pdf')return printHTML(PGM.toHTML(p,rm));
@@ -2546,7 +2546,7 @@ function paintMusicUI(){
   const sh=$('#musicSheet');if(!$('#musicWrap').classList.contains('on'))return;
   const nf=MUSIC.files.length, cur=MS.mode==='beats'?TRACKS[MS.ti].n:MS.mode==='files'&&nf?MUSIC.files[MS.fi%nf].name:'nessun brano';
   sh.innerHTML=`<div class="grab"></div><h2 class="d" style="font-size:46px;margin:4px 0 14px">Musica</h2>
-  <div class="row">${[['off','Nessuna'],['beats','Hift Beats'],['files','I miei brani']].map(([k,l])=>`<button class="chip ${MS.mode===k?'on':''}" data-mm="${k}">${l}</button>`).join('')}</div>
+  <div class="row">${[['off','Nessuna'],['beats','HIFT Lab Beats'],['files','I miei brani']].map(([k,l])=>`<button class="chip ${MS.mode===k?'on':''}" data-mm="${k}">${l}</button>`).join('')}</div>
   ${MS.mode==='beats'?`<p class="note">Tracce originali generate dall’app in tempo reale: niente da scaricare, funzionano anche offline.</p>${TRACKS.map((t,i)=>`<button class="opt ${MS.ti===i?'on':''}" data-tr="${i}"><b>${t.n} · ${t.bpm} BPM</b><span>${t.d}</span></button>`).join('')}`:''}
   ${MS.mode==='files'?`<label class="btn ghost w" style="margin-top:14px;position:relative;overflow:hidden">+ Aggiungi brani dal dispositivo<input type="file" accept="audio/*" multiple id="mFiles" style="position:absolute;inset:0;opacity:0;cursor:pointer"></label>
     ${nf?MUSIC.files.map((f,i)=>`<div class="mrow ${i===MS.fi%nf?'on':''}"><button data-fi="${i}">${esc(f.name)}${f.id==null?' <small>· solo per ora</small>':''}</button><button class="swap" data-fdel="${i}" aria-label="Rimuovi">×</button></div>`).join(''):'<p class="empty" style="padding:18px 0 4px">Nessun brano. Aggiungi file audio (mp3, m4a, wav…) dalla memoria del telefono.</p>'}
@@ -2586,8 +2586,8 @@ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=
 window.addEventListener('appinstalled',()=>{installEvt=null;paintInstall();paintInstallChip()});
 function paintInstall(){
   const box=$('#installBox'); if(!box) return;
-  if(standalone()){box.innerHTML='<h3>App</h3><p class="muted">Hift è installata su questo dispositivo.</p>';return}
-  box.innerHTML='<h3>Installa l’app</h3>'+(installEvt?'<p class="muted">Aggiungi Hift alla schermata Home: si apre a tutto schermo e funziona anche offline.</p><button class="btn ghost w" style="margin-top:12px" id="instBtn">Installa Hift</button>'
+  if(standalone()){box.innerHTML='<h3>App</h3><p class="muted">HIFT Lab è installata su questo dispositivo.</p>';return}
+  box.innerHTML='<h3>Installa l’app</h3>'+(installEvt?'<p class="muted">Aggiungi HIFT Lab alla schermata Home: si apre a tutto schermo e funziona anche offline.</p><button class="btn ghost w" style="margin-top:12px" id="instBtn">Installa HIFT Lab</button>'
     :isIOS?'<p class="muted">Su iPhone e iPad apri questa pagina in Safari, tocca il pulsante Condividi e scegli “Aggiungi alla schermata Home”.</p>'
     :'<p class="muted">Apri il menu del browser (⋮) e scegli “Installa app” o “Aggiungi a schermata Home”.</p>');
   const b=$('#instBtn'); if(b) b.onclick=doInstall;
@@ -2604,6 +2604,6 @@ else{
   route();
 }
 </script>
-<script src="aggiornamenti.js" data-version="1.8.0"></script>
+<script src="aggiornamenti.js" data-version="1.8.1"></script>
 </body>
 </html>

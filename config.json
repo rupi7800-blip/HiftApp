@@ -1,5 +1,5 @@
 {
-  "_info": "Impostazioni dell'amministratore di HIFT App. Modifica questo file (anche dal sito di GitHub, matita 'Edit') e salva: tutti gli utenti vedono il cambiamento al successivo avvio dell'app. Per nascondere il collegamento metti \"attivo\": false.",
+  "_info": "Impostazioni dell'amministratore di HIFT Lab. Modifica questo file (anche dal sito di GitHub, matita 'Edit') e salva: tutti gli utenti vedono il cambiamento al successivo avvio dell'app. Per nascondere il collegamento metti \"attivo\": false.",
   "collegamenti": {
     "sct": {
       "attivo": true,

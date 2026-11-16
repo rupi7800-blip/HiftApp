@@ -382,7 +382,7 @@
   function toICS(p, progressi) {
     var now = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
     var hm = /^(\d{1,2}):(\d{2})$/.exec(p.ora || '18:00') || [0, '18', '00'];
-    var L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Hift App//Programma//IT', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:' + icsEsc(p.nome)];
+    var L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//HIFT Lab//Programma//IT', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:' + icsEsc(p.nome)];
     calendario(p, progressi).forEach(function (s) {
       s.giorni.forEach(function (g) {
         var dur = durataSeduta(g.esercizi);
@@ -410,7 +410,7 @@
         out.push('');
       });
     });
-    out.push((md ? '_' : '') + 'Generato con Hift App. Riscaldamento di 8–10 minuti prima di ogni seduta. RIR = ripetizioni in riserva a fine serie.' + (md ? '_' : ''));
+    out.push((md ? '_' : '') + 'Generato con HIFT Lab. Riscaldamento di 8–10 minuti prima di ogni seduta. RIR = ripetizioni in riserva a fine serie.' + (md ? '_' : ''));
     return out.join('\n') + '\n';
   }
   function toHTML(p, progressi) {
@@ -429,7 +429,7 @@
                 '</td><td>' + (x.kg != null ? fmtN(x.kg) + ' kg' : x.pct != null ? x.pct + '% 1RM' : '—') + '</td><td>' + x.rec + '"</td><td>' + x.rir + '</td><td>☐</td></tr>';
             }).join('') + '</table>';
         }).join('');
-      }).join('') + '<p class="m">Generato con Hift App · RIR = ripetizioni in riserva · riscaldamento di 8–10 minuti prima di ogni seduta.</p></body></html>';
+      }).join('') + '<p class="m">Generato con HIFT Lab · RIR = ripetizioni in riserva · riscaldamento di 8–10 minuti prima di ogni seduta.</p></body></html>';
   }
 
   return {

@@ -1,4 +1,4 @@
-/* Hift App — service worker
+/* HIFT Lab — service worker
    L'app resta sulla versione installata (funziona anche offline) finché
    non premi "Aggiorna": il tasto compare quando version.json annuncia
    una versione nuova. Non serve cambiare questo file a ogni rilascio. */

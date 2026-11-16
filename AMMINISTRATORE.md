@@ -1,6 +1,6 @@
 # Impostazioni dell'amministratore
 
-HIFT App non ha un server né account: è una web app pubblicata su GitHub Pages e i dati di ogni utente restano nel suo browser. Per questo **l'amministratore è chi gestisce il repository** e le sue impostazioni stanno nel file **`config.json`**.
+HIFT Lab non ha un server né account: è una web app pubblicata su GitHub Pages e i dati di ogni utente restano nel suo browser. Per questo **l'amministratore è chi gestisce il repository** e le sue impostazioni stanno nel file **`config.json`**.
 
 Ogni volta che si apre, l'app legge `config.json` dalla rete. Senza rete usa l'ultima copia scaricata. Le modifiche valgono per tutti gli utenti dal loro avvio successivo dell'app.
 
