@@ -44,7 +44,7 @@ const ok = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) fails++
   await p.evaluate(() => { PL.t0 -= 20 * 60000; }); await p.waitForTimeout(200);
   await p.click('#setDone'); await p.waitForTimeout(300);
   ok(await p.isVisible('#faBox [data-af="dist"]'), 'fine attività: si inseriscono distanza e dati');
-  ok(!(await p.$('#fPrT')), 'le attività non toccano i progressi di forza');
+  ok(!(await p.$('#fPr')), 'le attività non hanno il registro delle serie né toccano i progressi di forza');
   await p.fill('#faBox [data-af="dist"]', '8'); await p.click('[data-rpe="6"]'); await p.click('#fSave'); await p.waitForTimeout(300);
   const bike = await p.evaluate(() => state.hist[0]);
   ok(bike.att === 'bici' && bike.min === 20 && bike.dist === 8 && /24 km\/h/.test(bike.res), 'bici dal vivo: 20 minuti cronometrati, 24 km/h');

@@ -25,20 +25,19 @@ const skipToEnd = async p => { for (let i = 0; i < 400; i++) { if (!(await p.$('
   ok(await p.evaluate(() => { for (let seed = 1; seed < 500; seed++) { const s = generate(state.P, { minutes: 30, focus: 'core', format: 'AMRAP', seed });
     if (s.blocks.find(b => b.kind === 'wod').items.some(i => EX[i.id].unit === 'sec')) { state.session = s; store.set('session', s); renderHome(); return true; } } return false; }), 'sessione di prova con un esercizio a tempo');
   await p.click('#go'); await p.waitForTimeout(200); await skipToEnd(p);
-  ok(await p.isVisible('#fPrT'), 'fine allenamento: "Registra i progressi" presente');
-  await p.click('#fPrT');
-  const n = await p.evaluate(() => PL.prItems.length);
-  ok(n >= 2 && await p.evaluate(() => PL.prItems.every(it => it.pr.k.startsWith('w:'))), 'modulo con gli esercizi del WOD (' + n + ', senza riscaldamento e stretching)');
+  ok(await p.isVisible('#fPr'), 'fine allenamento: registro dell\'allenamento presente');
+  const n = await p.evaluate(() => PL.L.length);
+  ok(n >= 2 && await p.evaluate(() => PL.L.every(x => x.k.startsWith('w:'))), 'registro con gli esercizi del WOD (' + n + ', senza riscaldamento e stretching)');
   for (let i = 0; i < n; i++) {
-    await p.click(`[data-pi="${i}"] [data-pes="facile"]`);
-    const t = await p.evaluate(i => PL.prItems[i].pr, i);
-    if (t.target) await p.fill(`[data-pv="${i}:rip"]`, String(t.target + 3));
-    if (t.targetSec) { ok(!(await p.$(`[data-pv="${i}:rip"]`)) && !!(await p.$(`[data-pv="${i}:sec"]`)), 'esercizio a tempo: si registrano i secondi, non le ripetizioni'); await p.fill(`[data-pv="${i}:sec"]`, String(t.targetSec + 5)); }
+    await p.click(`[data-lges="${i}:facile"]`);
+    const t = await p.evaluate(i => PL.L[i], i);
+    if (t.target) await p.fill(`[data-lg="${i}:0:rip"]`, String(t.target + 3));
+    if (t.targetSec) { ok(!(await p.$(`[data-lg="${i}:0:rip"]`)) && !!(await p.$(`[data-lg="${i}:0:sec"]`)), 'esercizio a tempo: si registrano i secondi, non le ripetizioni'); await p.fill(`[data-lg="${i}:0:sec"]`, String(t.targetSec + 5)); }
   }
-  if (await p.$('[data-pv="0:kg"]')) await p.fill('[data-pv="0:kg"]', '16');
+  if (await p.$('[data-lg="0:0:kg"]')) await p.fill('[data-lg="0:0:kg"]', '16');
   await p.click('[data-prec="lunghi"]'); await p.click('[data-rpe="5"]');
   if (OUT) await p.screenshot({ path: OUT + '/p1-fine-allenamento.png', fullPage: true });
-  const first = await p.evaluate(() => PL.prItems.map(it => it.pr.k));
+  const first = await p.evaluate(() => PL.L.map(x => x.k));
   await p.click('#fSave'); await p.waitForTimeout(400);
   ok(await p.evaluate(n => PROG.entries.length === n && PROG.sessions.length === 1, n), 'salvati ' + n + ' progressi e la sessione');
   ok(await p.evaluate(k => PR.exState(PROG, k[0], state.P.goal).fattore > 1, first), 'esercizio facile e sopra obiettivo: volume in aumento');
@@ -88,10 +87,9 @@ const skipToEnd = async p => { for (let i = 0; i < 400; i++) { if (!(await p.$('
   ok(await p.isVisible('text=Adattato ai tuoi progressi'), 'HIFT: adattamento mostrato nella scheda');
   ok(!h.err, 'HIFT: scheda valida');
   await p.click('#hStart'); await p.waitForTimeout(200); await skipToEnd(p);
-  await p.click('#fPrT');
-  const hn = await p.evaluate(() => PL.prItems.length);
-  ok(hn === 8 && await p.evaluate(() => PL.prItems.every(it => it.pr.k.startsWith('h:'))), 'HIFT: modulo con 3 esercizi CORE e 5 stazioni');
-  await p.click('[data-pi="0"] [data-pes="duro"]'); await p.fill('[data-pv="0:sec"]', '25');
+  const hn = await p.evaluate(() => PL.L.length);
+  ok(hn === 8 && await p.evaluate(() => PL.L.every(x => x.k.startsWith('h:'))), 'HIFT: registro con 3 esercizi CORE e 5 stazioni');
+  await p.click('[data-lges="0:duro"]'); await p.fill('[data-lg="0:0:sec"]', '25');
   await p.click('#fSave'); await p.waitForTimeout(400);
   const hk = await p.evaluate(() => PROG.entries.find(e => e.k.startsWith('h:')));
   ok(hk && hk.esito === 'duro' && hk.sec === 25 && hk.src === 'hift', 'HIFT: progresso salvato');
@@ -106,7 +104,7 @@ const skipToEnd = async p => { for (let i = 0; i < 400; i++) { if (!(await p.$('
   ok(await p.evaluate(() => !generate(state.P, { minutes: 30, seed: 9 }).why.some(w => w.startsWith('Progressi'))), 'disattivati: gli allenamenti tornano alla base');
   await p.evaluate(() => go('oggi')); await p.waitForTimeout(200);
   await p.click('#go'); await p.waitForTimeout(200); await skipToEnd(p);
-  ok(!(await p.$('#fPrT')), 'disattivati: niente modulo a fine allenamento');
+  ok(!!(await p.$('#fPr')) && !(await p.$('[data-lges]')), 'disattivati: il registro resta, senza le sensazioni per l\'adattamento');
   await p.click('#fSkip');
   const overflow = await p.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
   ok(!overflow, 'nessuno scorrimento orizzontale a 390px');

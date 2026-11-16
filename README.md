@@ -14,6 +14,7 @@ Web app per allenamenti funzionali ad alta intensità (HIFT).
 - **Progressi** (facoltativi): carichi, ripetizioni, tempi, serie, recuperi e sensazioni registrati a fine allenamento o dal Diario; l'app li elabora e adatta gli allenamenti di tutte le sezioni all'obiettivo (vedi `PROGRESSI.md`)
 - **Attività**: corsa, camminata, bicicletta, nuoto, stretching, pilates e yoga, da registrare o cronometrare dal vivo
 - **Analisi**: minuti parziali e totali per disciplina, calorie e MET stimati (Compendium of Physical Activities), obiettivo OMS settimanale, grafici di minuti, progressi degli esercizi e velocità di corsa (vedi `ANALISI.md`)
+- **Registro dell'allenamento**: pesi, ripetizioni, tempi, recuperi e serie di ogni allenamento, segnati dal vivo nel timer o a fine sessione (recuperi misurati in automatico), modificabili dal Diario; allenamento libero per le sessioni fatte fuori dall'app (vedi `REGISTRO.md`)
 - Diario con RPE e note, dettaglio ed eliminazione delle voci
 - Libreria di 45 esercizi con figure animate, istruzioni, errori comuni e link a video gratuiti (Pexels, Pixabay, Wikimedia Commons)
 
@@ -24,10 +25,11 @@ App installabile (PWA): si aggiunge alla schermata Home, si apre a tutto schermo
 - `progressi-core.js`, `PROGRESSI.md` — registrazione ed elaborazione dei progressi
 - `programma-core.js`, `PROGRAMMA.md` — programmi personali: regole, calendario, esportazioni
 - `analisi-core.js`, `ANALISI.md` — attività, MET, calorie e analisi
+- `registro-core.js`, `REGISTRO.md` — registro serie per serie
 - `ARCHIVIO.md` — come collegare l'archivio esercizi esterno
 - `archivio-esercizi.json`, `archivio/` — archivio degli Atlanti 100 (illustrazioni e copie delle pagine sorgente)
 - `tools/estrai-atlanti.js` — rigenera l'archivio dagli atlanti
-- `tests/` — test automatici (`node --test tests/*.test.js`, `node tests/e2e.js`, `node tests/e2e-progressi.js`, `node tests/e2e-crea.js`, `node tests/e2e-attivita.js`)
+- `tests/` — test automatici (`node --test tests/*.test.js`, `node tests/e2e.js`, `node tests/e2e-progressi.js`, `node tests/e2e-crea.js`, `node tests/e2e-attivita.js`, `node tests/e2e-registro.js`)
 - `manifest.json`, `sw.js` — installazione e offline
 - `aggiornamenti.js`, `version.json` — tasto Aggiorna quando esce una nuova versione
 - `icons/` — logo e icone
