@@ -1,10 +1,11 @@
 {
-  "version": "1.4.0",
+  "version": "1.5.0",
   "date": "16/11/2026",
   "notes": [
-    "Nuovo: Progressi. A fine allenamento o dal Diario puoi registrare carichi, ripetizioni, tempi, serie e recuperi",
-    "L'app elabora i progressi e adatta ripetizioni, carichi, tempi e recuperi al tuo obiettivo, nel WOD di Oggi e in HIFT Method",
-    "Diario → Progressi: record, andamento, prossimo carico e suggerimento di livello",
-    "Funzione facoltativa: si attiva o disattiva dal Profilo"
+    "Nuova sezione Crea: il tuo programma con esercizi, carichi, tempi, serie, ripetizioni, giorni, settimane e mesi",
+    "Controllo automatico delle regole della programmazione: volume, frequenza, recupero, intensità, scarichi",
+    "Progressione lineare, ondulata o a blocchi, con calendario settimana per settimana",
+    "Esportazione in PDF, CSV, Excel, calendario, HTML, Markdown, testo e JSON",
+    "Sedute del programma nel timer, con registrazione dei progressi"
   ]
 }

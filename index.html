@@ -192,7 +192,7 @@ ul.err li::before{content:"×";position:absolute;left:0;top:-1px;color:var(--cor
 
 /* nav */
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(13,14,11,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding-bottom:var(--sb)}
-.nav .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+.nav .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr)}
 .nav button{height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--dim);font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
 .nav button.on{color:var(--volt)}
 
@@ -340,6 +340,11 @@ ul.err li::before{content:"×";position:absolute;left:0;top:-1px;color:var(--cor
 .toast{position:fixed;left:50%;bottom:calc(150px + var(--sb));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:999px;font-weight:700;font-size:14px;z-index:120;opacity:0;pointer-events:none;transition:.25s;max-width:calc(100% - 32px);text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 @media (max-width:380px){.hx{grid-template-columns:48px minmax(0,1fr) auto;gap:9px}.hx-img{width:48px;height:48px}.ov{padding-left:0}.nav button{font-size:9px;letter-spacing:.04em}}
+/* crea programma */
+details.hcard>summary::-webkit-details-marker{display:none}
+details.hcard[open]>summary{margin-bottom:4px}
+.nav button svg{flex:none}
+@media (max-width:400px){.nav button{font-size:9px;letter-spacing:.03em}}
 /* progressi */
 .hx-p{font-size:12px;color:var(--sky);margin-top:3px;line-height:1.35}
 .pgx{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-top:10px}
@@ -384,6 +389,7 @@ body.has-upd .top>.m,body.has-upd #instChip{visibility:hidden}
 <nav class="nav" id="nav"><div class="in">
   <button data-r="oggi"><svg class="ico" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Oggi</button>
   <button data-r="metodo"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="3.5" r="1.5"/><circle cx="20" cy="9.5" r="1.5"/><circle cx="17" cy="19.5" r="1.5"/><circle cx="7" cy="19.5" r="1.5"/><circle cx="4" cy="9.5" r="1.5"/></svg>HIFT</button>
+  <button data-r="crea"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M12 12v6M9 15h6"/></svg>Crea</button>
   <button data-r="esercizi"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Esercizi</button>
   <button data-r="diario"><svg class="ico" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Diario</button>
   <button data-r="profilo"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Profilo</button>
@@ -397,6 +403,7 @@ body.has-upd .top>.m,body.has-upd #instChip{visibility:hidden}
 
 <script src="hift-method-core.js"></script>
 <script src="progressi-core.js"></script>
+<script src="programma-core.js"></script>
 <script>
 "use strict";
 /* ============ utilità ============ */
@@ -1011,7 +1018,7 @@ function route(){
   const r=(location.hash||'#oggi').slice(1);
   $$('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.r===r));
   $('#cta').classList.toggle('hide',r!=='oggi');
-  ({oggi:renderHome,metodo:renderMethod,esercizi:renderLib,diario:renderDiary,profilo:renderProfile}[r]||renderHome)();
+  ({oggi:renderHome,metodo:renderMethod,crea:renderCrea,esercizi:renderLib,diario:renderDiary,profilo:renderProfile}[r]||renderHome)();
   window.scrollTo(0,0);
 }
 $$('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.r));
@@ -1338,14 +1345,14 @@ function renderProfile(){
   <div class="sec" id="installBox"></div>
   <button class="btn volt w" style="margin-top:26px" id="saveP">Salva e rigenera</button>
   <button class="btn ghost w" style="margin-top:10px" id="resetAll">Cancella tutti i dati</button>
-  <p class="note" style="margin-top:14px">I dati restano solo in questo browser. “Cancella tutti i dati” elimina anche le schede HIFT e i progressi, ma non l’archivio esercizi importato.</p>`;
+  <p class="note" style="margin-top:14px">I dati restano solo in questo browser. “Cancella tutti i dati” elimina anche le schede HIFT, i programmi e i progressi, ma non l’archivio esercizi importato.</p>`;
   bindForm($('#view'),D);
   $('#progT').onclick=()=>{PROG.on=!PROG.on;saveProg();$('#progT .sw').classList.toggle('on',PROG.on);toast(PROG.on?'Progressi attivi':'Progressi disattivati: i dati restano salvati')};
   paintInstall();
   $('#saveP').onclick=()=>{state.P=sanitize(D);store.set('profile',state.P);state.opt.minutes=state.P.minutes;newSession();go('oggi')};
   let armed=false;
   $('#resetAll').onclick=e=>{ if(!armed){armed=true;e.currentTarget.textContent='Tocca di nuovo per confermare';e.currentTarget.style.borderColor='var(--coral)';e.currentTarget.style.color='var(--coral)';return}
-    ['profile','session','hist','m_cfg','m_draft','m_plans','m_log','prog'].forEach(k=>store.del(k));PROG=PR.empty();
+    ['profile','session','hist','m_cfg','m_draft','m_plans','m_log','prog','progs'].forEach(k=>store.del(k));PROG=PR.empty();CR.list=[];CR.edit=null;
     state.P=null;state.session=null;state.hist=[];Object.assign(HM,{cfg:null,draft:null,plans:[],log:[],loaded:false});onboarding(); };
 }
 
@@ -1672,6 +1679,260 @@ function hiftSource(p){
       after(){HM.tab='schede';go('metodo')}}};
 }
 
+/* ============ CREA: programmi personali (vedi programma-core.js) ============ */
+const PGM=window.HiftProgramma;
+const CR={list:store.get('progs',[]).map(p=>PGM.pulisci(p)),edit:null,tab:'struttura',dg:0,filt:{q:'',g:'',src:''}};
+const saveProgs=()=>{if(!store.set('progs',CR.list))toast('Memoria piena: programma non salvato')};
+const crCur=()=>CR.list.find(p=>p.id===CR.edit)||null;
+function crTouch(p){p.modificato=new Date().toISOString();saveProgs()}
+const CATG={squat:'quadricipiti',hinge:'glutei',lunge:'quadricipiti',pull:'dorso',core:'core',cardio:'cardio',plyo:'quadricipiti',full:'total',carry:'core'};
+/* catalogo esercizi: libreria WOD + archivio HIFT; ok = compatibile con attrezzatura e zone da proteggere */
+function crCatalog(){
+  const P=state.P,eq=new Set(P.eq),out=[];
+  Object.values(EX).forEach(e=>{if(e.warmOnly||e.cool)return;
+    const g0=e.cat==='push'?(/press/.test(e.id)?'spalle':'petto'):CATG[e.cat];if(!g0)return;
+    const gr=[g0,...PGM.gruppiDaTesto(e.mus).filter(x=>x!==g0)];
+    const ok=!(e.eq&&!e.eq.every(x=>eq.has(x)))&&!(e.eqAny&&!e.eqAny.some(x=>eq.has(x)))&&!(e.j&&e.j.some(j=>P.lim.includes(j)));
+    out.push({k:'w:'+e.id,nome:e.n,gruppi:gr,unita:e.unit==='sec'?'sec':e.unit,carico:!!e.load,livello:e.lvl,multi:['squat','hinge','lunge','push','pull','full'].includes(e.cat),fonte:'WOD',ok});
+  });
+  if(HM.arch&&HM.arch.ok){const heq=new Set((HM.cfg&&HM.cfg.eq)||[HC.BW]);
+    HM.arch.exercises.forEach(e=>{if(!e.primary)return;
+      const gr=[e.primary,...Object.keys(e.slots).filter(x=>x!==e.primary)];
+      const t=(e.nome+' '+e.descrizione).toLowerCase(),hold=/\b(tieni|tenuta|tenute|hold|isometric)/.test(t)&&!/ripetizion/.test(t);
+      out.push({k:'h:'+e.id,nome:e.nome,gruppi:gr,unita:hold?'sec':'rip',carico:loadableH(e),livello:e.livello,multi:e.primary!=='core',fonte:'HIFT · '+e.id,ok:HC.eqOk(e,heq),img:e.immagine});
+    });}
+  return out;
+}
+/* massimali stimati dai progressi registrati (Epley), per i carichi in % */
+function crRM(){if(!progOn())return {};const m={};PROG.entries.forEach(e=>{const r=PGM.stima1RM(e.kg,e.rip);if(r&&(!m[e.k]||r>m[e.k].rm))m[e.k]={rm:r}});return m}
+function dlFile(name,mime,text){
+  const blob=new Blob([text],{type:mime}),url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);
+}
+async function shareFile(name,mime,text){
+  try{const f=new File([text],name,{type:mime});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:name});return true}}catch(e){if(e&&e.name==='AbortError')return true}
+  return false;
+}
+function printHTML(html){
+  let fr=$('#printFrame');if(fr)fr.remove();
+  fr=document.createElement('iframe');fr.id='printFrame';fr.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0';document.body.appendChild(fr);
+  fr.onload=()=>{try{fr.contentWindow.focus();fr.contentWindow.print()}catch(e){toast('Stampa non disponibile: esporta in HTML e stampa da lì')}};
+  fr.srcdoc=html;
+}
+const slug=s=>String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'').toLowerCase()||'programma';
+const EXPORTS=[
+  ['pdf','Stampa / PDF','Impaginato con caselle da spuntare: dalla finestra di stampa scegli “Salva come PDF”',null,null],
+  ['csv','CSV','Excel, Fogli Google, Numbers: una riga per esercizio di ogni seduta','text/csv;charset=utf-8','csv'],
+  ['xls','Excel (.xls)','Foglio di calcolo con intestazioni e scheda di informazioni','application/vnd.ms-excel','xls'],
+  ['ics','Calendario (.ics)','Ogni seduta nel calendario di telefono, Google o Outlook, con gli esercizi nella descrizione','text/calendar;charset=utf-8','ics'],
+  ['html','Pagina web (.html)','Da aprire in qualsiasi browser o stampare','text/html;charset=utf-8','html'],
+  ['md','Markdown (.md)','Per note, Notion, Obsidian, GitHub','text/markdown;charset=utf-8','md'],
+  ['txt','Testo (.txt)','Semplice da leggere o incollare in un messaggio','text/plain;charset=utf-8','txt'],
+  ['json','JSON (backup)','Copia completa: si reimporta in Hift App su un altro dispositivo','application/json','json']];
+function crExport(p,kind,share){
+  const rm=crRM(),f={csv:PGM.toCSV,xls:PGM.toXLS,ics:PGM.toICS,html:PGM.toHTML,md:PGM.toMarkdown,txt:PGM.toText,json:PGM.toJSON};
+  if(kind==='pdf')return printHTML(PGM.toHTML(p,rm));
+  const x=EXPORTS.find(e=>e[0]===kind),text=f[kind](p,rm),name=slug(p.nome)+'.'+x[4];
+  if(share)shareFile(name,x[3],text).then(ok=>{if(!ok){dlFile(name,x[3],text);toast('Condivisione non disponibile: file scaricato')}});
+  else{dlFile(name,x[3],text);toast('Esportato: '+name)}
+}
+
+function renderCrea(){
+  if(!HM.loaded&&!HM.loading){loadArchive().then(()=>{if((location.hash||'').slice(1)==='crea')renderCrea()})}
+  const p=crCur(),y=window.scrollY;
+  $('#view').innerHTML=p?crEditor(p):crList();
+  if(p)window.scrollTo(0,y);
+  bindCrea();
+}
+function crList(){
+  return `<div class="top"><div class="logo">H<i></i>FT</div><div class="m">Programmi</div></div>
+  <h1 class="h1 d">Crea il tuo<br><em style="font-style:normal;color:var(--volt)">programma</em></h1>
+  <p class="quote" style="margin-top:-6px">Esercizi, carichi, tempi, serie, ripetizioni, giorni e settimane: con il controllo delle regole della programmazione e l’esportazione in più formati.</p>
+  <button class="btn volt w" id="crNew">+ Nuovo programma</button>
+  <label class="btn ghost w" style="margin-top:10px;position:relative;overflow:hidden">Importa da file (JSON)<input type="file" accept=".json,application/json" id="crImp" style="position:absolute;inset:0;opacity:0;cursor:pointer"></label>
+  ${CR.list.length?`<div class="m lbl">I tuoi programmi · ${CR.list.length}</div>`+CR.list.map(p=>{const O=PGM.OBIETTIVI[p.obiettivo],tot=p.settimane*p.giorni.length,nx=PGM.prossima(p);
+    return `<div class="hcard"><div class="m">${esc(O.n)} · ${p.settimane} sett. · ${p.giorni.map(g=>PGM.WDS[g.wd]).join(' ')}</div><div class="d" style="font-size:30px;margin-top:6px">${esc(p.nome)}</div>
+      <div class="bar7" style="margin-top:10px">${Array.from({length:Math.min(tot,40)},(_,i)=>`<i class="${i<p.fatte.length*Math.min(1,40/tot)?'on':''}"></i>`).join('')}</div>
+      <p class="note">${p.fatte.length}/${tot} sedute fatte${nx?' · prossima: settimana '+(nx.w+1)+', '+esc(nx.g.nome)+' ('+esc(PGM.WD[nx.g.wd].toLowerCase())+' '+nx.g.data.split('-').reverse().slice(0,2).join('/')+')':' · programma completato'}</p>
+      <div class="row" style="margin-top:10px"><button class="chip on" data-cract="open:${p.id}">Apri</button>${nx?`<button class="chip" data-cract="go:${p.id}">Allena</button>`:''}<button class="chip" data-cract="dup:${p.id}">Duplica</button><button class="chip" data-cract="del:${p.id}" style="color:var(--coral)">Elimina</button></div></div>`}).join('')
+   :'<p class="empty">Nessun programma. Crea il primo: puoi partire da una proposta automatica e modificarla.</p>'}`;
+}
+function crEditor(p){
+  const O=PGM.OBIETTIVI[p.obiettivo],iss=PGM.controlla(p),nW=iss.filter(i=>i.level==='warn'||i.level==='error').length,nx=PGM.prossima(p);
+  const T=[['struttura','Struttura'],['esercizi','Esercizi'],['controllo','Controllo'+(nW?' · '+nW:'')],['calendario','Calendario'],['esporta','Esporta']];
+  let body='';
+  if(CR.tab==='struttura')body=crStruttura(p,O);
+  else if(CR.tab==='esercizi')body=crEsercizi(p);
+  else if(CR.tab==='controllo')body=crControllo(p,iss);
+  else if(CR.tab==='calendario')body=crCal(p);
+  else body=`<p class="note">Il programma esportato contiene tutte le ${p.settimane} settimane con progressione e scarichi già calcolati.</p>`+EXPORTS.map(([k,l,d])=>`<div class="hcard"><div class="hrow0"><div><b style="font-size:18px">${l}</b><div class="note" style="margin-top:4px">${d}</div></div></div><div class="row" style="margin-top:10px"><button class="chip on" data-crexp="${k}">${k==='pdf'?'Stampa':'Scarica'}</button>${k!=='pdf'?`<button class="chip" data-crshare="${k}">Condividi</button>`:''}</div></div>`).join('');
+  return `<div class="top"><button class="chip" id="crBack">← Programmi</button><div class="m">${esc(O.n)}</div></div>
+  <input class="hname d" id="crName" value="${esc(p.nome)}" maxlength="50" aria-label="Nome del programma" style="margin-top:8px">
+  <div class="tags" style="margin-top:8px"><span class="tag">${p.settimane} settimane · ${Math.round(p.settimane/4.345*10)/10} mesi</span><span class="tag">${p.giorni.length} giorni/sett.</span><span class="tag">${esc(PGM.MODELLI[p.modello].n)}</span>${nW?`<span class="tag hot">${nW} da rivedere</span>`:'<span class="tag ok">Regole rispettate</span>'}</div>
+  ${nx&&p.giorni.some(g=>g.esercizi.length)?`<button class="btn volt w" style="margin-top:14px" data-crgo="${nx.w}:${nx.i}">Allena · sett. ${nx.w+1} · ${esc(nx.g.nome)}</button>`:''}
+  <div class="scroll" style="margin-top:16px">${T.map(([k,l])=>`<button class="chip ${CR.tab===k?'on':''}" data-crtab="${k}">${l}</button>`).join('')}</div>
+  <div style="margin-top:6px">${body}</div>`;
+}
+function crStruttura(p,O){
+  const n=(k,v,l,u,mn,mx,st)=>`<label class="pf"><span class="m">${l}${u?' · '+u:''}</span><input class="inp" type="${st||'number'}" ${st?'':'inputmode="numeric"'} data-crp="${k}" value="${esc(v)}" ${mn!=null?`min="${mn}" max="${mx}"`:''}></label>`;
+  return `<div class="m lbl">Obiettivo</div><div class="row">${Object.entries(PGM.OBIETTIVI).map(([k,v])=>`<button class="chip ${p.obiettivo===k?'on':''}" data-crob="${k}">${v.n}</button>`).join('')}</div>
+   <p class="note">${esc(O.fonte)}</p>
+   <table class="sumt"><tbody><tr><th>Ripetizioni</th><td>${O.rip[0]}–${O.rip[1]}</td></tr><tr><th>Serie per esercizio</th><td>${O.serie[0]}–${O.serie[1]}</td></tr><tr><th>Recupero</th><td>${O.rec[0]}–${O.rec[1]}"</td></tr><tr><th>Intensità</th><td>${O.pct[0]}–${O.pct[1]}% del massimale · RIR ${O.rir[0]}–${O.rir[1]}</td></tr><tr><th>Volume settimanale</th><td>${O.vol[0]}–${O.vol[1]} serie per gruppo muscolare</td></tr><tr><th>Progressione</th><td>+${fmtN(O.inc*100)}% di carico a settimana (o ripetizioni/tempo senza carico)</td></tr></tbody></table>
+   <div class="m lbl">Livello</div><div class="row">${[1,2,3].map(v=>`<button class="chip ${p.livello===v?'on':''}" data-crlv="${v}">${PGM.LIVELLI[v]}</button>`).join('')}</div>
+   <div class="m lbl">Giorni della settimana</div><div class="row">${[1,2,3,4,5,6,7].map(d=>`<button class="chip ${p.giorni.some(g=>g.wd===d)?'on':''}" data-crwd="${d}">${PGM.WDS[d]}</button>`).join('')}</div>
+   <div class="pgr" style="margin-top:12px">${n('settimane',p.settimane,'Durata','settimane',1,52)}${n('inizio',p.inizio,'Inizio','',null,null,'date')}${n('ora',p.ora,'Ora (calendario)','',null,null,'time')}</div>
+   <div class="m lbl">Progressione</div><div class="row">${Object.entries(PGM.MODELLI).map(([k,v])=>`<button class="chip ${p.modello===k?'on':''}" data-crmod="${k}">${v.n}</button>`).join('')}</div>
+   <p class="note">${esc(PGM.MODELLI[p.modello].d)}</p>
+   <div class="m lbl">Settimana di scarico</div><div class="row">${[[0,'Nessuna'],[3,'Ogni 3'],[4,'Ogni 4'],[5,'Ogni 5'],[6,'Ogni 6']].map(([v,l])=>`<button class="chip ${p.scarico===v?'on':''}" data-crsc="${v}">${l}</button>`).join('')}</div>
+   <p class="note">Nella settimana di scarico serie al 60%, carico al 90% e 2 ripetizioni in più in riserva: il corpo assorbe il lavoro delle settimane precedenti.</p>
+   <button class="btn ghost w" id="crProp" style="margin-top:16px">Rifai la proposta automatica</button>
+   <p class="note">Sostituisce gli esercizi di tutti i giorni con una proposta basata su obiettivo, livello, giorni e la tua attrezzatura.</p>`;
+}
+function crEsercizi(p){
+  if(!p.giorni.length)return '<p class="empty">Scegli almeno un giorno nella scheda Struttura.</p>';
+  CR.dg=Math.min(CR.dg,p.giorni.length-1);const g=p.giorni[CR.dg],rm=crRM();
+  const f=(e,k,l,u,st)=>`<label class="pf"><span class="m">${l}${u?' · '+u:''}</span><input class="inp" type="number" inputmode="${st||'numeric'}" step="${k==='kg'?'0.5':'1'}" data-cre="${e.id}:${k}" value="${e[k]==null?'':e[k]}" placeholder="${k==='kg'&&e.pct&&rm[e.k]?fmtN(PGM.roundKg(rm[e.k].rm*e.pct/100)):k==='kg'?'—':''}"></label>`;
+  const gruppi=Object.entries(PGM.volumeSettimanale(p)).filter(([k])=>k!=='core');
+  return `<div class="scroll">${p.giorni.map((x,i)=>`<button class="chip ${i===CR.dg?'on':''}" data-crdg="${i}">${PGM.WDS[x.wd]} · ${esc(x.nome)}</button>`).join('')}</div>
+   <label class="fld"><span class="m">Nome della seduta</span><input class="inp" id="crDayName" value="${esc(g.nome)}" maxlength="40"></label>
+   <p class="note">Durata stimata ${PGM.durataSeduta(g.esercizi)}' (con 8' di riscaldamento) · ${g.esercizi.length} esercizi</p>
+   ${g.esercizi.map((e,i)=>{const c=e.k.startsWith('w:')?EX[e.k.slice(2)]:hx(e.k.slice(2));return `<div class="pgx">
+     <div class="hrow0"><div><div class="m">${i+1} · ${e.gruppi.map(x=>PGM.GRUPPI[x]).join(' + ')}</div><div class="nm">${esc(e.nome)}</div></div>
+       <div class="row" style="flex:none;gap:4px"><button class="swap" data-crmv="${e.id}:-1" aria-label="Su">↑</button><button class="swap" data-crmv="${e.id}:1" aria-label="Giù">↓</button><button class="swap" data-crdel="${e.id}" aria-label="Rimuovi">×</button></div></div>
+     <div class="row" style="margin-top:8px"><button class="chip ${e.unita!=='sec'?'on':''}" data-cru="${e.id}:rip">Ripetizioni</button><button class="chip ${e.unita==='sec'?'on':''}" data-cru="${e.id}:sec">A tempo</button>${c?`<button class="chip" data-crinfo="${esc(e.k)}">Scheda</button>`:''}</div>
+     <div class="pgr">${f(e,'serie','Serie')}${e.unita==='sec'?f(e,'sec','Tempo','sec'):f(e,'ripMin','Rip. min')+f(e,'ripMax','Rip. max')}${f(e,'kg','Carico','kg','decimal')}${f(e,'pct','% massimale','%')}${f(e,'rec','Recupero','sec')}${f(e,'rir','RIR','rip. in riserva')}</div>
+     ${e.pct&&e.kg==null?`<p class="note">${rm[e.k]?'Carico calcolato dal massimale stimato con i tuoi progressi ('+fmtN(PGM.roundKg(rm[e.k].rm))+' kg).':'Per calcolare i kg dalla % registra un progresso con carico e ripetizioni, o scrivi il carico.'}</p>`:''}
+     <input class="inp" style="margin-top:8px;height:42px;font-size:14px" data-cre="${e.id}:note" value="${esc(e.note||'')}" placeholder="Note (tecnica, tempo di esecuzione…)" maxlength="200"></div>`}).join('')}
+   <button class="btn volt w" id="crAddEx" style="margin-top:14px">+ Aggiungi esercizio</button>
+   <div class="m lbl">Serie settimanali per gruppo</div>
+   <table class="sumt"><tbody>${gruppi.map(([k,v])=>{const O=PGM.OBIETTIVI[p.obiettivo],st=v===0?'hot':v<O.vol[0]?'':v>O.vol[1]+2?'hot':'ok';return `<tr><th>${PGM.GRUPPI[k]}</th><td><span class="tag ${st}">${fmtN(v)} serie</span> <span class="muted">consigliate ${O.vol[0]}–${O.vol[1]}</span></td></tr>`}).join('')}</tbody></table>`;
+}
+function crControllo(p,iss){
+  const ord={error:0,warn:1,info:2,ok:3},cls={error:'error',warn:'warn',info:'',ok:'ok'};
+  const f=PGM.frequenza(p);
+  return `<p class="note">Controllo automatico secondo le linee guida (ACSM 2009, NSCA, Schoenfeld 2016–2017): volume, frequenza, recupero, intensità, ordine degli esercizi e periodizzazione.</p>
+   <ul class="hiss">${iss.slice().sort((a,b)=>ord[a.level]-ord[b.level]).map(i=>`<li class="${cls[i.level]}"><b style="font-size:13px">${esc(i.area)}</b><br>${esc(i.msg)}</li>`).join('')}</ul>
+   <div class="m lbl">Frequenza settimanale per gruppo</div>
+   <table class="sumt"><tbody>${PGM.MUSCOLARI.map(k=>`<tr><th>${PGM.GRUPPI[k]}</th><td>${f[k]} ${f[k]===1?'seduta':'sedute'}${f[k]>=2?' <span class="tag ok">ottimale</span>':''}</td></tr>`).join('')}</tbody></table>`;
+}
+function crCal(p){
+  const cal=PGM.calendario(p,crRM());
+  return cal.map((s,w)=>`<details class="hcard" ${w===(PGM.prossima(p)||{w:0}).w?'open':''}><summary class="hrow0" style="list-style:none;cursor:pointer"><div><div class="m">Settimana ${s.n} · ${esc(s.fase)}</div><b>${s.giorni.filter(g=>g.fatta).length}/${s.giorni.length} sedute</b></div><span class="m">${s.giorni[0]?s.giorni[0].data.split('-').reverse().slice(0,2).join('/'):''}</span></summary>
+     ${s.giorni.map((g,i)=>`<div class="sec" style="margin-top:14px"><div class="hrow0"><div><div class="m">${PGM.WD[g.wd]} ${g.data.split('-').reverse().join('/')} · ~${PGM.durataSeduta(g.esercizi)}'</div><b style="font-size:17px">${esc(g.nome)}${g.fatta?' <span class="tag ok">Fatta</span>':''}</b></div>${g.esercizi.length?`<button class="chip" data-crgo="${w}:${i}">Allena</button>`:''}</div>
+       ${g.esercizi.map(x=>`<p style="font-size:14px;margin-top:6px"><b>${esc(x.nome)}</b><br><span class="muted">${esc(PGM.presTxt(x))}</span></p>`).join('')}</div>`).join('')}</details>`).join('');
+}
+function bindCrea(){
+  const V=$('#view'),p=crCur();
+  const on=(sel,fn,ev)=>$$(sel,V).forEach(b=>b[ev||'onclick']=e=>fn(b,e));
+  const re=()=>{if(p)crTouch(p);renderCrea()};
+  on('#crNew',()=>crNewSheet());
+  on('#crImp',b=>{const f=b.files&&b.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const q=PGM.fromJSON(rd.result);CR.list.unshift(q);saveProgs();CR.edit=q.id;CR.tab='struttura';toast('Programma importato');renderCrea()}catch(e){toast(e.message||'File non valido')}};rd.readAsText(f)},'onchange');
+  on('[data-cract]',b=>{const [a,id]=b.dataset.cract.split(':'),i=CR.list.findIndex(x=>x.id===id),q=CR.list[i];if(!q)return;
+    if(a==='open'){CR.edit=id;CR.tab='struttura';renderCrea();window.scrollTo(0,0)}
+    if(a==='go'){const nx=PGM.prossima(q);if(nx)startPlayer(crSource(q,nx.w,nx.i))}
+    if(a==='dup'){const c=Object.assign(JSON.parse(JSON.stringify(q)),{id:hid(),nome:(q.nome+' (copia)').slice(0,50),fatte:[],creato:new Date().toISOString()});CR.list.splice(i,0,c);saveProgs();toast('Programma duplicato');renderCrea()}
+    if(a==='del'){if(!b._arm){b._arm=1;b.textContent='Conferma eliminazione';return}CR.list.splice(i,1);saveProgs();toast('Programma eliminato');renderCrea()}});
+  if(!p)return;
+  on('#crBack',()=>{CR.edit=null;renderCrea();window.scrollTo(0,0)});
+  on('#crName',b=>{p.nome=b.value.trim()||p.nome;crTouch(p)},'onchange');
+  on('[data-crtab]',b=>{CR.tab=b.dataset.crtab;renderCrea()});
+  on('[data-crob]',b=>{p.obiettivo=b.dataset.crob;re()});
+  on('[data-crlv]',b=>{p.livello=+b.dataset.crlv;re()});
+  on('[data-crmod]',b=>{p.modello=b.dataset.crmod;re()});
+  on('[data-crsc]',b=>{p.scarico=+b.dataset.crsc;re()});
+  on('[data-crwd]',b=>{const d=+b.dataset.crwd,g=p.giorni.find(x=>x.wd===d);
+    if(g){if(g.esercizi.length&&!b._arm){b._arm=1;toast('Il giorno ha esercizi: tocca di nuovo per toglierlo');return}p.giorni=p.giorni.filter(x=>x!==g)}else PGM.nuovoGiorno(p,d);re()});
+  on('[data-crp]',b=>{const k=b.dataset.crp;if(k==='settimane')p.settimane=clamp(Math.round(+b.value)||p.settimane,1,52);else if(b.value)p[k]=b.value;re()},'onchange');
+  on('#crProp',b=>{if(!b._arm){b._arm=1;b.textContent='Tocca di nuovo: gli esercizi attuali verranno sostituiti';b.style.borderColor='var(--coral)';return}
+    const q=PGM.proposta({obiettivo:p.obiettivo,livello:p.livello,wd:p.giorni.map(g=>g.wd),settimane:p.settimane},crCatalog().filter(c=>c.ok));
+    p.giorni=q.giorni;p.fatte=[];toast('Proposta aggiornata');re()});
+  on('[data-crdg]',b=>{CR.dg=+b.dataset.crdg;renderCrea()});
+  const g=p.giorni[CR.dg];
+  on('#crDayName',b=>{if(g){g.nome=b.value.trim()||g.nome;re()}},'onchange');
+  const ex=id=>g&&g.esercizi.find(e=>e.id===id);
+  on('[data-cre]',b=>{const [id,k]=b.dataset.cre.split(':'),e=ex(id);if(!e)return;
+    if(k==='note')e.note=b.value.slice(0,200);else e[k]=b.value===''?null:+b.value;
+    const q=PGM.pulisci({giorni:[{esercizi:[e]}]}).giorni[0].esercizi[0];Object.assign(e,q,{id:e.id});re()},'onchange');
+  on('[data-cru]',b=>{const [id,u]=b.dataset.cru.split(':'),e=ex(id);if(!e)return;const O=PGM.OBIETTIVI[p.obiettivo];
+    if(u==='sec'){e.unita='sec';e.sec=e.sec||Math.round((O.sec[0]+O.sec[1])/2);e.ripMin=e.ripMax=null}else{e.unita='rip';e.ripMin=e.ripMin||O.rip[0];e.ripMax=e.ripMax||O.rip[1];e.sec=null}re()});
+  on('[data-crmv]',b=>{const [id,d]=b.dataset.crmv.split(':'),i=g.esercizi.findIndex(e=>e.id===id),j=i+(+d);if(i<0||j<0||j>=g.esercizi.length)return;[g.esercizi[i],g.esercizi[j]]=[g.esercizi[j],g.esercizi[i]];re()});
+  on('[data-crdel]',b=>{if(!b._arm){b._arm=1;b.textContent='?';b.style.color='var(--coral)';return}g.esercizi=g.esercizi.filter(e=>e.id!==b.dataset.crdel);re()});
+  on('[data-crinfo]',b=>{const k=b.dataset.crinfo;if(k.startsWith('w:'))openEx(k.slice(2));else openHx(k.slice(2))});
+  on('#crAddEx',()=>crPicker(p,g));
+  on('[data-crgo]',b=>{const [w,i]=b.dataset.crgo.split(':').map(Number);startPlayer(crSource(p,w,i))});
+  on('[data-crexp]',b=>crExport(p,b.dataset.crexp,false));
+  on('[data-crshare]',b=>crExport(p,b.dataset.crshare,true));
+}
+function crNewSheet(){
+  const P=state.P,goalMap={dimagrimento:'dimagrimento',forza:'forza',potenza:'potenza',resistenza:'resistenza',salute:'salute'};
+  const D={nome:'Programma '+(CR.list.length+1),obiettivo:goalMap[P.goal]||'ipertrofia',livello:P.level,settimane:8,wd:({2:[2,5],3:[1,3,5],4:[1,2,4,5],5:[1,2,3,5,6],6:[1,2,3,4,5,6]})[P.days]||[1,3,5]};
+  const paint=()=>{
+    $('#sheet').innerHTML=`<div class="grab"></div><h2 class="d" style="font-size:40px;margin-top:6px">Nuovo programma</h2>
+     <label class="fld"><span class="m">Nome</span><input class="inp" id="nwName" value="${esc(D.nome)}" maxlength="50"></label>
+     <div class="m lbl">Obiettivo</div><div class="row">${Object.entries(PGM.OBIETTIVI).map(([k,v])=>`<button class="chip ${D.obiettivo===k?'on':''}" data-nwob="${k}">${v.n}</button>`).join('')}</div>
+     <div class="m lbl">Livello</div><div class="row">${[1,2,3].map(v=>`<button class="chip ${D.livello===v?'on':''}" data-nwlv="${v}">${PGM.LIVELLI[v]}</button>`).join('')}</div>
+     <div class="m lbl">Giorni</div><div class="row">${[1,2,3,4,5,6,7].map(d=>`<button class="chip ${D.wd.includes(d)?'on':''}" data-nwwd="${d}">${PGM.WDS[d]}</button>`).join('')}</div>
+     <div class="m lbl">Durata</div><div class="row">${[[4,'4 sett.'],[6,'6 sett.'],[8,'2 mesi'],[12,'3 mesi'],[16,'4 mesi'],[24,'6 mesi']].map(([v,l])=>`<button class="chip ${D.settimane===v?'on':''}" data-nwsw="${v}">${l}</button>`).join('')}</div>
+     <button class="btn volt w" id="nwProp" style="margin-top:20px">Crea con proposta automatica</button>
+     <button class="btn ghost w" id="nwEmpty" style="margin-top:10px">Crea vuoto e scegli tu gli esercizi</button>
+     <p class="note">La proposta usa la tua attrezzatura e le linee guida dell’obiettivo; poi puoi cambiare tutto.</p>
+     <button class="btn ghost w" style="margin-top:10px" id="closeSheet">Annulla</button>`;
+    const S=$('#sheet');
+    $('#nwName',S).onchange=e=>{D.nome=e.target.value.trim()||D.nome};
+    $$('[data-nwob]',S).forEach(b=>b.onclick=()=>{D.obiettivo=b.dataset.nwob;paint()});
+    $$('[data-nwlv]',S).forEach(b=>b.onclick=()=>{D.livello=+b.dataset.nwlv;paint()});
+    $$('[data-nwsw]',S).forEach(b=>b.onclick=()=>{D.settimane=+b.dataset.nwsw;paint()});
+    $$('[data-nwwd]',S).forEach(b=>b.onclick=()=>{const d=+b.dataset.nwwd;D.wd=D.wd.includes(d)?D.wd.filter(x=>x!==d):[...D.wd,d].sort();paint()});
+    const make=prop=>{D.nome=$('#nwName',S).value.trim()||D.nome;if(!D.wd.length){toast('Scegli almeno un giorno');return}
+      const p=prop?PGM.proposta(D,crCatalog().filter(c=>c.ok)):(()=>{const q=PGM.vuoto(D);D.wd.forEach(d=>PGM.nuovoGiorno(q,d));return q})();
+      CR.list.unshift(p);saveProgs();CR.edit=p.id;CR.tab=prop?'esercizi':'esercizi';CR.dg=0;closeSheet();renderCrea();window.scrollTo(0,0)};
+    $('#nwProp',S).onclick=()=>make(true);$('#nwEmpty',S).onclick=()=>make(false);$('#closeSheet',S).onclick=closeSheet;
+  };
+  paint();$('#sheet').scrollTop=0;$('#sheetWrap').classList.add('on');
+}
+function crPicker(p,g){
+  const F=CR.filt,all=crCatalog();
+  const paint=()=>{
+    const qq=F.q.toLowerCase(),L=all.filter(c=>(!F.g||c.gruppi[0]===F.g)&&(!F.src||c.fonte.startsWith(F.src))&&(!qq||c.nome.toLowerCase().includes(qq))).sort((a,b)=>(b.ok-a.ok)||a.nome.localeCompare(b.nome,'it')).slice(0,60);
+    $('#sheet').innerHTML=`<div class="grab"></div><h2 class="d" style="font-size:36px;margin-top:6px">Aggiungi a ${esc(g.nome)}</h2>
+     <input class="search" id="pkQ" placeholder="Cerca un esercizio…" value="${esc(F.q)}">
+     <div class="scroll" style="margin-top:10px">${[['','Tutti'],...Object.entries(PGM.GRUPPI)].map(([k,l])=>`<button class="chip ${F.g===k?'on':''}" data-pkg="${k}">${l}</button>`).join('')}</div>
+     <div class="row" style="margin-top:8px">${[['','Tutte le fonti'],['WOD','Libreria WOD'],['HIFT','Archivio HIFT']].map(([k,l])=>`<button class="chip ${F.src===k?'on':''}" data-pks="${k}">${l}</button>`).join('')}</div>
+     <div style="margin-top:10px">${L.map((c,i)=>`<button class="vlink" style="width:100%;text-align:left;${c.ok?'':'opacity:.55'}" data-pk="${i}"><div><b>${esc(c.nome)}</b><span>${esc(c.gruppi.map(x=>PGM.GRUPPI[x]).join(' + '))} · ${esc(c.fonte)}${c.livello?' · '+PGM.LIVELLI[c.livello]:''}${c.ok?'':' · attrezzatura non selezionata'}</span></div><span>+</span></button>`).join('')||'<p class="empty">Nessun esercizio.</p>'}</div>
+     <button class="btn ghost w" style="margin-top:10px" id="closeSheet">Chiudi</button>`;
+    const S=$('#sheet');
+    $('#pkQ',S).oninput=e=>{F.q=e.target.value;paint();const n=$('#pkQ');n.focus();n.setSelectionRange(n.value.length,n.value.length)};
+    $$('[data-pkg]',S).forEach(b=>b.onclick=()=>{F.g=b.dataset.pkg;paint()});
+    $$('[data-pks]',S).forEach(b=>b.onclick=()=>{F.src=b.dataset.pks;paint()});
+    $$('[data-pk]',S).forEach(b=>b.onclick=()=>{const c=L[+b.dataset.pk];if(g.esercizi.some(e=>e.k===c.k)){toast('Già presente in questa seduta');return}
+      const e=PGM.nuovoEsercizio(c,p.obiettivo,p.livello);if(c.gruppi[0]==='core'){e.rec=Math.min(e.rec,60)}g.esercizi.push(e);crTouch(p);toast('Aggiunto: '+c.nome);renderCrea()});
+    $('#closeSheet',S).onclick=closeSheet;
+  };
+  paint();$('#sheet').scrollTop=0;$('#sheetWrap').classList.add('on');
+}
+/* seduta del programma → timer: serie a ripetizioni con "Serie fatta", serie a tempo cronometrate, recuperi */
+function crSource(p,w,i){
+  const s=PGM.calendario(p,crRM())[w],g=s.giorni[i],segs=[],B={block:g.nome,bi:0};
+  const exOf=k=>k.startsWith('w:')&&EX[k.slice(2)]?k.slice(2):undefined,imgOf=k=>k.startsWith('h:')?((hx(k.slice(2))||{}).immagine||''):'';
+  const load=x=>x.kg!=null?fmtN(x.kg)+' kg':x.pct!=null?x.pct+'% del massimale':'';
+  if(g.esercizi.length)segs.push({...B,type:'timed',kind:'prep',dur:10,label:g.esercizi[0].nome,sub:'Settimana '+s.n+' · '+s.fase+' · riscaldati prima di iniziare',key:g.esercizi[0].id,ex:exOf(g.esercizi[0].k),img:imgOf(g.esercizi[0].k)});
+  g.esercizi.forEach((x,j)=>{const nx=g.esercizi[j+1];
+    for(let k=1;k<=x.serie;k++){
+      const base=`Serie ${k}/${x.serie} · `+(x.unita==='sec'?x.sec+'"':(x.ripMin===x.ripMax?x.ripMin:x.ripMin+'–'+x.ripMax)+' rip')+` · RIR ${x.rir}`;
+      if(x.unita==='sec')segs.push({...B,x:1,type:'timed',kind:'work',dur:x.sec,label:x.nome,sub:base,load:load(x),key:x.id,ex:exOf(x.k),img:imgOf(x.k),dist:PGM.GRUPPI[x.gruppi[0]]||''});
+      else segs.push({...B,x:1,type:'manual',kind:'work',label:x.nome,sub:base,load:load(x),key:x.id,ex:exOf(x.k),img:imgOf(x.k),dist:PGM.GRUPPI[x.gruppi[0]]||'',btn:'Serie fatta'});
+      const last=k===x.serie;if(last&&!nx)continue;
+      const r=last?Math.max(60,Math.min(x.rec,120)):x.rec;
+      if(r)segs.push({...B,type:'timed',kind:'rest',dur:r,label:last?'Cambio esercizio':'Recupero',sub:last?'Prossimo: '+nx.nome:'Prossima: serie '+(k+1)+'/'+x.serie,key:last?nx.id:x.id,ex:exOf(last?nx.k:x.k),img:imgOf(last?nx.k:x.k)});
+    }});
+  return {segs,
+    view:[{label:g.nome,format:'Sett. '+s.n+' · '+s.fase,items:g.esercizi.map(x=>({key:x.id,name:x.nome,txt:PGM.presTxt(x),
+      pr:{k:x.k,rip:x.unita!=='sec',sec:x.unita==='sec',target:x.unita==='sec'?null:x.ripMin,targetSec:x.unita==='sec'?x.sec:null,kg:x.carico||x.kg!=null,serie:x.serie}}))}],
+    meta:{src:'wod',title:p.nome+' · '+g.nome,fmt:'PROGRAMMA',fmtLabel:'Programma · sett. '+s.n,ids:[],extra:{programma:p.id},
+      onSave(entry){const q=CR.list.find(x=>x.id===p.id);if(q&&!q.fatte.some(f=>f.w===w&&f.g===g.id)){q.fatte.push({w,g:g.id,d:entry.date});saveProgs()}},
+      after(){CR.edit=p.id;CR.tab='calendario';go('crea')}}};
+}
+
 /* ============ player ============ */
 let PL=null,AC=null,WL=null;
 // segnali del timer (configurabili dal pannello Musica)
@@ -1977,6 +2238,6 @@ else{
   route();
 }
 </script>
-<script src="aggiornamenti.js" data-version="1.4.0"></script>
+<script src="aggiornamenti.js" data-version="1.5.0"></script>
 </body>
 </html>
