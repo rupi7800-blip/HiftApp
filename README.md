@@ -10,6 +10,7 @@ Web app per allenamenti funzionali ad alta intensità (HIFT).
 - Esercizi su due lati contati per lato, con indicazione del lato da eseguire
 - Musica: tracce Hift Beats generate dall'app o brani dal proprio dispositivo
 - **HIFT Method**: CORE fisso (3 esercizi × 4 serie, 30" lavoro / 30" recupero) e circuito funzionale su 5 stazioni in ordine fisso (petto, quadricipiti, spalle, glutei, dorso), con 5 metodi configurabili (a tempo, a intervalli, a tempo fisso, a ripetizioni, personalizzato). Gli esercizi vengono dall'archivio esterno: oggi i 600 esercizi illustrati degli Atlanti 100 (vedi `ARCHIVIO.md`) e rispettano attrezzatura, livello, esclusioni e storico. Le schede si possono salvare, modificare, duplicare, rinominare, archiviare ed eliminare
+- **Progressi** (facoltativi): carichi, ripetizioni, tempi, serie, recuperi e sensazioni registrati a fine allenamento o dal Diario; l'app li elabora e adatta gli allenamenti di tutte le sezioni all'obiettivo (vedi `PROGRESSI.md`)
 - Diario con RPE e note
 - Libreria di 45 esercizi con figure animate, istruzioni, errori comuni e link a video gratuiti (Pexels, Pixabay, Wikimedia Commons)
 
@@ -17,10 +18,11 @@ App installabile (PWA): si aggiunge alla schermata Home, si apre a tutto schermo
 
 - `index.html` — l'app
 - `hift-method-core.js` — logica del metodo HIFT (generatore, metodi, durate, controlli)
+- `progressi-core.js`, `PROGRESSI.md` — registrazione ed elaborazione dei progressi
 - `ARCHIVIO.md` — come collegare l'archivio esercizi esterno
 - `archivio-esercizi.json`, `archivio/` — archivio degli Atlanti 100 (illustrazioni e copie delle pagine sorgente)
 - `tools/estrai-atlanti.js` — rigenera l'archivio dagli atlanti
-- `tests/` — test automatici (`node --test tests/*.test.js`, `node tests/e2e.js`)
+- `tests/` — test automatici (`node --test tests/*.test.js`, `node tests/e2e.js`, `node tests/e2e-progressi.js`)
 - `manifest.json`, `sw.js` — installazione e offline
 - `aggiornamenti.js`, `version.json` — tasto Aggiorna quando esce una nuova versione
 - `icons/` — logo e icone
