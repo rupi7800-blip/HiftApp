@@ -40,8 +40,8 @@ self.addEventListener('fetch', e => {
   const url = new URL(req.url);
   if (url.pathname.endsWith('version.json')) return; // controllo aggiornamenti: sempre dalla rete
 
-  // Archivio esercizi e impostazioni dell'amministratore: prima la rete (così un archivio aggiornato arriva subito), offline la copia salvata
-  if (url.origin === self.location.origin && (url.pathname.endsWith('archivio-esercizi.json') || url.pathname.endsWith('config.json'))) {
+  // Archivio esercizi: prima la rete (così un archivio aggiornato arriva subito), offline la copia salvata
+  if (url.origin === self.location.origin && (url.pathname.endsWith('archivio-esercizi.json'))) {
     e.respondWith(fromNetwork(req).then(res => res.ok ? res : caches.match(req).then(hit => hit || res)).catch(() => caches.match(req)));
     return;
   }

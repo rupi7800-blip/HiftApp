@@ -1,5 +1,5 @@
 /* Test end-to-end: marchio HIFT Lab, navigazione nel timer, stop tra CORE e circuito,
-   collegamento S.C.T. TrainingLab, atlanti nascosti (Playwright).
+   atlanti nascosti (Playwright).
    Avvio: python3 -m http.server 8765 (dalla cartella dell'app), poi  node tests/e2e-marchio.js [cartella-screenshot] */
 const { chromium } = require('playwright');
 const URL = process.env.HIFT_URL || 'http://localhost:8765/index.html';
@@ -29,19 +29,8 @@ const ok = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) fails++
   const man = await p.evaluate(async () => (await fetch('manifest.json')).json());
   ok(man.theme_color === '#1B1A1C' && !man.icons.some(i => /svg/.test(i.src)), 'manifest: colori e icone nuove');
 
-  // ---------- collegamento S.C.T. TrainingLab ----------
-  const sct = await p.$('a.hhome.sct');
-  ok(!!sct && /S\.C\.T\. TrainingLab/i.test(await sct.innerText()) && await sct.getAttribute('target') === '_blank', 'Home: collegamento S.C.T. TrainingLab (attivo da config.json)');
-  ok(await sct.getAttribute('href') === 'https://rupi7800-blip.github.io/SCT-TrainingLab/', 'indirizzo del collegamento');
+  ok(!(await p.$('a.hhome.sct')) && !/TrainingLab/i.test(await p.innerText('#view')), 'nessun collegamento a S.C.T. TrainingLab');
   if (OUT) await p.screenshot({ path: OUT + '/m1-home.png' });
-  await p.evaluate(() => go('profilo')); await p.waitForTimeout(200);
-  ok(!!(await p.$('#view a.hhome.sct')), 'Profilo: collegamento presente');
-  // l'amministratore lo disattiva: config.json con "attivo": false
-  await p.route('**/config.json', r => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ collegamenti: { sct: { attivo: false, url: 'https://rupi7800-blip.github.io/SCT-TrainingLab/', nome: 'S.C.T. TrainingLab' } } }) }));
-  await p.reload(); await p.waitForTimeout(800); await p.evaluate(() => go('oggi')); await p.waitForTimeout(300);
-  ok(!(await p.$('a.hhome.sct')), 'disattivato dall\'amministratore: il collegamento sparisce');
-  await p.unroute('**/config.json'); await p.reload(); await p.waitForTimeout(800); await p.evaluate(() => go('oggi')); await p.waitForTimeout(300);
-  ok(!!(await p.$('a.hhome.sct')), 'riattivato: il collegamento ricompare');
 
   // ---------- timer: saltare, tornare, scegliere ----------
   await p.click('#go'); await p.waitForTimeout(300);

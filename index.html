@@ -348,7 +348,6 @@ button.sl-i{display:block;width:100%;text-align:left;color:inherit}
 .pj{position:absolute;inset:0;z-index:5;background:rgba(27,26,28,.97);overflow:auto;padding:calc(14px + var(--st)) 18px calc(20px + var(--sb))}
 .pjs{max-width:560px;margin:0 auto}
 .pj .vlink.now{border-color:var(--volt)}.pj .vlink.done{opacity:.55}
-.hhome.sct{border-color:var(--sky);background:rgba(127,214,255,.06);text-decoration:none;color:var(--ink);margin-top:10px}
 /* registro dell'allenamento */
 .lgt{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
 .lgt th{font:400 10px 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);text-align:left;padding:0 4px 4px}
@@ -463,12 +462,6 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const NS='http://www.w3.org/2000/svg';
-/* impostazioni dell'amministratore (config.json): collegamenti esterni attivabili/disattivabili */
-let CFG=store.get('cfg',{});
-function sctLink(){const l=CFG&&CFG.collegamenti&&CFG.collegamenti.sct;return l&&l.attivo===true&&/^https:\/\//.test(l.url||'')?l:null}
-function linkCard(l){return `<a class="hhome sct" href="${esc(l.url)}" target="_blank" rel="noopener"><div><div class="m" style="color:var(--sky)">Collegamento</div><b class="d">${esc(l.nome||'S.C.T. TrainingLab')}</b>${l.descrizione?`<div class="note" style="margin-top:4px">${esc(l.descrizione)}</div>`:''}</div><span style="font-size:22px">↗</span></a>`}
-if(location.protocol.startsWith('http'))fetch('config.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(c=>{if(!c)return;const was=JSON.stringify(CFG);CFG=c;store.set('cfg',c);
-  if(was!==JSON.stringify(c)){const r=(location.hash||'#oggi').slice(1);if((r==='oggi'||r==='profilo')&&state.P)route()}}).catch(()=>{});
 /* progressi dell'utente: facoltativi, usati da tutte le sezioni (vedi progressi-core.js) */
 const PR=window.HiftProgressi;
 let PROG=PR.load(store.get('prog',null));
@@ -1105,7 +1098,6 @@ function renderHome(){
     <div class="stat"><div class="m">Minuti</div><div class="v d">${mins}</div></div>
   </div>
   <button class="hhome" id="toMethod"><div><div class="m" style="color:var(--volt)">HIFT Method</div><b class="d">Core + circuito 5 stazioni</b><div class="note" style="margin-top:4px">Programma con l’archivio esercizi e la tua attrezzatura</div></div><svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-  ${sctLink()?linkCard(sctLink()):''}
   <button class="btn ghost w" id="toAtt" style="height:46px;margin-top:4px">+ Corsa, camminata, bici, nuoto, stretching, pilates, yoga</button>
   <div class="m lbl">Durata</div>
   <div class="scroll">${[15,20,30,45,60].map(m=>`<button class="chip ${s.T===m?'on':''}" data-min="${m}">${m}'</button>`).join('')}</div>
@@ -1499,7 +1491,6 @@ function renderProfile(){
   <div class="m lbl" style="margin-top:24px">Progressi</div>
   <button class="toggle" id="progT" style="margin-top:4px"><span class="sw ${PROG.on?'on':''}"></span>Registra i progressi e adatta gli allenamenti</button>
   <p class="note">Carichi, ripetizioni, tempi, serie, recuperi e sensazioni: facoltativi, a fine allenamento o dal Diario. Valgono per il WOD di Oggi e per HIFT Method.</p>
-  ${sctLink()?`<div class="m lbl" style="margin-top:24px">Collegamenti</div>${linkCard(sctLink())}`:''}
   <div class="sec" id="installBox"></div>
   <button class="btn volt w" style="margin-top:26px" id="saveP">Salva e rigenera</button>
   <button class="btn ghost w" style="margin-top:10px" id="resetAll">Cancella tutti i dati</button>
@@ -2604,6 +2595,6 @@ else{
   route();
 }
 </script>
-<script src="aggiornamenti.js" data-version="1.8.1"></script>
+<script src="aggiornamenti.js" data-version="1.8.2"></script>
 </body>
 </html>
