@@ -25,7 +25,7 @@ Ogni volta che si apre, l'app legge `config.json` dalla rete. Senza rete usa l'u
 
 **Come si modifica dal telefono o dal computer:**
 
-1. Su GitHub apri il repository **HiftApp**, poi il file `config.json`.
+1. Su GitHub apri il repository **HiftLab**, poi il file `config.json`.
 2. Tocca la matita (*Edit this file*).
 3. Cambia `true` in `false` (o viceversa) e premi *Commit changes*.
 4. Dopo un minuto circa GitHub Pages pubblica la modifica.
