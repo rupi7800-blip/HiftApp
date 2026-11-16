@@ -23,6 +23,7 @@
   --ink:#F3F1EA;--mute:#A09F94;--dim:#5E5E56;
   --volt:#D4FF1E;--coral:#FF5B3A;--sky:#7FD6FF;
   --line:rgba(243,241,234,.10);--line2:rgba(243,241,234,.18);
+  --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#0ca30c;
   --r:20px;--sb:env(safe-area-inset-bottom,0px);--st:env(safe-area-inset-top,0px);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -340,6 +341,28 @@ ul.err li::before{content:"×";position:absolute;left:0;top:-1px;color:var(--cor
 .toast{position:fixed;left:50%;bottom:calc(150px + var(--sb));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:999px;font-weight:700;font-size:14px;z-index:120;opacity:0;pointer-events:none;transition:.25s;max-width:calc(100% - 32px);text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 @media (max-width:380px){.hx{grid-template-columns:48px minmax(0,1fr) auto;gap:9px}.hx-img{width:48px;height:48px}.ov{padding-left:0}.nav button{font-size:9px;letter-spacing:.04em}}
+/* analisi e grafici */
+.chart{position:relative;margin-top:8px}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.chart .cg{stroke:var(--line);stroke-width:1}
+.chart .cb{stroke:var(--line2);stroke-width:1}
+.chart .ct{font:10px 'JetBrains Mono',monospace;fill:var(--mute)}
+.chart .cv{font:700 11px 'Archivo',sans-serif;fill:var(--ink)}
+.chart .cl{fill:none;stroke:var(--volt);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.chart .cdot{fill:var(--volt);stroke:var(--bg);stroke-width:2}
+.chart [data-tt]{cursor:pointer}
+.chart rect.hov{fill:rgba(243,241,234,.06)!important}
+.tt{position:absolute;z-index:5;pointer-events:none;background:var(--card2);border:1px solid var(--line2);border-radius:10px;padding:8px 10px;font-size:12px;line-height:1.4;color:var(--ink);max-width:220px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.tt div{color:var(--mute)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mute);margin-top:2px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.meter{position:relative;height:8px;border-radius:4px;background:var(--line2);margin-top:12px}
+.meter i{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--volt)}
+.meter span{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);opacity:.6}
+.blist{margin-top:4px}.bl{padding:8px 0;font-size:14px}.bl .muted{font-size:12px;text-align:right}
+.bt{height:8px;border-radius:4px;background:var(--line);margin-top:6px;overflow:hidden}.bt i{display:block;height:100%;border-radius:4px}
+.an4{grid-template-columns:repeat(2,1fr)}.an4 .stat .v{font-size:30px}
+.hrow.tap{cursor:pointer}.hrow .att{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:1px}
 /* crea programma */
 details.hcard>summary::-webkit-details-marker{display:none}
 details.hcard[open]>summary{margin-bottom:4px}
@@ -404,6 +427,7 @@ body.has-upd .top>.m,body.has-upd #instChip{visibility:hidden}
 <script src="hift-method-core.js"></script>
 <script src="progressi-core.js"></script>
 <script src="programma-core.js"></script>
+<script src="analisi-core.js"></script>
 <script>
 "use strict";
 /* ============ utilità ============ */
@@ -1053,6 +1077,7 @@ function renderHome(){
     <div class="stat"><div class="m">Minuti</div><div class="v d">${mins}</div></div>
   </div>
   <button class="hhome" id="toMethod"><div><div class="m" style="color:var(--volt)">HIFT Method</div><b class="d">Core + circuito 5 stazioni</b><div class="note" style="margin-top:4px">Programma con l’archivio esercizi e la tua attrezzatura</div></div><svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  <button class="btn ghost w" id="toAtt" style="height:46px;margin-top:4px">+ Corsa, camminata, bici, nuoto, stretching, pilates, yoga</button>
   <div class="m lbl">Durata</div>
   <div class="scroll">${[15,20,30,45,60].map(m=>`<button class="chip ${s.T===m?'on':''}" data-min="${m}">${m}'</button>`).join('')}</div>
   <div class="m lbl">Focus</div>
@@ -1087,6 +1112,7 @@ function renderHome(){
   $$('[data-fmt]').forEach(b=>b.onclick=()=>{state.opt.format=b.dataset.fmt;newSession();renderHome()});
   $$('[data-open]').forEach(b=>b.onclick=()=>openEx(b.dataset.open));
   $('#toMethod').onclick=()=>go('metodo');
+  $('#toAtt').onclick=()=>openAttivita();
   $$('[data-swap]').forEach(b=>b.onclick=()=>{const [bi,ii]=b.dataset.swap.split(':').map(Number);swapItem(bi,ii)});
 }
 $('#regen').onclick=()=>{newSession();renderHome()};
@@ -1152,8 +1178,16 @@ $('#sheetWrap').onclick=e=>{if(e.target.id==='sheetWrap')closeSheet()};
 /* ============ diario ============ */
 function renderDiary(){
   const H=state.hist,tab=state.dtab||'sessioni';
-  const tabs=`<div class="row" style="margin:-4px 0 18px"><button class="chip ${tab==='sessioni'?'on':''}" data-dtab="sessioni">Sessioni</button><button class="chip ${tab==='progressi'?'on':''}" data-dtab="progressi">Progressi${PROG.entries.length?' · '+new Set(PROG.entries.map(e=>e.k)).size:''}</button></div>`;
+  const tabs=`<div class="row" style="margin:-4px 0 18px"><button class="chip ${tab==='sessioni'?'on':''}" data-dtab="sessioni">Sessioni</button><button class="chip ${tab==='progressi'?'on':''}" data-dtab="progressi">Progressi${PROG.entries.length?' · '+new Set(PROG.entries.map(e=>e.k)).size:''}</button><button class="chip ${tab==='analisi'?'on':''}" data-dtab="analisi">Analisi</button></div>`;
   const bindTabs=()=>$$('[data-dtab]').forEach(b=>b.onclick=()=>{state.dtab=b.dataset.dtab;renderDiary()});
+  if(tab==='analisi'){
+    $('#view').innerHTML=`<div class="top"><div class="logo">H<i></i>FT</div><div class="m">Analisi</div></div><h1 class="h1 d">Diario</h1>${tabs}${anPage()}`;
+    bindTabs();bindCharts($('#view'));
+    $$('[data-anp]').forEach(b=>b.onclick=()=>{state.anP=b.dataset.anp==='Infinity'?Infinity:+b.dataset.anp;renderDiary()});
+    $$('[data-anx]').forEach(b=>b.onclick=()=>{state.anX=b.dataset.anx;const y=window.scrollY;renderDiary();window.scrollTo(0,y)});
+    if($('#anTab'))$('#anTab').onclick=()=>{state.anTab=!state.anTab;const y=window.scrollY;renderDiary();window.scrollTo(0,y)};
+    return;
+  }
   if(tab==='progressi'){
     $('#view').innerHTML=`<div class="top"><div class="logo">H<i></i>FT</div><div class="m">${PROG.entries.length} registrazioni</div></div><h1 class="h1 d">Diario</h1>${tabs}${progPage()}`;
     bindTabs();
@@ -1168,10 +1202,13 @@ function renderDiary(){
   const mx=Math.max(30,...weeks);
   $('#view').innerHTML=`<div class="top"><div class="logo">H<i></i>FT</div><div class="m">${H.length} sessioni</div></div>
   <h1 class="h1 d">Diario</h1>${tabs}
+  <button class="btn ghost w" id="dAtt" style="height:48px;margin-bottom:16px">+ Aggiungi attività: corsa, bici, nuoto, yoga…</button>
   <div class="m">Minuti per settimana</div>
   <div class="weeks">${weeks.map((m,i)=>`<div><i class="${m?'':'z'}" style="height:${Math.max(3,m/mx*70)}px"></i><span>${i===7?'ORA':'-'+(7-i)}</span></div>`).join('')}</div>
-  ${H.length?H.map(h=>`<div class="hrow"><div><div class="m">${new Date(h.date).toLocaleDateString('it-IT',{day:'numeric',month:'short'})} · ${esc(h.fmtLabel||'')}</div><div class="d">${esc(h.title)}</div>${h.res?`<div class="muted" style="font-size:13px;margin-top:4px">${esc(h.res)}</div>`:''}${h.note?`<div class="muted" style="font-size:13px;margin-top:4px">“${esc(h.note)}”</div>`:''}</div><div class="r"><div class="d" style="font-size:28px">${h.min}'</div><div class="m">RPE ${h.rpe||'–'}</div></div></div>`).join(''):`<p class="empty">Ancora niente qui. Completa la tua prima sessione e comparirà nel diario.</p>`}`;
+  ${H.length?H.map((h,i)=>`<div class="hrow tap" data-hi="${i}"><div><div class="m"><span class="att" style="background:${FAMC[AN.DISC[AN.disciplina(h)].fam]}"></span>${new Date(h.date).toLocaleDateString('it-IT',{day:'numeric',month:'short'})} · ${esc(h.fmtLabel||'')}</div><div class="d">${esc(h.title)}</div>${h.res?`<div class="muted" style="font-size:13px;margin-top:4px">${esc(h.res)}</div>`:''}${h.note?`<div class="muted" style="font-size:13px;margin-top:4px">“${esc(h.note)}”</div>`:''}</div><div class="r"><div class="d" style="font-size:28px">${h.min}'</div><div class="m">RPE ${h.rpe||'–'}</div></div></div>`).join(''):`<p class="empty">Ancora niente qui. Completa la tua prima sessione e comparirà nel diario.</p>`}`;
   bindTabs();
+  $('#dAtt').onclick=()=>openAttivita();
+  $$('[data-hi]').forEach(r=>r.onclick=()=>openHist(+r.dataset.hi));
 }
 /* ============ progressi: registrazione, pagina, schede ============ */
 const HLOAD=['powerbag','med ball','kettlebell','manubri','bilanciere','sandbag'];
@@ -1933,6 +1970,171 @@ function crSource(p,w,i){
       after(){CR.edit=p.id;CR.tab='calendario';go('crea')}}};
 }
 
+/* ============ attività (corsa, camminata, bici, nuoto, stretching, pilates, yoga) ============ */
+const AN=window.HiftAnalisi;
+const pesoKg=()=>state.P&&state.P.weight||70;
+const fmtI=n=>Math.round(n).toLocaleString('it-IT');
+function attFields(D,live){
+  const d=AN.DISC[D.att];
+  return `${d.dist?`<label class="pf"><span class="m">Distanza · ${d.dist}</span><input class="inp" type="number" inputmode="decimal" step="${d.dist==='km'?'0.01':'25'}" min="0" data-af="dist" value="${esc(D.dist)}" placeholder="facoltativa"></label>`:''}
+    <label class="pf"><span class="m">FC media · bpm</span><input class="inp" type="number" inputmode="numeric" min="40" max="230" data-af="fc" value="${esc(D.fc)}" placeholder="facoltativa"></label>
+    ${live?'':`<label class="pf"><span class="m">Durata · min</span><input class="inp" type="number" inputmode="numeric" min="1" max="1440" data-af="min" value="${esc(D.min)}"></label><label class="pf"><span class="m">Data</span><input class="inp" type="date" data-af="date" value="${esc(D.date)}" max="${today()}"></label>`}`;
+}
+function attChips(D){
+  return `${D.att==='nuoto'?`<div class="m lbl">Stile</div><div class="row">${Object.entries(AN.STILI).map(([k,l])=>`<button class="chip ${D.stile===k?'on':''}" data-asty="${k}">${l}</button>`).join('')}</div>`:''}
+   ${D.att==='yoga'?`<div class="m lbl">Tipo di yoga</div><div class="row">${Object.entries(AN.YOGA).map(([k,l])=>`<button class="chip ${D.yoga===k?'on':''}" data-ayo="${k}">${l}</button>`).join('')}</div>`:''}
+   <div class="m lbl">Intensità ${AN.DISC[D.att].dist&&D.att!=='nuoto'?'(se non indichi la distanza)':''}</div><div class="row">${Object.entries(AN.INT).map(([k,l])=>`<button class="chip ${D.intensita===k?'on':''}" data-aint="${k}">${l}</button>`).join('')}</div>`;
+}
+function attPreview(D){
+  if(!(+D.min>0))return 'Inserisci la durata per vedere la stima.';
+  const h=AN.voce(Object.assign({},D,{peso:pesoKg()})),m=AN.met(h);
+  return `Stima: <b>${fmtN(m.met)} MET</b> (${esc(m.base)}) · <b>${h.res}</b>`;
+}
+function openAttivita(pre){
+  const D=Object.assign({att:'corsa',date:today(),min:'',dist:'',intensita:null,stile:'libero',yoga:'hatha',rpe:null,fc:'',note:''},pre||{});
+  const paint=()=>{
+    $('#sheet').innerHTML=`<div class="grab"></div><h2 class="d" style="font-size:40px;margin-top:6px">Attività</h2>
+     <div class="row">${AN.ATTIVITA.map(k=>`<button class="chip ${D.att===k?'on':''}" data-aat="${k}">${AN.DISC[k].n}</button>`).join('')}</div>
+     <button class="btn volt w" id="atLive" style="margin-top:16px">Inizia ora con il cronometro</button>
+     <p class="note">Oppure registra un’attività già fatta:</p>
+     <div class="pgr" style="margin-top:4px">${attFields(D,false)}</div>
+     ${attChips(D)}
+     <div class="m lbl">Sforzo percepito (RPE 1–10)</div><div class="rpe">${Array.from({length:10},(_,i)=>`<button data-arpe="${i+1}" class="${D.rpe===i+1?'on':''}">${i+1}</button>`).join('')}</div>
+     <label class="fld"><span class="m">Nota</span><input class="inp" data-af="note" value="${esc(D.note)}" maxlength="300" placeholder="Percorso, sensazioni…"></label>
+     <p class="note" id="atPrev" style="font-size:13px">${attPreview(D)}</p>
+     <button class="btn ghost w" id="atSave" style="margin-top:8px">Salva nel diario</button>
+     <p class="note">Calorie e MET sono stime dal Compendium of Physical Activities con il tuo peso (${fmtN(pesoKg())} kg): il valore reale può variare del 20–30%.</p>
+     <button class="btn ghost w" style="margin-top:10px" id="closeSheet">Chiudi</button>`;
+    const S=$('#sheet');
+    $$('[data-aat]',S).forEach(b=>b.onclick=()=>{D.att=b.dataset.aat;D.dist='';paint()});
+    $$('[data-asty]',S).forEach(b=>b.onclick=()=>{D.stile=b.dataset.asty;paint()});
+    $$('[data-ayo]',S).forEach(b=>b.onclick=()=>{D.yoga=b.dataset.ayo;paint()});
+    $$('[data-aint]',S).forEach(b=>b.onclick=()=>{D.intensita=D.intensita===b.dataset.aint?null:b.dataset.aint;paint()});
+    $$('[data-arpe]',S).forEach(b=>b.onclick=()=>{D.rpe=+b.dataset.arpe;$$('[data-arpe]',S).forEach(x=>x.classList.toggle('on',x===b));$('#atPrev').innerHTML=attPreview(D)});
+    $$('[data-af]',S).forEach(i=>i.oninput=()=>{D[i.dataset.af]=i.value;$('#atPrev').innerHTML=attPreview(D)});
+    $('#atSave',S).onclick=()=>{
+      if(!(+D.min>0)){toast('Inserisci la durata in minuti');return}
+      const dt=D.date&&D.date!==today()?new Date(D.date+'T12:00:00').toISOString():new Date().toISOString();
+      const h=AN.voce(Object.assign({},D,{date:dt,peso:pesoKg()}));
+      state.hist.unshift(h);state.hist.sort((a,b)=>String(b.date).localeCompare(String(a.date)));store.set('hist',state.hist);
+      closeSheet();toast(AN.DISC[D.att].n+' salvata · '+h.min+'\'');if((location.hash||'#oggi').slice(1)==='diario'||(location.hash||'#oggi').slice(1)==='oggi')route();
+    };
+    $('#atLive',S).onclick=()=>{closeSheet();startPlayer(attSource(D))};
+    $('#closeSheet',S).onclick=closeSheet;
+  };
+  paint();$('#sheet').scrollTop=0;$('#sheetWrap').classList.add('on');
+}
+/* attività dal vivo: cronometro nel player (pausa compresa), poi distanza e dati a fine sessione */
+function attSource(D){
+  const n=AN.DISC[D.att].n,F=Object.assign({},D);
+  return {segs:[{block:n,bi:0,x:1,type:'manual',kind:'work',label:n,sub:'Cronometro in corso · premi Fine quando hai finito',btn:'Fine',key:'a',act:1}],
+    view:[{label:n,format:'Attività',items:[{key:'a',name:n,txt:'cronometro'}]}],
+    meta:{title:n,fmt:'ATTIVITA',fmtLabel:n,ids:[],act:1,noProg:1,
+      form:()=>`<div class="sec"><h3>Dati dell’attività</h3><div class="pgr">${attFields(F,true)}</div>${attChips(F)}</div>`,
+      bind(root){$$('[data-af]',root).forEach(i=>i.oninput=()=>{F[i.dataset.af]=i.value});
+        const re=()=>{const box=$('#faBox');if(box){box.innerHTML=`<div class="sec"><h3>Dati dell’attività</h3><div class="pgr">${attFields(F,true)}</div>${attChips(F)}</div>`;PL.meta.bind(box)}};
+        $$('[data-asty]',root).forEach(b=>b.onclick=()=>{F.stile=b.dataset.asty;re()});$$('[data-ayo]',root).forEach(b=>b.onclick=()=>{F.yoga=b.dataset.ayo;re()});
+        $$('[data-aint]',root).forEach(b=>b.onclick=()=>{F.intensita=F.intensita===b.dataset.aint?null:b.dataset.aint;re()})},
+      collect(entry){return AN.voce(Object.assign({},F,{min:entry.min,rpe:entry.rpe,note:entry.note,date:entry.date,peso:pesoKg()}))},
+      after(){state.dtab='sessioni';go('diario')}}};
+}
+/* dettaglio di una voce del diario, con eliminazione */
+function openHist(i){
+  const h=state.hist[i];if(!h)return;const e=AN.arricchisci(h,pesoKg()),d=AN.DISC[e.disc];
+  $('#sheet').innerHTML=`<div class="grab"></div><div class="m">${new Date(h.date).toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long',year:'numeric'})} · ${esc(d.n)}</div>
+   <h2 class="d" style="font-size:40px;margin-top:8px">${esc(h.title)}</h2>
+   <div class="stats" style="margin-top:12px"><div class="stat"><div class="m">Minuti</div><div class="v d">${h.min}</div></div><div class="stat"><div class="m">Kcal stimate</div><div class="v d">${fmtI(e.kcal)}</div></div><div class="stat"><div class="m">MET</div><div class="v d">${fmtN(e.met)}</div></div></div>
+   <p class="note">MET da ${esc(e.base)} · ${fmtI(e.metmin)} MET-minuti${e.modEq?' · '+e.modEq+' minuti validi per l’obiettivo OMS':''}${h.rpe?' · RPE '+h.rpe:''}</p>
+   ${h.res?`<p style="margin-top:10px">${esc(h.res)}</p>`:''}${h.note?`<p class="muted" style="margin-top:8px">“${esc(h.note)}”</p>`:''}
+   <button class="btn ghost w" id="hsDel" style="margin-top:20px">Elimina dal diario</button>
+   <button class="btn ghost w" style="margin-top:10px" id="closeSheet">Chiudi</button>`;
+  $('#hsDel').onclick=e=>{const b=e.currentTarget;if(!b._arm){b._arm=1;b.textContent='Tocca di nuovo per eliminare';b.style.borderColor='var(--coral)';b.style.color='var(--coral)';return}
+    state.hist.splice(i,1);store.set('hist',state.hist);closeSheet();toast('Voce eliminata');renderDiary()};
+  $('#closeSheet').onclick=closeSheet;$('#sheet').scrollTop=0;$('#sheetWrap').classList.add('on');
+}
+
+/* ============ analisi: dati e grafici ============ */
+const FAMC={funz:'var(--s1)',corsa:'var(--s2)',camminata:'var(--s3)',bici:'var(--s4)',nuoto:'var(--s5)',mente:'var(--s6)'};
+const PERIODI=[[4,'4 settimane'],[12,'3 mesi'],[26,'6 mesi'],[52,'12 mesi'],[Infinity,'Tutto']];
+function niceMax(v){if(v<=0)return 60;const s=[30,60,90,120,180,240,300,360,480,600,900,1200,1800,2400,3600,6000,12000];return s.find(x=>x>=v)||Math.ceil(v/6000)*6000}
+/* colonne impilate per famiglia: barre ≤24px, 2px di separazione, angoli 4px in cima, una sola scala */
+function chartStack(r){
+  const W=340,H=190,L=34,R=6,T=10,B=24,pw=W-L-R,ph=H-T-B,n=r.buckets.length,band=pw/Math.max(1,n),bw=Math.min(24,band*.62);
+  const mx=niceMax(Math.max(0,...r.buckets.map(b=>b.min))),y=v=>T+ph-v/mx*ph;
+  let g='';
+  [0,.5,1].forEach(f=>{const v=mx*f,yy=y(v);g+=`<line x1="${L}" x2="${W-R}" y1="${yy}" y2="${yy}" class="cg"/><text x="${L-6}" y="${yy+3.5}" class="ct" text-anchor="end">${fmtI(v)}'</text>`});
+  const step=Math.ceil(n/7);
+  let bars='';
+  r.buckets.forEach((b,i)=>{
+    const x=L+band*i+(band-bw)/2;let base=T+ph;
+    const segs=AN.FAM.filter(f=>b.fam[f.k]>0);
+    segs.forEach((f,j)=>{const h=b.fam[f.k]/mx*ph,gap=j?2:0,hh=Math.max(1,h-gap),y1=base-gap,y0=y1-hh;
+      if(j===segs.length-1){const rr=Math.min(4,hh,bw/2);bars+=`<path d="M${x},${y1}V${y0+rr}Q${x},${y0} ${x+rr},${y0}H${x+bw-rr}Q${x+bw},${y0} ${x+bw},${y0+rr}V${y1}Z" fill="${FAMC[f.k]}"/>`}
+      else bars+=`<rect x="${x}" y="${y0}" width="${bw}" height="${hh}" fill="${FAMC[f.k]}"/>`;
+      base-=h;});
+    const tip=esc(b.full)+'|'+(b.min?fmtI(b.min)+' minuti · '+b.n+' sessioni · ~'+fmtI(b.kcal)+' kcal':'Nessun allenamento')+(segs.length?'|'+segs.map(f=>f.n+': '+fmtI(b.fam[f.k])+'\'').join('|'):'');
+    bars+=`<rect x="${L+band*i}" y="${T}" width="${band}" height="${ph}" fill="transparent" data-tt="${tip}"/>`;
+    if((n-1-i)%step===0)g+=`<text x="${L+band*i+band/2}" y="${H-7}" class="ct" text-anchor="middle">${esc(b.lab)}</text>`;
+  });
+  const best=r.buckets.reduce((a,b,i)=>b.min>(r.buckets[a]||{min:-1}).min?i:a,0),bb=r.buckets[best];
+  const lab=bb&&bb.min?`<text x="${L+band*best+band/2}" y="${y(bb.min)-5}" class="cv" text-anchor="middle">${fmtI(bb.min)}'</text>`:'';
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Minuti di allenamento per ${r.mesi?'mese':'settimana'}, divisi per disciplina">${g}<line x1="${L}" x2="${W-R}" y1="${T+ph}" y2="${T+ph}" class="cb"/>${bars}${lab}</svg><div class="tt hide"></div></div>`;
+}
+/* linea singola (progressi di un esercizio, velocità di corsa): 2px, marcatori ≥8px con anello */
+function chartLine(pts,unit,label){
+  if(pts.length<2)return '';
+  const W=340,H=170,L=38,R=12,T=14,B=24,pw=W-L-R,ph=H-T-B;
+  const t0=pts[0].t,t1=pts[pts.length-1].t,vs=pts.map(p=>p.v),lo=Math.min(...vs),hi=Math.max(...vs),pad=(hi-lo)*.15||Math.max(1,hi*.1);
+  const a=Math.max(0,lo-pad),b=hi+pad,x=t=>L+(t1===t0?pw/2:(t-t0)/(t1-t0)*pw),y=v=>T+ph-(v-a)/(b-a)*ph;
+  let g='';[a,(a+b)/2,b].forEach(v=>{g+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" class="cg"/><text x="${L-6}" y="${y(v)+3.5}" class="ct" text-anchor="end">${fmtN(v)}</text>`});
+  const d=pts.map((p,i)=>(i?'L':'M')+x(p.t).toFixed(1)+','+y(p.v).toFixed(1)).join('');
+  const dates=[pts[0],pts[pts.length-1]].map((p,i)=>`<text x="${x(p.t)}" y="${H-7}" class="ct" text-anchor="${i?'end':'start'}">${new Date(p.t).toLocaleDateString('it-IT',{day:'numeric',month:'short'})}</text>`).join('');
+  const last=pts[pts.length-1];
+  const dots=pts.map(p=>`<circle cx="${x(p.t)}" cy="${y(p.v)}" r="4" class="cdot"/><circle cx="${x(p.t)}" cy="${y(p.v)}" r="13" fill="transparent" data-tt="${esc(new Date(p.t).toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'}))}|${esc(fmtN(p.v)+' '+unit)}${p.extra?'|'+esc(p.extra):''}"/>`).join('');
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)}">${g}<line x1="${L}" x2="${W-R}" y1="${T+ph}" y2="${T+ph}" class="cb"/><path d="${d}" class="cl"/>${dots}<text x="${Math.min(x(last.t),W-R)}" y="${y(last.v)-9}" class="cv" text-anchor="end">${esc(fmtN(last.v)+' '+unit)}</text>${dates}</svg><div class="tt hide"></div></div>`;
+}
+function bindCharts(root){
+  $$('.chart',root).forEach(c=>{const tt=$('.tt',c);
+    const show=(el,ev)=>{const parts=el.dataset.tt.split('|');tt.innerHTML=`<b>${parts[0]}</b>`+parts.slice(1).map(s=>`<div>${s}</div>`).join('');tt.classList.remove('hide');
+      const r=c.getBoundingClientRect(),er=el.getBoundingClientRect(),cx=er.left+er.width/2-r.left;tt.style.left=Math.max(4,Math.min(r.width-tt.offsetWidth-4,cx-tt.offsetWidth/2))+'px';tt.style.top='0px';
+      $$('[data-tt]',c).forEach(x=>x.classList.toggle('hov',x===el))};
+    $$('[data-tt]',c).forEach(el=>{el.addEventListener('pointerenter',e=>show(el,e));el.addEventListener('pointerdown',e=>show(el,e))});
+    c.addEventListener('pointerleave',()=>{tt.classList.add('hide')});
+  });
+}
+function anPage(){
+  const P=state.P,per=state.anP||12,r=AN.analizza(state.hist,pesoKg(),{settimane:per}),o=AN.oms(state.hist,pesoKg());
+  const famUsed=AN.FAM.filter(f=>r.buckets.some(b=>b.fam[f.k]>0));
+  const disc=r.perDisc.filter(d=>d.min>0).sort((a,b)=>b.min-a.min),mxD=Math.max(1,...disc.map(d=>d.min));
+  const sel=state.anX;
+  const ex=progOn()?PR.summaryAll(PROG,P.goal).filter(s=>s.main&&s.serie.filter(v=>v!=null).length>=2):[];
+  const exSel=ex.find(s=>s.key===sel)||ex[0];
+  const exPts=exSel?PR.historyOf(PROG,exSel.key).slice().reverse().filter(e=>e[exSel.main]!=null).map(e=>({t:new Date(e.d).getTime(),v:e[exSel.main],extra:progTxt(e)})):[];
+  const runs=r.entries.filter(e=>e.disc==='corsa'&&e.kmh).sort((a,b)=>a.t-b.t).map(e=>({t:e.t,v:Math.round(e.kmh*10)/10,extra:AN.passo(e.kmh)+' · '+fmtN(e.dist)+' km'}));
+  const pct=r.tot.min?d=>Math.round(d.min/r.tot.min*100):()=>0;
+  const unit={kg:'kg',rip:'rip',sec:'s'};
+  return `<div class="row" style="margin-bottom:12px">${PERIODI.map(([v,l])=>`<button class="chip ${per===v?'on':''}" data-anp="${v}">${l}</button>`).join('')}</div>
+   <div class="stats an4"><div class="stat"><div class="m">Minuti</div><div class="v d">${fmtI(r.tot.min)}</div></div><div class="stat"><div class="m">Sessioni</div><div class="v d">${r.tot.sessioni}</div></div>
+     <div class="stat"><div class="m">Kcal stimate</div><div class="v d">${fmtI(r.tot.kcal)}</div></div><div class="stat"><div class="m">MET-ore</div><div class="v d">${fmtI(r.tot.metmin/60)}</div></div></div>
+   <p class="note">Media ${fmtI(r.tot.mediaSett)} minuti a settimana · ${fmtI(r.tot.metmin)} MET-minuti nel periodo.</p>
+   <div class="hcard"><div class="m">Questa settimana · raccomandazioni OMS</div>
+     <b>${fmtI(o.modEq)} minuti moderati equivalenti · ${o.giorniForza} ${o.giorniForza===1?'giorno':'giorni'} di forza</b>
+     <div class="meter" role="img" aria-label="${o.modEq} minuti su 150–300"><i style="width:${Math.round(o.min300*100)}%"></i><span style="left:50%"></span></div>
+     <div class="hrow0" style="margin-top:4px"><span class="m">0</span><span class="m">150'</span><span class="m">300'</span></div>
+     <p class="note">${o.ok?'Obiettivo raggiunto: almeno 150 minuti moderati (o 75 vigorosi) e 2 giorni di rinforzo muscolare.':'Obiettivo OMS 2020: 150–300 minuti moderati a settimana (i minuti vigorosi contano doppio) e almeno 2 giorni di rinforzo muscolare.'}</p></div>
+   <div class="m lbl">Minuti per ${r.mesi?'mese':'settimana'}</div>
+   ${famUsed.length>=2?`<div class="legend">${famUsed.map(f=>`<span><i style="background:${FAMC[f.k]}"></i>${f.n}</span>`).join('')}</div>`:famUsed.length?`<p class="note" style="margin-top:0">${famUsed[0].n}</p>`:''}
+   ${r.tot.min?chartStack(r):'<p class="empty">Nessun allenamento nel periodo.</p>'}
+   ${r.tot.min?`<button class="chip" id="anTab" style="margin-top:6px">${state.anTab?'Nascondi tabella':'Mostra tabella'}</button>${state.anTab?`<div style="overflow-x:auto;margin-top:8px"><table class="sumt"><thead><tr><th>${r.mesi?'Mese':'Settimana'}</th>${famUsed.map(f=>`<th>${f.n}</th>`).join('')}<th>Totale</th></tr></thead><tbody>${r.buckets.slice().reverse().map(b=>`<tr><td>${esc(b.lab)}</td>${famUsed.map(f=>`<td>${b.fam[f.k]?fmtI(b.fam[f.k])+"'":'–'}</td>`).join('')}<td><b>${fmtI(b.min)}'</b></td></tr>`).join('')}</tbody></table></div>`:''}`:''}
+   ${disc.length?`<div class="m lbl">Minuti per disciplina</div><div class="blist">${disc.map(d=>`<div class="bl"><div class="hrow0"><span>${esc(d.n)}</span><span class="muted">${fmtI(d.min)}' · ${pct(d)}% · ${d.sessioni} sess. · ~${fmtI(d.kcal)} kcal${d.dist?' · '+(AN.DISC[d.k].dist==='km'?fmtN(Math.round(d.dist*10)/10)+' km':fmtI(d.dist)+' m'):''}</span></div><div class="bt"><i style="width:${Math.max(2,d.min/mxD*100)}%;background:${FAMC[d.fam]}"></i></div></div>`).join('')}</div>`:''}
+   <div class="m lbl">Progressi negli esercizi</div>
+   ${ex.length?`<div class="scroll">${ex.map(s=>`<button class="chip ${s===exSel?'on':''}" data-anx="${esc(s.key)}">${esc(s.nome)}</button>`).join('')}</div>
+     <p class="note">${esc(exSel.nome)} · ${{kg:'carico',rip:'ripetizioni',sec:'tempo'}[exSel.main]} · record ${fmtN(exSel.best[exSel.main])} ${unit[exSel.main]}${exSel.trend?' · '+{su:'in crescita',giu:'in calo',stabile:'stabile'}[exSel.trend]:''}</p>
+     ${chartLine(exPts,unit[exSel.main],'Andamento di '+exSel.nome)}`:'<p class="note">Registra almeno due volte lo stesso esercizio (a fine allenamento o da Progressi) per vederne l’andamento.</p>'}
+   ${runs.length>=2?`<div class="m lbl">Corsa · velocità media</div>${chartLine(runs,'km/h','Velocità media nella corsa')}`:''}
+   <p class="note" style="margin-top:16px">Calorie: MET × peso (${fmtN(pesoKg())} kg) × ore, con i MET del Compendium of Physical Activities. Per WOD, HIFT e programmi il MET dipende dallo sforzo percepito (RPE). Sono stime ipotetiche: il valore reale può variare del 20–30%.</p>`;
+}
+
 /* ============ player ============ */
 let PL=null,AC=null,WL=null;
 // segnali del timer (configurabili dal pannello Musica)
@@ -1966,6 +2168,7 @@ const mmss=s=>{s=Math.max(0,Math.ceil(s));return Math.floor(s/60)+':'+String(s%6
 function segDone(){
   const s=PL.segs[PL.i];
   PL.num=PL.num||{};
+  if(s.act)PL.actSec=el();
   if(s.type==='amrap'){PL.res[s.res]=PL.rounds+' giri completi';PL.num.giri=PL.rounds}
   if(s.type==='fortime'&&PL.finished)PL.num.tempo=Math.round(el());
   if(s.type==='fortime') PL.res[s.res]=PL.finished?('Tempo '+mmss(el())):('Time cap · '+PL.rounds+' giri');
@@ -2084,13 +2287,14 @@ function tick(){
 }
 function finishPlayer(){
   PL.done=true; MUSIC.setDuck(false); beep(880,.15);setTimeout(()=>beep(1320,.4,.1),180);
-  const min=Math.max(1,Math.round((Date.now()-PL.start)/60000));
+  const min=PL.meta.act?Math.max(1,Math.round((PL.actSec||0)/60)):Math.max(1,Math.round((Date.now()-PL.start)/60000));
   let rpe=null;
   $('#plRoot').innerHTML=`<div class="pl" data-k="work" style="overflow:auto;justify-content:flex-start"><div style="max-width:560px;width:100%;margin:0 auto">
     <div class="m" style="margin-top:10px">${esc(PL.meta.title)}</div>
     <div class="d" style="font-size:120px;color:var(--volt);margin:14px 0 6px">Fatto.</div>
     <p class="muted" style="font-size:17px">${min} minuti investiti in te.</p>
     ${Object.keys(PL.res).length?`<div class="sec"><h3>Risultati</h3>${Object.entries(PL.res).map(([k,v])=>`<p><b>${esc(k)}</b> · ${esc(v)}</p>`).join('')}</div>`:''}
+    ${PL.meta.form?`<div id="faBox">${PL.meta.form()}</div>`:''}
     <div class="sec"><h3>Quanto è stata dura? (RPE 1–10)</h3><div class="rpe">${Array.from({length:10},(_,i)=>`<button data-rpe="${i+1}">${i+1}</button>`).join('')}</div>
     <p class="note">1 = passeggiata · 5 = impegnativo · 8 = molto duro · 10 = massimale</p></div>
     ${progOn()&&PL.view.some(b=>b.items.some(it=>it.pr))?`<div class="sec"><button class="hrow0" id="fPrT"><h3 style="margin:0">Registra i progressi <span class="muted" style="text-transform:none;letter-spacing:0">· facoltativo</span></h3><span class="m" id="fPrL">Apri</span></button><div id="fPr" class="hide" style="margin-top:10px">${progForm()}</div></div>`:''}
@@ -2099,13 +2303,15 @@ function finishPlayer(){
     <button class="btn ghost w" id="fSkip" style="margin:10px 0 30px">Chiudi senza salvare</button>
   </div></div>`;
   $$('[data-rpe]').forEach(b=>b.onclick=()=>{rpe=+b.dataset.rpe;$$('[data-rpe]').forEach(x=>x.classList.toggle('on',x===b))});
+  if(PL.meta.bind&&$('#faBox'))PL.meta.bind($('#faBox'));
   if($('#fPrT')){$('#fPrT').onclick=()=>{const h=$('#fPr').classList.toggle('hide');$('#fPrL').textContent=h?'Apri':'Chiudi'};bindProgForm($('#fPr'))}
   $('#fSave').onclick=()=>{
     const M=PL.meta,entry={date:new Date().toISOString(),title:M.title,min,rpe,note:$('#fNote').value.trim(),res:Object.values(PL.res).join(' · '),fmt:M.fmt,fmtLabel:M.fmtLabel,ids:M.ids||[]};
     if(M.extra)Object.assign(entry,M.extra);
+    if(M.collect)Object.assign(entry,M.collect(entry));
     state.hist.unshift(entry);
     store.set('hist',state.hist); if(M.onSave)M.onSave(entry);
-    if(progOn()){const n=saveProgFromPlayer(entry);if(n)toast(n===1?'1 progresso salvato':n+' progressi salvati')}
+    if(progOn()&&!M.noProg){const n=saveProgFromPlayer(entry);if(n)toast(n===1?'1 progresso salvato':n+' progressi salvati')}
     closePlayer(); M.after&&M.after();
   };
   $('#fSkip').onclick=closePlayer;
@@ -2238,6 +2444,6 @@ else{
   route();
 }
 </script>
-<script src="aggiornamenti.js" data-version="1.5.0"></script>
+<script src="aggiornamenti.js" data-version="1.6.0"></script>
 </body>
 </html>

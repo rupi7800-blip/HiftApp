@@ -1,11 +1,10 @@
 {
-  "version": "1.5.0",
+  "version": "1.6.0",
   "date": "16/11/2026",
   "notes": [
-    "Nuova sezione Crea: il tuo programma con esercizi, carichi, tempi, serie, ripetizioni, giorni, settimane e mesi",
-    "Controllo automatico delle regole della programmazione: volume, frequenza, recupero, intensità, scarichi",
-    "Progressione lineare, ondulata o a blocchi, con calendario settimana per settimana",
-    "Esportazione in PDF, CSV, Excel, calendario, HTML, Markdown, testo e JSON",
-    "Sedute del programma nel timer, con registrazione dei progressi"
+    "Nuove attività: corsa, camminata, bicicletta, nuoto, stretching, pilates e yoga, anche con il cronometro",
+    "Diario → Analisi: minuti parziali e totali per disciplina, calorie e MET stimati",
+    "Grafici di minuti per settimana o mese, progressi degli esercizi e velocità di corsa",
+    "Obiettivo OMS della settimana; ogni voce del diario si apre e si può eliminare"
   ]
 }
