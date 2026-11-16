@@ -364,7 +364,7 @@
     var info = testata(p).map(function (t) { return row([t]); }).join('');
     return '<?xml version="1.0" encoding="UTF-8"?>\n<?mso-application progid="Excel.Sheet"?>\n' +
       '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">' +
-      '<Styles><Style ss:ID="h"><Font ss:Bold="1"/><Interior ss:Color="#D4FF1E" ss:Pattern="Solid"/></Style></Styles>' +
+      '<Styles><Style ss:ID="h"><Font ss:Bold="1"/><Interior ss:Color="#FA8C1D" ss:Pattern="Solid"/></Style></Styles>' +
       '<Worksheet ss:Name="Programma"><Table>' + row(COLS, true) + righe(p, progressi).map(function (r) { return row(r); }).join('') + '</Table></Worksheet>' +
       '<Worksheet ss:Name="Info"><Table>' + info + '</Table></Worksheet></Workbook>';
   }
@@ -382,7 +382,7 @@
   function toICS(p, progressi) {
     var now = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
     var hm = /^(\d{1,2}):(\d{2})$/.exec(p.ora || '18:00') || [0, '18', '00'];
-    var L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Hift App//Programma//IT', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:' + icsEsc(p.nome)];
+    var L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//HIFT Lab//Programma//IT', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:' + icsEsc(p.nome)];
     calendario(p, progressi).forEach(function (s) {
       s.giorni.forEach(function (g) {
         var dur = durataSeduta(g.esercizi);
@@ -410,15 +410,15 @@
         out.push('');
       });
     });
-    out.push((md ? '_' : '') + 'Generato con Hift App. Riscaldamento di 8–10 minuti prima di ogni seduta. RIR = ripetizioni in riserva a fine serie.' + (md ? '_' : ''));
+    out.push((md ? '_' : '') + 'Generato con HIFT Lab. Riscaldamento di 8–10 minuti prima di ogni seduta. RIR = ripetizioni in riserva a fine serie.' + (md ? '_' : ''));
     return out.join('\n') + '\n';
   }
   function toHTML(p, progressi) {
     var O = OBIETTIVI[p.obiettivo], h = testata(p);
     var cal = calendario(p, progressi);
     return '<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + xmlEsc(p.nome) + '</title>' +
-      '<style>body{font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#111;margin:24px;max-width:960px}h1{font-size:28px;margin:0 0 4px}h2{font-size:18px;margin:28px 0 8px;padding:6px 10px;background:#D4FF1E}h2.s{background:#cde8f5}h3{font-size:15px;margin:16px 0 6px}' +
-      'table{border-collapse:collapse;width:100%;margin-bottom:8px}td,th{border:1px solid #ccc;padding:5px 8px;text-align:left;vertical-align:top}th{background:#f2f2f2}.m{color:#555}.f{font-size:12px;color:#555;border-left:3px solid #D4FF1E;padding-left:10px}' +
+      '<style>body{font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#111;margin:24px;max-width:960px}h1{font-size:28px;margin:0 0 4px}h2{font-size:18px;margin:28px 0 8px;padding:6px 10px;background:#FA8C1D}h2.s{background:#cde8f5}h3{font-size:15px;margin:16px 0 6px}' +
+      'table{border-collapse:collapse;width:100%;margin-bottom:8px}td,th{border:1px solid #ccc;padding:5px 8px;text-align:left;vertical-align:top}th{background:#f2f2f2}.m{color:#555}.f{font-size:12px;color:#555;border-left:3px solid #FA8C1D;padding-left:10px}' +
       '@media print{body{margin:10mm}h2{break-after:avoid}table{break-inside:avoid}}</style></head><body>' +
       '<h1>' + xmlEsc(h[0]) + '</h1><div class="m">' + xmlEsc(h[1]) + '<br>' + xmlEsc(h[2]) + '</div><p class="f">' + xmlEsc(O.fonte) + '</p>' +
       cal.map(function (s) {
@@ -429,7 +429,7 @@
                 '</td><td>' + (x.kg != null ? fmtN(x.kg) + ' kg' : x.pct != null ? x.pct + '% 1RM' : '—') + '</td><td>' + x.rec + '"</td><td>' + x.rir + '</td><td>☐</td></tr>';
             }).join('') + '</table>';
         }).join('');
-      }).join('') + '<p class="m">Generato con Hift App · RIR = ripetizioni in riserva · riscaldamento di 8–10 minuti prima di ogni seduta.</p></body></html>';
+      }).join('') + '<p class="m">Generato con HIFT Lab · RIR = ripetizioni in riserva · riscaldamento di 8–10 minuti prima di ogni seduta.</p></body></html>';
   }
 
   return {

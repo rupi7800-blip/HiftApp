@@ -1,10 +1,7 @@
 {
-  "version": "1.6.0",
+  "version": "1.8.1",
   "date": "16/11/2026",
   "notes": [
-    "Nuove attività: corsa, camminata, bicicletta, nuoto, stretching, pilates e yoga, anche con il cronometro",
-    "Diario → Analisi: minuti parziali e totali per disciplina, calorie e MET stimati",
-    "Grafici di minuti per settimana o mese, progressi degli esercizi e velocità di corsa",
-    "Obiettivo OMS della settimana; ogni voce del diario si apre e si può eliminare"
+    "Nuovo nome: HIFT Lab"
   ]
 }

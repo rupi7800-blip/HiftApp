@@ -38,7 +38,7 @@ Il MET di ogni sessione viene dal **Compendium of Physical Activities** (Ainswor
 | Stretching | 2,3 |
 | Pilates | 3,0 |
 | WOD, HIFT | circuit training: 4,3 / 6,0 / 8,0 secondo l'RPE |
-| Programmi | allenamento con i pesi: 3,5 / 5,0 / 6,0 secondo l'RPE |
+| Programmi, allenamento libero | allenamento con i pesi: 3,5 / 5,0 / 6,0 secondo l'RPE |
 
 **Calorie = MET × peso (kg, dal Profilo) × ore.** Sono stime ipotetiche: il valore reale può variare del 20–30%. **MET-minuti = MET × minuti**; in analisi si mostrano anche come MET-ore.
 
@@ -50,7 +50,7 @@ Il MET di ogni sessione viene dal **Compendium of Physical Activities** (Ainswor
   - minuti "moderati equivalenti" (le attività da 3 a 6 MET contano una volta, quelle da 6 MET in su contano doppio, quelle sotto 3 MET non contano) rispetto all'obiettivo di 150–300 minuti;
   - giorni di rinforzo muscolare: WOD, HIFT e programmi, almeno 2 a settimana.
 - **Minuti per settimana o mese:** colonne impilate per famiglia (allenamento funzionale, corsa, camminata, bici, nuoto, mente e corpo). Toccando una colonna si vede il dettaglio, e i dati sono disponibili anche in tabella.
-- **Minuti per disciplina:** minuti parziali di ognuna delle 10 discipline, con percentuale, sessioni, calorie e distanza.
+- **Minuti per disciplina:** minuti parziali di ognuna delle 11 discipline, con percentuale, sessioni, calorie e distanza.
 - **Progressi negli esercizi:** andamento di carico, ripetizioni o tempo per ogni esercizio registrato almeno due volte.
 - **Corsa:** andamento della velocità media.
 

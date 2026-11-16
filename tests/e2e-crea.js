@@ -103,7 +103,7 @@ const ok = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) fails++
   ok(seg.load, 'timer: carico della settimana mostrato');
   if (OUT) await p.screenshot({ path: OUT + '/c4-timer.png' });
   for (let i = 0; i < 300; i++) { if (!(await p.$('#pNext'))) break; await p.click('#pNext'); }
-  ok(await p.isVisible('#fPrT'), 'fine seduta: si possono registrare i progressi');
+  ok(await p.isVisible('#fPr'), 'fine seduta: registro delle serie');
   await p.click('#fSave'); await p.waitForTimeout(400);
   ok(await p.evaluate(() => CR.list[0].fatte.length === 1 && PGM.prossima(CR.list[0]).i === 1), 'seduta segnata come fatta, la prossima avanza');
   ok(await p.evaluate(() => state.hist[0].fmt === 'PROGRAMMA'), 'seduta nel Diario');

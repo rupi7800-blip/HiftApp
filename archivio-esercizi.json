@@ -1,41 +1,35 @@
 {
- "_info": "Archivio esercizi di HIFT App generato da tools/estrai-atlanti.js a partire dagli Atlanti 100 (non modificare a mano: rigenera).",
- "versione": "2026-11-15",
+ "_info": "Archivio esercizi di HIFT Lab generato da tools/estrai-atlanti.js a partire dagli Atlanti 100 (non modificare a mano: rigenera).",
+ "versione": "2026-11-16",
  "fonti": [
   {
    "atlante": "Atlante Core 100",
    "sottotitolo": "Stabilizzazione del core · 100 esercizi illustrati",
-   "artifact": "https://claude.ai/artifact/WWSbveH43XNKFgLGVMLnUj",
    "esercizi": 100
   },
   {
    "atlante": "Atlante Petto 100",
    "sottotitolo": "Spinta e pettorali · 100 esercizi illustrati",
-   "artifact": "https://claude.ai/artifact/Tnz955xdYyonF7jawEnC6Y",
    "esercizi": 100
   },
   {
    "atlante": "Atlante Quadricipiti 100",
    "sottotitolo": "Quadricipiti e parte anteriore della coscia · 100 esercizi illustrati",
-   "artifact": "https://claude.ai/artifact/88jQkeYo4sDuG4mUX2EbY8",
    "esercizi": 100
   },
   {
    "atlante": "Atlante Spalle 100",
    "sottotitolo": "Deltoidi e cingolo scapolare · 100 esercizi illustrati",
-   "artifact": "https://claude.ai/artifact/D3tppThDYuMqj3wSCf4V11",
    "esercizi": 100
   },
   {
    "atlante": "Atlante Glutei 100",
    "sottotitolo": "Glutei e catena posteriore della coscia · 100 esercizi illustrati",
-   "artifact": "https://claude.ai/artifact/RCCncpg7EJah2RQthtTjWo",
    "esercizi": 100
   },
   {
    "atlante": "Atlante Dorso 100",
    "sottotitolo": "Dorsali, trapezio ed erettori · 100 esercizi illustrati",
-   "artifact": "https://claude.ai/artifact/RmpXnCdsVJ8A8JP3zpf7oU",
    "esercizi": 100
   }
  ],

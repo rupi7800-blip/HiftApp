@@ -1,11 +1,11 @@
-/* Hift App — service worker
+/* HIFT Lab — service worker
    L'app resta sulla versione installata (funziona anche offline) finché
    non premi "Aggiorna": il tasto compare quando version.json annuncia
    una versione nuova. Non serve cambiare questo file a ogni rilascio. */
 const CACHE = 'hift-app';
 const ASSETS = [
-  './', './index.html', './aggiornamenti.js', './hift-method-core.js', './progressi-core.js', './programma-core.js', './analisi-core.js', './manifest.json',
-  './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/favicon-32.png', './icons/apple-touch-icon.png'
+  './', './index.html', './aggiornamenti.js', './hift-method-core.js', './progressi-core.js', './programma-core.js', './analisi-core.js', './registro-core.js', './manifest.json',
+  './icons/logo.png', './icons/icon-192.png', './icons/icon-512.png', './icons/favicon-32.png', './icons/apple-touch-icon.png'
 ];
 
 self.addEventListener('install', e => {
@@ -40,8 +40,8 @@ self.addEventListener('fetch', e => {
   const url = new URL(req.url);
   if (url.pathname.endsWith('version.json')) return; // controllo aggiornamenti: sempre dalla rete
 
-  // Archivio esercizi esterno: prima la rete (così un archivio aggiornato arriva subito), offline la copia salvata
-  if (url.origin === self.location.origin && url.pathname.endsWith('archivio-esercizi.json')) {
+  // Archivio esercizi e impostazioni dell'amministratore: prima la rete (così un archivio aggiornato arriva subito), offline la copia salvata
+  if (url.origin === self.location.origin && (url.pathname.endsWith('archivio-esercizi.json') || url.pathname.endsWith('config.json'))) {
     e.respondWith(fromNetwork(req).then(res => res.ok ? res : caches.match(req).then(hit => hit || res)).catch(() => caches.match(req)));
     return;
   }

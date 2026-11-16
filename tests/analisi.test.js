@@ -10,6 +10,8 @@ test('discipline: sessioni esistenti dell\'app e nuove attività', () => {
   assert.equal(A.disciplina({ fmt: 'AMRAP' }), 'wod');
   assert.equal(A.disciplina({ fmt: 'HIFT' }), 'hift');
   assert.equal(A.disciplina({ fmt: 'PROGRAMMA' }), 'programma');
+  assert.equal(A.disciplina({ fmt: 'LIBERO' }), 'libero');
+  assert.equal(A.met({ fmt: 'LIBERO', rpe: 8 }).met, 6.0);
   assert.equal(A.disciplina({ fmt: 'ATTIVITA', att: 'yoga' }), 'yoga');
   assert.deepEqual(A.ATTIVITA, ['corsa', 'camminata', 'bici', 'nuoto', 'stretching', 'pilates', 'yoga']);
 });

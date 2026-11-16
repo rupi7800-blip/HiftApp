@@ -23,7 +23,7 @@
     { k: 'bici', n: 'Bicicletta' }, { k: 'nuoto', n: 'Nuoto' }, { k: 'mente', n: 'Mente e corpo' }
   ];
   var DISC = {
-    wod: { n: 'WOD', fam: 'funz' }, hift: { n: 'HIFT Method', fam: 'funz' }, programma: { n: 'Programmi', fam: 'funz' },
+    wod: { n: 'WOD', fam: 'funz' }, hift: { n: 'HIFT Method', fam: 'funz' }, programma: { n: 'Programmi', fam: 'funz' }, libero: { n: 'Allenamento libero', fam: 'funz' },
     corsa: { n: 'Corsa', fam: 'corsa', dist: 'km', att: 1 }, camminata: { n: 'Camminata', fam: 'camminata', dist: 'km', att: 1 },
     bici: { n: 'Bicicletta', fam: 'bici', dist: 'km', att: 1 }, nuoto: { n: 'Nuoto', fam: 'nuoto', dist: 'm', att: 1 },
     stretching: { n: 'Stretching', fam: 'mente', att: 1 }, pilates: { n: 'Pilates', fam: 'mente', att: 1 }, yoga: { n: 'Yoga', fam: 'mente', att: 1 }
@@ -58,6 +58,7 @@
     if (h.att && DISC[h.att]) return h.att;
     if (h.fmt === 'HIFT') return 'hift';
     if (h.fmt === 'PROGRAMMA') return 'programma';
+    if (h.fmt === 'LIBERO') return 'libero';
     return 'wod';
   }
   function velocita(h) {
@@ -69,7 +70,7 @@
   function met(h) {
     var k = disciplina(h), int = INT[h.intensita] ? h.intensita : intDaRpe(h.rpe), v = velocita(h);
     if (k === 'wod' || k === 'hift') return { met: h.rpe == null ? 6.0 : h.rpe <= 5 ? 4.3 : h.rpe <= 7 ? 6.0 : 8.0, base: 'circuit training, sforzo da RPE' };
-    if (k === 'programma') return { met: h.rpe == null ? 5.0 : h.rpe <= 5 ? 3.5 : h.rpe <= 7 ? 5.0 : 6.0, base: 'allenamento con i pesi, sforzo da RPE' };
+    if (k === 'programma' || k === 'libero') return { met: h.rpe == null ? 5.0 : h.rpe <= 5 ? 3.5 : h.rpe <= 7 ? 5.0 : 6.0, base: 'allenamento con i pesi, sforzo da RPE' };
     if (T[k] && v && v > 0.5) return { met: Math.round(lerpT(T[k], v) * 10) / 10, base: 'velocità ' + (Math.round(v * 10) / 10) + ' km/h' };
     if (k === 'nuoto') { var st = NUOTO[h.stile] ? h.stile : 'misto'; return { met: NUOTO[st][II[int]], base: STILI[st].toLowerCase() + ', intensità ' + int }; }
     if (k === 'yoga') { var y = YOGA_MET[h.yoga] != null ? h.yoga : int === 'leggera' ? 'dolce' : int === 'vigorosa' ? 'vinyasa' : 'hatha'; return { met: YOGA_MET[y], base: 'yoga ' + YOGA[y].toLowerCase() }; }
